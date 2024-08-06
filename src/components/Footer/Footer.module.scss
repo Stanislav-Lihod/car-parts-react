@@ -1,0 +1,14 @@
+.footer{
+  &__menu{
+    background-color: $lightGray2;
+    padding: 32px;
+  }
+
+  &__copying{
+    background-color: $primary;
+    padding: 16px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+  }
+}

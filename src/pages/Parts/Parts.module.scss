@@ -1,0 +1,19 @@
+.main{
+  min-height: 100vh;
+
+  .content{
+    margin-top: 20px;
+    display: flex;
+    gap: 32px;
+
+    &__general{
+      flex-grow: 1;
+    }
+
+    .part__list{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+.link{
+  &:hover{
+    text-decoration: none;
+    .part{
+      background-color: $lightGray;
+    }
+  }
+}
+
+.part {
+  padding: 12px;
+  border: 1px solid $lightGray;
+  border-radius: 4px;
+  display: flex;
+  gap: 20px;
+  transition: .3s;
+
+  .image{
+    width: 260px;
+
+    img{
+      width: 100%;
+    }
+  }
+
+  .content{
+    padding-right: 40px;
+    flex-grow: 1;
+
+    &__title{
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    &__price{
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+}
