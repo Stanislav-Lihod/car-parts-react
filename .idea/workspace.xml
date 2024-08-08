@@ -4,8 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab6c182e-838a-4012-a639-735602cfcdba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="ab6c182e-838a-4012-a639-735602cfcdba" name="Changes" comment="Create filter and parts page, customize server">
+      <change afterPath="$PROJECT_DIR$/public/images/bg_main.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Empty/Empty.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Main/components/Filter/Filter.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Main/components/Filter/Filter.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header/Header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header/Header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PreviewPart/PreviewPart.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PreviewPart/PreviewPart.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/PreviewPart/PreviewPart.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PreviewPart/PreviewPart.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.module.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.module.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Part/Part.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Part/Part.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Part/components/PartDescription/PartDescription.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Part/components/PartDescription/PartDescription.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Part/components/PartShare/PartShare.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Part/components/PartShare/PartShare.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Parts/Parts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Parts/Parts.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,30 +40,38 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP" />
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2kBjYsbQAo0P9NBKc9BUb57Apmo" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/Applications/PhpStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/stan/Documents/work/pet/partsCar/public/images&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/PhpStorm.app/Contents/plugins/javascript-impl/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/images" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/images" />
       <recent name="$PROJECT_DIR$/src/pages/Part/components" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/redux" />
@@ -66,11 +92,26 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1722763915088</updated>
-      <workItem from="1722763916124" duration="37473000" />
+      <workItem from="1722763916124" duration="54172000" />
+      <workItem from="1723140425676" duration="15070000" />
     </task>
+    <task id="LOCAL-00001" summary="Init">
+      <option name="closed" value="true" />
+      <created>1722978456932</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1722978456932</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Init" />
+    <MESSAGE value="Create filter and parts page, customize server" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create filter and parts page, customize server" />
   </component>
 </project>

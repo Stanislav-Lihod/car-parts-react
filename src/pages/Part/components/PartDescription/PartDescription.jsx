@@ -1,11 +1,10 @@
 import React from "react";
 import * as style from './PartDescription.module.scss'
-export default function PartDescription(){
+export default function PartDescription({part_name, car_name, part_number}){
   return (
     <div className={`container ${style.part__description}`}>
-      <h2 className='mb-20'>Volkswagen Multivan T5 A/C air flow flap actuator/motor: more information</h2>
-      <p className="mb-20">In this category you will also find more spare parts such as Volkswagen Multivan A/C air flow flap
-        actuator/motor 7A0819021. View the description and technical information of the spare part you are interested
+      <h2 className='mb-20'>{car_name} {part_name}: more information</h2>
+      <p className="mb-20">In this category you will also find more spare parts such as {car_name} {part_name} {part_number}. View the description and technical information of the spare part you are interested
         in. Buy the required spare part online and we will deliver it to Europe and beyond within a few business days.
         Autoparts cooperates with reliable auto parts dealers who can guarantee the quality of the offered parts.
       </p>

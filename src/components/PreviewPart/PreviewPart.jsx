@@ -1,8 +1,18 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import * as style from './PreviewPart.module.scss'
+import {TrophyIcon} from "@heroicons/react/24/outline";
 
-export default function PreviewPart({id}){
+export default function PreviewPart({id, part}){
+  const {
+    price_final,
+    part_name,
+    description,
+    delivery_price,
+    image,
+    scrapheap
+  } = part
+
   return(
     <Link
       to={`/used-part/${id}`}
@@ -11,17 +21,24 @@ export default function PreviewPart({id}){
       <div className={style.part}>
         <div className={style.image}>
           <img
-            src="https://images.ovoko.com/br/581x436/kli/0/0/0/0/5/3/0/9/4/4a3cfadd48e0b5d046d9768a046855ce-volkswagen_multivan_t5_sankabos_komplektas.jpg"
-            alt="Name"
+            src={image.full}
+            alt={`${part_name}, ${description}`}
           />
         </div>
         <div className={style.content}>
-          <h2 className={style.content__title}>Clutch set kit</h2>
-          <div>Volkswagen Multivan T5 2007, 96kW, 2500cm3 Diesel Manual</div>
-          <div className={`mt-6 ${style.content__price}`}>80.00 €</div>
-          <div>+ Service Fee</div>
-          <div>+ Delivery: 11.99 €</div>
-          <div>Pasvalio raj., Lietuva</div>
+          <h2 className={style.content__title}>{part_name}</h2>
+          <div className={style.content__description}>{description.replace('<br>', ' ')}</div>
+          <div className={`mt-6 ${style.content__price}`}>{price_final}</div>
+          <div className={style.content__fee}>+ Service Fee</div>
+          <div className={style.content__fee}>+ Delivery: {delivery_price}</div>
+          { }
+          <div className={style.content__seller}>
+            {scrapheap.top_seller && <span><TrophyIcon/> Top seller </span>}
+            {scrapheap.title}
+          </div>
+          <div className={style.content__region}>
+            {scrapheap.city !== '' && `${scrapheap.city},`} {scrapheap.country}
+          </div>
         </div>
       </div>
     </Link>

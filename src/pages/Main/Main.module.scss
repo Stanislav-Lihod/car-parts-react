@@ -1,0 +1,20 @@
+.head{
+  background-image: url("/build/images/bg_main.jpg");
+  background-repeat: repeat;
+  height: 500px;
+  background-size: contain;
+}
+
+.content{
+  padding: 96px 0;
+
+  h1, .content__desc{
+    width: 60%;
+    min-width: 500px;
+
+    span{
+      color: $primary;
+      font-weight: bold;
+    }
+  }
+}

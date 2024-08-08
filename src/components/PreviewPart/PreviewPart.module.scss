@@ -32,9 +32,41 @@
       font-size: 18px;
     }
 
+    &__description{
+      font-size: 13px;
+      color: #666;
+    }
+
     &__price{
       font-size: 24px;
       font-weight: bold;
+    }
+
+    &__fee{
+      font-size: 13px;
+    }
+
+    &__seller{
+      margin-top: 5px;
+      font-size: 13px;
+
+      span{
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: $primary;
+
+        svg{
+          stroke: $primary;
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+
+    &__region{
+      font-size: 13px;
+      color: #666;
     }
   }
 }
