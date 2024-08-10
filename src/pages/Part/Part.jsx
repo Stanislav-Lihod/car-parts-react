@@ -31,7 +31,7 @@ export const Part = () =>{
 
     fetchData();
   },[])
-  console.log(part)
+
   return(
     <main>
       <Breadcrumbs/>

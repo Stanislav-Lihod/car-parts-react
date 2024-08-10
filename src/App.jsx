@@ -5,6 +5,7 @@ import {Main} from "./pages/Main/Main";
 import {Part} from "./pages/Part/Part";
 import {Header} from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import {useSelector} from "react-redux";
 export const App = () =>{
   return (
     <div>

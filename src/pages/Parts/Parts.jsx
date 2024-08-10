@@ -22,7 +22,6 @@ export const Parts = () =>{
     }
   })
 
-  console.log(params)
   useEffect(()=>{
     async function fetchData() {
       try {
@@ -30,7 +29,6 @@ export const Parts = () =>{
         const response = await axios.get('https://9aaca2b44dbb58a9.mokky.dev/parts2',{params});
         setParts(response.data.items);
         setTotalParts(response.data.meta.total_items)
-        console.log(response.data)
         setLoading(false)
       } catch (error) {
         setLoading(false)
