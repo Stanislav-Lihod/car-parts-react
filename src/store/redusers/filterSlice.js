@@ -2,25 +2,18 @@ import {createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  isFilterLoading: false,
+  isLoading: false,
+  isStoreData: false,
   error: '',
   brands: [],
   models: [],
   modifications: [],
   searchParam: '',
   currentParams: {
-    brand: {
-      id: 'null',
-      name: ''
-    },
-    model: {
-      id: 'null',
-      name: ''
-    },
-    modification:{
-      id: 'null',
-      name: ''
-    }
+    "car.brand": '',
+    "car.model": '',
+    "car.modification": '',
+    'sortBy': ''
   }
 }
 
@@ -34,22 +27,22 @@ export const fetchBrands = () => async (dispatch) =>{
   }
 }
 
-export const fetchModels = (id) => async (dispatch) =>{
-  if (id !== 'null'){
+export const fetchModels = (brandId) => async (dispatch) =>{
+  if (brandId !== ''){
     try {
       dispatch(filterSlice.actions.showLoad())
-      const response = await axios.get(`https://9aaca2b44dbb58a9.mokky.dev/models/${id}`)
+      const response = await axios.get(`https://9aaca2b44dbb58a9.mokky.dev/models/${brandId}`)
       dispatch(filterSlice.actions.modelsFetching(response.data.models))
     } catch (e){
       dispatch(filterSlice.actions.errorHandling(e.message))
     }
   } else {
-    dispatch(filterSlice.actions.resetCurrentParameter('model'))
+    // dispatch(filterSlice.actions.resetCurrentParameter(['model']))
   }
 }
 
 export const fetchModification = (brandId,modelId) => async (dispatch) =>{
-  if (brandId !== 'null' && modelId !== 'null'){
+  if (brandId !== '' && modelId !== ''){
     try {
       dispatch(filterSlice.actions.showLoad())
       const response = await axios.get(`https://9aaca2b44dbb58a9.mokky.dev/modification?brand=${brandId}&model=${modelId}`)
@@ -58,7 +51,7 @@ export const fetchModification = (brandId,modelId) => async (dispatch) =>{
       dispatch(filterSlice.actions.errorHandling(e.message))
     }
   } else {
-    dispatch(filterSlice.actions.resetCurrentParameter('modification'))
+    // dispatch(filterSlice.actions.resetCurrentParameter(['modification']))
   }
 }
 
@@ -67,49 +60,54 @@ export const filterSlice = createSlice({
   initialState,
   reducers:{
     showLoad(state){
-      state.isFilterLoading = true
+      state.isLoading = true
     },
     errorHandling(state, action){
       state.error = action.payload
-      state.isFilterLoading = false
+      state.isLoading = false
     },
     brandsFetching(state, action){
       state.error = ''
       state.brands = action.payload
-      state.isFilterLoading = false
+      state.isLoading = false
     },
     modelsFetching(state, action){
       state.error = ''
       state.models = action.payload
-      state.isFilterLoading = false
+      state.isLoading = false
     },
     modificationFetching(state, action){
       state.error = ''
       state.modifications = action.payload
-      state.isFilterLoading = false
+      state.isLoading = false
     },
     setCurrentFilter(state, action){
-      const key = Object.keys(action.payload)[0]
-      state.currentParams[key] = action.payload[key];
-    },
-    resetCurrentParameter(state, action){
-      state[action.payload + 's'] = []
-      state.currentParams[action.payload] = {
-        id: 'null',
-        name: ''
-      }
-    },
-    changeSearchParamsString(state){
-      const arr = []
-      for (const tag in state.currentParams) {
-        if (state.currentParams[tag].id !== 'null'){
-          arr.push(`${tag}=${state.currentParams[tag].id}`)
+      const needReset = action.payload[1],
+            newParameters = action.payload[0],
+            key = Object.keys(newParameters)[0];
+
+      if (needReset){
+        switch (key){
+          case 'car.brand':
+            state['models'] = []
+            state.currentParams[`car.model`] = ''
+          case 'car.model':
+            state['modifications'] = []
+            state.currentParams[`car.modification`] = ''
         }
       }
-      state.searchParam = arr.join('&')
+
+      state.currentParams[key] = newParameters[key];
+
+      state.searchParam = Object.entries(state.currentParams)
+        .filter(([key, value]) => value !== '')
+        .map(([key, value]) => `${key}=${value}`)
+        .join('&');
+
+      state.isStoreData = true
     }
   }
 })
 
-export const {setCurrentFilter,changeSearchParamsString} = filterSlice.actions
+export const {setCurrentFilter} = filterSlice.actions
 export default filterSlice.reducer

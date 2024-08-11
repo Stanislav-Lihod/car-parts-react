@@ -1,10 +1,17 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import * as style from './Filter.module.scss'
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchBrands, fetchModels, fetchModification, setCurrentFilter, changeSearchParamsString} from "../../../../store/redusers/filterSlice";
+import {
+  fetchBrands,
+  fetchModels,
+  fetchModification,
+  setCurrentFilter
+} from "../../../../store/redusers/filterSlice";
+import {fetchParts} from "../../../../store/redusers/partsSlice";
+import FilterSelect from "./components/FilterSelect";
 
-export default function Filter(props) {
+export default function Filter({isPartsPage}) {
   const dispatch = useDispatch()
 
   //store variables
@@ -12,83 +19,83 @@ export default function Filter(props) {
     brands,
     models,
     modifications,
-    isFilterLoading,
+    isLoading,
     currentParams,
     searchParam
   } = useSelector(state => state.filters)
-  const currentBrand = currentParams.brand
-  const currentModel = currentParams.model
+  const currentBrand = currentParams["car.brand"]
+  const currentModel = currentParams["car.model"]
+  const currentModification = currentParams["car.modification"]
+
+  const prevBrandRef = useRef(currentBrand);
+  const prevModelRef = useRef(currentModel);
 
   useEffect(() => {
     dispatch(fetchBrands())
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchModels(currentBrand.id))
-  }, [dispatch, currentBrand.id]);
+    if (currentBrand && currentBrand !== prevBrandRef.current) {
+      dispatch(fetchModels(currentBrand));
+    }
+    prevBrandRef.current = currentBrand;
+  }, [dispatch, currentBrand]);
 
   useEffect(() => {
-    dispatch(fetchModification(currentBrand.id, currentModel.id))
-  }, [dispatch, currentBrand.id, currentModel.id]);
+    if (currentBrand && currentModel && (currentBrand !== prevBrandRef.current || currentModel !== prevModelRef.current)) {
+      dispatch(fetchModification(currentBrand, currentModel));
+    }
+    prevModelRef.current = currentModel;
+  }, [dispatch, currentBrand, currentModel]);
 
-  const handler = (e)=>{
+  const selectHandler = (e)=>{
     const tag = e.target.getAttribute('name')
     const params = {
-      [tag]: {
-        id: e.target.value,
-        name: e.target.selectedOptions[0].text
-      }
+      [tag]: e.target.value
     }
-    dispatch(setCurrentFilter(params))
-    dispatch(changeSearchParamsString())
+    dispatch(setCurrentFilter([params, true]))
+  }
+
+  const searchButton = (e) =>{
+    e.preventDefault()
+    isPartsPage && dispatch(fetchParts(currentParams))
   }
 
   return (
-    <section className={style.section}>
-      <div className={style.title}>Car parts search</div>
-      <div>
-        <select name="brand" id="brand" onChange={handler}>
-          <option value="null">Select</option>
-          {brands.map((item) => (
-            <option
-              value={item.id}
-              key={item.id}
-              name={item.brand}
-            >
-              {item.brand}
-            </option>
-          ))}
-        </select>
-        <select name="model" id="model" onChange={handler} disabled={currentBrand?.id === 'null'}>
-          <option value="null">Select</option>
-          {models?.map((item) => (
-            <option
-              value={item.id}
-              key={item.id}
-              name={item.title}
-            >
-              {item.title}
-            </option>
-          ))}
-        </select>
-        <select name="modification" id="modification" onChange={handler} disabled={currentModel?.id === 'null'}>
-          <option value="null">Select</option>
-          {modifications?.map((item) => (
-            <option
-              value={item.id}
-              name={`${item.name} (${item.yearStart} - ${item.yearEnd})`}
-              key={item.id}
-            >
-              {item.name} ({item.yearStart} - {item.yearEnd})
-            </option>
-          ))}
-        </select>
-        <button>
-          <Link
-            to={`/parts${searchParam.length > 0 ? '?' + searchParam : ''}`}
-          >Search</Link>
-        </button>
-      </div>
+    <section className={`${style.section} ${isPartsPage && style.parts__page}`}>
+      <FilterSelect
+        name="car.brand"
+        value={currentBrand || ''}
+        onChange={selectHandler}
+        defaultOption="Brand"
+        options={brands}
+      />
+
+      <FilterSelect
+        name="car.model"
+        value={currentModel || ''}
+        onChange={selectHandler}
+        defaultOption="Model"
+        options={models}
+        disabled={currentBrand === ''}
+      />
+
+      <FilterSelect
+        name="car.modification"
+        value={currentModification || ''}
+        onChange={selectHandler}
+        defaultOption="Modification"
+        options={modifications}
+        disabled={currentModel === ''}
+      />
+
+      <button onClick={searchButton}>
+        <Link to={`/parts${searchParam ? `?${searchParam}` : ''}`}>
+          {isPartsPage ? 'Filter Car' : 'Search'}
+        </Link>
+      </button>
+
+
     </section>
   );
 }

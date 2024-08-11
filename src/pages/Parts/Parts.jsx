@@ -5,39 +5,53 @@ import PreviewPart from "../../components/PreviewPart/PreviewPart";
 import ModelTitle from "./components/ModelTitle/ModelTitle";
 import {Aside} from "./components/Aside/Aside";
 import axios from 'axios'
-import {useParams, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 import Empty from "../../components/Empty/Empty";
+import CarFilter from "./components/CarFilter/CarFilter";
+import {useDispatch, useSelector} from "react-redux";
+import {setCurrentFilter} from "../../store/redusers/filterSlice";
+import {fetchParts} from "../../store/redusers/partsSlice";
 
 export const Parts = () =>{
-  const [parts, setParts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [totalParts, setTotalParts] = useState(0)
-  const params = {
-    limit: 9
-  }
+  const dispatch = useDispatch()
+  const [isInitialized, setIsInitialized] = useState(false);
+  const {
+    currentParams,
+    isStoreData
+  } = useSelector(state => state.filters)
+
+  const {
+    parts,
+    pagination,
+    isLoading
+  } = useSelector(state => state.parts)
+  const totalParts = pagination.totalParts
+
+  // Search Params handler
   const [searchParams, setSearchParams] = useSearchParams();
-  searchParams.forEach((value,key) => {
-    if (value !== ''){
-      params[`car.${key}`] = value
+
+  useEffect(() => {
+    if(!isStoreData){
+      searchParams.forEach((value, key) => {
+        dispatch(setCurrentFilter([{ [key]: value }, false]));
+      });
     }
-  })
+  }, [dispatch, searchParams]);
 
-  useEffect(()=>{
-    async function fetchData() {
-      try {
-        setLoading(true)
-        const response = await axios.get('https://9aaca2b44dbb58a9.mokky.dev/parts2',{params});
-        setParts(response.data.items);
-        setTotalParts(response.data.meta.total_items)
-        setLoading(false)
-      } catch (error) {
-        setLoading(false)
-        console.error('Error fetching:', error.message);
-      }
-    };
+  useEffect(() => {
+    if (!isInitialized){
+      dispatch(fetchParts(currentParams));
+      setIsInitialized(true)
+    }
+  }, [dispatch, currentParams]);
 
-    fetchData();
-  },[])
+  const sortHandler = (e)=>{
+    const tag = e.target.getAttribute('name')
+    const params = {
+      [tag]: e.target.value
+    }
+    dispatch(setCurrentFilter([params, false]))
+  }
 
   return(
     <main className={style.main}>
@@ -46,22 +60,33 @@ export const Parts = () =>{
       <div className={`container mt-20 ${style.content}`}>
         <Aside/>
         <div className={style.content__general}>
-          {/*<CarFilter/>*/}
+          <CarFilter />
           <div className="mt-6">
             <div className="flex justify-between items-center">
               <div>We found in the warehouse <b>{totalParts}</b> parts:</div>
-              {/*<InputFilter className="w-48" placeholder="Sort"/>*/}
+              <select
+                name="sortBy"
+                value={currentParams['sortBy']}
+                onChange={sortHandler}
+              >
+                <option value="">Standart</option>
+                <option value="price">Lowest price</option>
+                <option value="-price">Highest price</option>
+              </select>
             </div>
+
             <div className={`${style.part__list} mt-15`}>
-              {
+              {isLoading ? (
+                'loading'
+              ) : (
                 parts && parts.length > 0 ? (
                   parts.map(part => (
-                    <PreviewPart id={part.part_id} part={part} key={part.part_id} />
+                    <PreviewPart id={part.part_id} part={part} key={part.part_id}/>
                   ))
                 ) : (
-                  <Empty />
+                  <Empty/>
                 )
-              }
+              )}
             </div>
           </div>
         </div>
