@@ -4,7 +4,7 @@ import axios from "axios";
 const initialState = {
   isLoading: true,
   error: '',
-  partsInBasket: JSON.parse(localStorage.getItem('basketParts')) || [],
+  ID_partsInBasket: JSON.parse(localStorage.getItem('basketParts')) || [],
   counter: JSON.parse(localStorage.getItem('basketParts'))?.length || 0,
   basket_parts: []
 }
@@ -32,15 +32,26 @@ export const basketSlice = createSlice({
       state.isLoading = false
     },
     addPartInBasket(state, action){
-      state.partsInBasket.push(action.payload)
-      state.counter = state.partsInBasket.length
-      localStorage.setItem('basketParts', JSON.stringify(state.partsInBasket))
+      const currentBasket = JSON.parse(localStorage.getItem('basketParts')) || []
+      const newBasket = new Set()
+
+      currentBasket.forEach(part => newBasket.add(part))
+      newBasket.add(action.payload)
+
+      state.ID_partsInBasket = [...newBasket]
+      state.counter = state.ID_partsInBasket.length
+      localStorage.setItem('basketParts', JSON.stringify(state.ID_partsInBasket))
     },
     removePartInBasket(state, action){
-      console.log(action.payload)
-      state.partsInBasket = state.partsInBasket.filter(item => item !== action.payload)
-      state.counter = state.partsInBasket.length
-      localStorage.setItem('basketParts', JSON.stringify(state.partsInBasket))
+      const currentBasket = JSON.parse(localStorage.getItem('basketParts')) || []
+      const newBasket = new Set()
+
+      currentBasket.forEach(part => newBasket.add(part))
+      newBasket.delete(action.payload)
+
+      state.ID_partsInBasket = [...newBasket]
+      state.counter = state.ID_partsInBasket.length
+      localStorage.setItem('basketParts', JSON.stringify(state.ID_partsInBasket))
     },
     basketPartsFetching(state, action){
       state.basket_parts = action.payload

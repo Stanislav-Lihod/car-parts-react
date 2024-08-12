@@ -1,24 +1,25 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import * as style from './Basket.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {fetchBasketParts, removePartInBasket} from "../../store/redusers/basketSlice";
 import Empty from "../../components/Empty/Empty";
-import {Link} from "react-router-dom";
+import BasketPart from "./components/BasketPart";
 
 export const Basket = () =>{
   const dispatch = useDispatch()
-  const {basket_parts, parts} = useSelector(state => state.basket)
+  const {basket_parts, ID_partsInBasket} = useSelector(state => state.basket)
 
   useEffect(()=>{
-    (parts.length > 0 || basket_parts.length > 0) && dispatch(fetchBasketParts(parts.join('&part_id=')))
-  }, [dispatch, parts])
+    (ID_partsInBasket.length > 0 || basket_parts.length > 0) && dispatch(fetchBasketParts(ID_partsInBasket.join('&part_id=')))
+  }, [dispatch, ID_partsInBasket])
 
   const totalParts = basket_parts.reduce((sum, item) => sum + item.price, 0).toFixed(2);
   const totalDelivery = basket_parts.reduce((sum, item) => sum + Number(item.delivery_price.slice(0, -2)), 0).toFixed(2);
   const totalFee = basket_parts.reduce((sum, item) => sum + item.service_fee, 0).toFixed(2);
   const totalPrice = (parseFloat(totalParts) + parseFloat(totalDelivery) + parseFloat(totalFee)).toFixed(2);
 
-  const removePart = (id) =>{
+  const removePart = (event, id) =>{
+    event.target.disabled
     dispatch(removePartInBasket(String(id)))
   }
 
@@ -29,25 +30,11 @@ export const Basket = () =>{
           <div className={style.title}>Shopping cart</div>
 
           {basket_parts.map(part => (
-            <div className={style.basket__part} key={part.part_id}>
-              <button onClick={()=>{removePart(part.part_id)}}>Remove</button>
-              <div className={style.part__title}>{part.scrapheap.title}</div>
-              <div className={style.part__top}>
-                <img src={part.image.thumb} alt={part.part_name}/>
-                <div className={style.part__top__text}>
-                  <Link to={`/used-part/${part.part_id}`}>{part.part_id} - {part.part_name}</Link>
-                  <div dangerouslySetInnerHTML={{__html: part.description}}/>
-                </div>
-                <div className={style.part__top__price}>
-                  {part.price_final}
-                  <span>incl. VAT</span>
-                </div>
-              </div>
-              <div className={style.part__bottom}>
-                <div className={style.part__bottom__text}>Delivery (1 - 3 business
-                  days): <span>{part.delivery_price}</span></div>
-              </div>
-            </div>
+            <BasketPart
+              part={part}
+              key={part.part_id}
+              onRemove={removePart}
+            />
           ))}
 
           <div className={style.total}>

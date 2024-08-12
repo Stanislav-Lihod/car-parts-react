@@ -14,13 +14,13 @@ import {getBreadcrumbs, getPart} from "../../store/redusers/partSlice";
 export const Part = () =>{
   const {id} = useParams()
   const dispatch = useDispatch()
-  const {partsInBasket} = useSelector(state => state.basket)
+  const {ID_partsInBasket} = useSelector(state => state.basket)
   const {part, isLoading, isBreadcrumbsLoading, breadcrumbs} = useSelector(state => state.part)
 
   const [inBasket, setInBasket] = useState(false)
 
   useEffect(()=>{
-    setInBasket(partsInBasket.includes(id))
+    setInBasket(ID_partsInBasket.includes(id))
     dispatch(getPart(id))
   },[dispatch])
 

@@ -9,6 +9,7 @@
   }
 
   &__part{
+    position: relative;
     border-radius: 4px;
     border: 1px solid $lightGray;
     padding: 20px;

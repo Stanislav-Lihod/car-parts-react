@@ -7,7 +7,7 @@ export const Button = ({children, maxWidth, bgColor, onClick, additionalStyle}) 
       onClick={onClick}
       className=
         {`${style.button}
-          ${maxWidth && style.w__full}
+          ${maxWidth ? style.w__full : ''}
           ${bgColor ? style[bgColor] : style.yellow__blue}
           ${additionalStyle ? style[additionalStyle] : ''}
         `}

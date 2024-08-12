@@ -1,12 +1,13 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import * as style from './PreviewPart.module.scss'
 import {ShoppingCartIcon, TrophyIcon} from "@heroicons/react/24/outline";
 import {addPartInBasket} from "../../store/redusers/basketSlice";
-import {useDispatch} from "react-redux";
-import {Button} from "../Button/Button";
+import {useDispatch, useSelector} from "react-redux";
+import IconButton from "../Button/IconButton";
 
 export default function PreviewPart({id, part}){
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     price_final,
@@ -17,8 +18,22 @@ export default function PreviewPart({id, part}){
     scrapheap
   } = part
 
-  const addPartInCart = (id) =>{
-    dispatch(addPartInBasket(id))
+  const [inBasket, setInBasket] = useState(false)
+  const {ID_partsInBasket} = useSelector(state => state.basket)
+
+  useEffect(() => {
+    setInBasket(ID_partsInBasket.includes(id))
+  }, [dispatch]);
+
+  const addPartInCart = (e, id) =>{
+    e.stopPropagation()
+    e.preventDefault()
+    if (!inBasket){
+      setInBasket(true)
+      dispatch(addPartInBasket(id))
+    } else {
+      navigate(`/used-part/${id}`)
+    }
   }
 
   return(
@@ -47,11 +62,18 @@ export default function PreviewPart({id, part}){
           <div className={style.content__region}>
             {scrapheap.city !== '' && `${scrapheap.city},`} {scrapheap.country}
           </div>
-          <Button
-            onClick={()=>{addPartInCart(id)}}
-          >
-            <ShoppingCartIcon/>
-          </Button>
+          <div className={style.actions}>
+            <IconButton
+              additionalClass={inBasket && 'inBasket'}
+              style={{
+                bottom: 0,
+                right: 0
+              }}
+              onClick={(e) => {addPartInCart(e, id)}}
+            >
+              <ShoppingCartIcon style={{width: '24px'}}/>
+            </IconButton>
+          </div>
         </div>
       </div>
     </Link>
