@@ -55,7 +55,6 @@ export const Parts = () =>{
 
   return(
     <main className={style.main}>
-      <Breadcrumbs/>
       <ModelTitle/>
       <div className={`container mt-20 ${style.content}`}>
         <Aside/>
@@ -84,7 +83,9 @@ export const Parts = () =>{
                     <PreviewPart id={part.part_id} part={part} key={part.part_id}/>
                   ))
                 ) : (
-                  <Empty/>
+                  <Empty>
+                    We found no parts according to your request. Try to clarify the search.
+                  </Empty>
                 )
               )}
             </div>

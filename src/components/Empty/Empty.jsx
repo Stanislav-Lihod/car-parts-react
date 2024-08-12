@@ -1,7 +1,10 @@
 import React from 'react';
+import * as style from './Empty.module.scss'
 
-export default function Empty() {
+export default function Empty({children, additionalClass}) {
   return (
-    <div>Empty</div>
+    <div className={`${style.empty} ${additionalClass ? style[additionalClass] : ''}`}>
+      {children}
+    </div>
   );
 }

@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import * as style from './Breadcrumbs.module.scss'
 import {BreadcrumbsItem} from "./BreadcrumbsItem";
 
-export const Breadcrumbs = () => {
-  const [breadcrumbs, setBredcrumbs] = useState([
-    'Home',
-    'Car make catalog',
-    'Volkswagen',
-    'Volkswagen Multivan T5 (Multivan)'
-  ])
+export const Breadcrumbs = ({isLoading, breadcrumbs}) => {
+  console.log(breadcrumbs)
+  // const [breadcrumbs, setBredcrumbs] = useState([
+  //   'Home',
+  //   'Car make catalog',
+  //   'Volkswagen',
+  //   'Volkswagen Multivan T5 (Multivan)'
+  // ])
 
   return (
     <section className={style.breadcrumbs}>

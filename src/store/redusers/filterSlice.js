@@ -36,8 +36,6 @@ export const fetchModels = (brandId) => async (dispatch) =>{
     } catch (e){
       dispatch(filterSlice.actions.errorHandling(e.message))
     }
-  } else {
-    // dispatch(filterSlice.actions.resetCurrentParameter(['model']))
   }
 }
 
@@ -50,8 +48,6 @@ export const fetchModification = (brandId,modelId) => async (dispatch) =>{
     } catch (e){
       dispatch(filterSlice.actions.errorHandling(e.message))
     }
-  } else {
-    // dispatch(filterSlice.actions.resetCurrentParameter(['modification']))
   }
 }
 

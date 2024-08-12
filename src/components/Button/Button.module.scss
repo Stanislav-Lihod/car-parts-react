@@ -9,6 +9,16 @@
   border-radius: 4px;
 }
 
+.yellow__blue{
+  color: black;
+  background-color: $secondary;
+
+  &:hover{
+    color: white;
+    background-color: $primary;
+  }
+}
+
 .blue__yellow {
   color: white;
   background-color: $primary;

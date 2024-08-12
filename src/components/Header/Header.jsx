@@ -1,11 +1,12 @@
 import React from 'react';
-import {Link, useLocation} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {ShoppingCartIcon, HeartIcon, UserIcon} from "@heroicons/react/24/outline";
 import Search from "./Search/Search";
 import * as style from "./Header.module.scss"
+import {useSelector} from "react-redux";
 
 export const Header = () => {
-  const location = useLocation()
+  const {counter} = useSelector(state => state.basket)
 
   return (
     <header className={style.header}>
@@ -31,6 +32,9 @@ export const Header = () => {
               <HeartIcon className="w-6"/>
             </Link>
             <Link to={"/basket"}>
+              {
+                counter > 0 && (<span className={style.counter}>{counter}</span>)
+              }
               <ShoppingCartIcon className="w-6"/>
             </Link>
           </div>

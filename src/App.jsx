@@ -6,6 +6,7 @@ import {Part} from "./pages/Part/Part";
 import {Header} from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import {useSelector} from "react-redux";
+import {Basket} from "./pages/Basket/Basket";
 export const App = () =>{
   return (
     <div>
@@ -13,6 +14,7 @@ export const App = () =>{
       <Routes>
         <Route path={'/parts'} element={<Parts />}/>
         <Route path="/used-part/:id" element={<Part />}/>
+        <Route path="/basket" element={<Basket />}/>
         <Route path={'/'} element={<Main />}/>
       </Routes>
       <Footer/>

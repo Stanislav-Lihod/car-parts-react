@@ -17,15 +17,20 @@
 
   .image{
     width: 260px;
+    height: 192px;
 
     img{
+      height: 192px;
       width: 100%;
+      max-width: 100%;
+      object-fit: cover;
     }
   }
 
   .content{
     padding-right: 40px;
     flex-grow: 1;
+    position: relative;
 
     &__title{
       font-weight: bold;
@@ -34,7 +39,7 @@
 
     &__description{
       font-size: 13px;
-      color: #666;
+      color: $gray;
     }
 
     &__price{
@@ -69,4 +74,10 @@
       color: #666;
     }
   }
+}
+
+.basket{
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
