@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import * as style from './PreviewPart.module.scss'
 import {ShoppingCartIcon, TrophyIcon} from "@heroicons/react/24/outline";
-import {addPartInBasket} from "../../store/redusers/basketSlice";
+import {updateBasket} from "../../store/redusers/basketSlice";
 import {useDispatch, useSelector} from "react-redux";
 import IconButton from "../Button/IconButton";
 
@@ -30,7 +30,7 @@ export default function PreviewPart({id, part}){
     e.preventDefault()
     if (!inBasket){
       setInBasket(true)
-      dispatch(addPartInBasket(id))
+      dispatch(updateBasket({actionType: 'add', part: id}))
     } else {
       navigate(`/used-part/${id}`)
     }

@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useRef} from 'react';
 import * as style from './Filter.module.scss'
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {
   fetchBrands,
@@ -8,11 +8,11 @@ import {
   fetchModification,
   setCurrentFilter
 } from "../../../../store/redusers/filterSlice";
-import {fetchParts} from "../../../../store/redusers/partsSlice";
 import FilterSelect from "./components/FilterSelect";
 
 export default function Filter({isPartsPage}) {
   const dispatch = useDispatch()
+  const navigate = useNavigate();
 
   //store variables
   const {
@@ -53,12 +53,13 @@ export default function Filter({isPartsPage}) {
     const params = {
       [tag]: e.target.value
     }
-    dispatch(setCurrentFilter([params, true]))
+    dispatch(setCurrentFilter(params))
   }
 
   const searchButton = (e) =>{
     e.preventDefault()
-    isPartsPage && dispatch(fetchParts(currentParams))
+    e.stopPropagation()
+    navigate(`/parts${searchParam ? `?${searchParam}` : ''}`)
   }
 
   return (
@@ -90,9 +91,7 @@ export default function Filter({isPartsPage}) {
       />
 
       <button onClick={searchButton}>
-        <Link to={`/parts${searchParam ? `?${searchParam}` : ''}`}>
-          {isPartsPage ? 'Filter Car' : 'Search'}
-        </Link>
+        {isPartsPage ? 'Filter Car' : 'Search'}
       </button>
 
 

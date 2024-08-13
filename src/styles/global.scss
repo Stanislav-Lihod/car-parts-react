@@ -1,1 +1,12 @@
 @import "./colors.scss";
+
+//Animations
+
+@keyframes loading {
+  0% {
+    left: -200px;
+  }
+  100% {
+    left: 100%;
+  }
+}

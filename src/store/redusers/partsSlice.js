@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import axios from "axios";
+import {setCurrentFilter} from "./filterSlice";
 
 const initialState = {
   isLoading: true,
@@ -7,13 +8,16 @@ const initialState = {
   parts: [],
   pagination:{
     totalParts: 0,
+    current_page: 1,
+    total_pages: 1,
   }
 }
 
-export const fetchParts = (currentParams) => async (dispatch) =>{
+export const fetchParts = (searchParams) => async (dispatch) =>{
   const params = Object.fromEntries(
-    Object.entries(currentParams).filter(([key, value]) => value !== '')
-  )
+    Array.from(searchParams.entries())
+  );
+
   try {
     dispatch(partsSlice.actions.showLoad())
     const response = await axios.get('https://9aaca2b44dbb58a9.mokky.dev/parts2?limit=9',{
@@ -44,6 +48,8 @@ export const partsSlice = createSlice({
     },
     setPagination(state, action){
       state.pagination.totalParts = action.payload.total_items
+      state.pagination.current_page = action.payload.current_page
+      state.pagination.total_pages = action.payload.total_pages
     }
   }
 })

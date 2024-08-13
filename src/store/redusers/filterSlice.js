@@ -3,7 +3,6 @@ import axios from "axios";
 
 const initialState = {
   isLoading: false,
-  isStoreData: false,
   error: '',
   brands: [],
   models: [],
@@ -12,8 +11,7 @@ const initialState = {
   currentParams: {
     "car.brand": '',
     "car.model": '',
-    "car.modification": '',
-    'sortBy': ''
+    "car.modification": ''
   }
 }
 
@@ -78,29 +76,22 @@ export const filterSlice = createSlice({
       state.isLoading = false
     },
     setCurrentFilter(state, action){
-      const needReset = action.payload[1],
-            newParameters = action.payload[0],
-            key = Object.keys(newParameters)[0];
+      const key = Object.keys(action.payload)[0];
 
-      if (needReset){
-        switch (key){
-          case 'car.brand':
-            state['models'] = []
-            state.currentParams[`car.model`] = ''
-          case 'car.model':
-            state['modifications'] = []
-            state.currentParams[`car.modification`] = ''
-        }
+      switch (key){
+        case 'car.brand':
+          state['models'] = []
+          state.currentParams[`car.model`] = ''
+        case 'car.model':
+          state['modifications'] = []
+          state.currentParams[`car.modification`] = ''
       }
 
-      state.currentParams[key] = newParameters[key];
-
+      state.currentParams[key] = action.payload[key];
       state.searchParam = Object.entries(state.currentParams)
         .filter(([key, value]) => value !== '')
         .map(([key, value]) => `${key}=${value}`)
         .join('&');
-
-      state.isStoreData = true
     }
   }
 })

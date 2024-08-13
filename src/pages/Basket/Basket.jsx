@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import * as style from './Basket.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {fetchBasketParts, removePartInBasket} from "../../store/redusers/basketSlice";
+import {fetchBasketParts, updateBasket} from "../../store/redusers/basketSlice";
 import Empty from "../../components/Empty/Empty";
 import BasketPart from "./components/BasketPart";
 
@@ -20,7 +20,7 @@ export const Basket = () =>{
 
   const removePart = (event, id) =>{
     event.target.disabled
-    dispatch(removePartInBasket(String(id)))
+    dispatch(updateBasket({actionType: 'remove', part: id}))
   }
 
   return(

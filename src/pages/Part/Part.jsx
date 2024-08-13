@@ -8,7 +8,7 @@ import PartDescription from "./components/PartDescription/PartDescription";
 import {Link, useParams} from "react-router-dom";
 import Empty from "../../components/Empty/Empty";
 import {useDispatch, useSelector} from "react-redux";
-import {addPartInBasket} from "../../store/redusers/basketSlice";
+import {updateBasket} from "../../store/redusers/basketSlice";
 import {getBreadcrumbs, getPart} from "../../store/redusers/partSlice";
 
 export const Part = () =>{
@@ -20,7 +20,7 @@ export const Part = () =>{
   const [inBasket, setInBasket] = useState(false)
 
   useEffect(()=>{
-    setInBasket(ID_partsInBasket.includes(id))
+    setInBasket(ID_partsInBasket.includes(Number(id)))
     dispatch(getPart(id))
   },[dispatch])
 
@@ -33,7 +33,7 @@ export const Part = () =>{
     e.preventDefault()
     if (!inBasket){
       setInBasket(true)
-      dispatch(addPartInBasket(id))
+      dispatch(updateBasket({actionType: 'add', part: id}))
     }
   }
 

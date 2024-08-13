@@ -31,27 +31,18 @@ export const basketSlice = createSlice({
       state.error = action.payload
       state.isLoading = false
     },
-    addPartInBasket(state, action){
-      const currentBasket = JSON.parse(localStorage.getItem('basketParts')) || []
-      const newBasket = new Set()
+    updateBasket(state, action) {
+      const currentBasket = new Set(JSON.parse(localStorage.getItem('basketParts')) || []);
 
-      currentBasket.forEach(part => newBasket.add(part))
-      newBasket.add(action.payload)
+      if (action.payload.actionType === 'add') {
+        currentBasket.add(action.payload.part);
+      } else if (action.payload.actionType === 'remove') {
+        currentBasket.delete(action.payload.part);
+      }
 
-      state.ID_partsInBasket = [...newBasket]
-      state.counter = state.ID_partsInBasket.length
-      localStorage.setItem('basketParts', JSON.stringify(state.ID_partsInBasket))
-    },
-    removePartInBasket(state, action){
-      const currentBasket = JSON.parse(localStorage.getItem('basketParts')) || []
-      const newBasket = new Set()
-
-      currentBasket.forEach(part => newBasket.add(part))
-      newBasket.delete(action.payload)
-
-      state.ID_partsInBasket = [...newBasket]
-      state.counter = state.ID_partsInBasket.length
-      localStorage.setItem('basketParts', JSON.stringify(state.ID_partsInBasket))
+      state.ID_partsInBasket = [...currentBasket];
+      state.counter = state.ID_partsInBasket.length;
+      localStorage.setItem('basketParts', JSON.stringify(state.ID_partsInBasket));
     },
     basketPartsFetching(state, action){
       state.basket_parts = action.payload
@@ -60,5 +51,5 @@ export const basketSlice = createSlice({
   }
 })
 
-export const {addPartInBasket,removePartInBasket} = basketSlice.actions
+export const {updateBasket} = basketSlice.actions
 export default basketSlice.reducer
