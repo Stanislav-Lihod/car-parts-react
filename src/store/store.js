@@ -3,6 +3,8 @@ import filterReducer from "./redusers/filterSlice";
 import partsReducer from "./redusers/partsSlice";
 import basketReducer from "./redusers/basketSlice";
 import partReducer from "./redusers/partSlice";
+import userReducer from "./redusers/userSlice";
+import errorReducer from "./redusers/errorSlice";
 
 
 const rootReducer = combineReducers({
@@ -10,6 +12,8 @@ const rootReducer = combineReducers({
   parts: partsReducer,
   basket: basketReducer,
   part: partReducer,
+  user: userReducer,
+  error: errorReducer,
 })
 
 export const setupStore = ()=>{

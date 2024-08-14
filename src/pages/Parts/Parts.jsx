@@ -49,8 +49,7 @@ export const Parts = () =>{
       [tag]: e.target.value
     }
     dispatch(setCurrentFilter(params))
-    console.log(searchParam)
-    navigate(`/parts?${searchParam}`)
+    // navigate(`/parts?${searchParam}`)
   }
 
   return(

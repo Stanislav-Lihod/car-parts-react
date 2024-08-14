@@ -1,0 +1,14 @@
+.error{
+  padding: 30px;
+  max-width: 300px;
+  width: 100%;
+  background-color: indianred;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}

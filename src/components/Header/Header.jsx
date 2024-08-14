@@ -25,7 +25,7 @@ export const Header = () => {
 
           <Search placeholder="Enter the part number, manufacturer or model"/>
           <div className={style.user_action}>
-            <Link to={"/login"}>
+            <Link to={"/user"}>
               <UserIcon className="w-6"/>
             </Link>
             <Link to={"/wishlist"}>
