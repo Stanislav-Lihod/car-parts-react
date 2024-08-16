@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 
 export const Header = () => {
   const {counter} = useSelector(state => state.basket)
+  const {isAuth} = useSelector(state => state.user)
 
   return (
     <header className={style.header}>
@@ -25,7 +26,7 @@ export const Header = () => {
 
           <Search placeholder="Enter the part number, manufacturer or model"/>
           <div className={style.user_action}>
-            <Link to={"/user"}>
+            <Link className={isAuth ? style.isAuth : ''} to={"/user"}>
               <UserIcon className="w-6"/>
             </Link>
             <Link to={"/wishlist"}>

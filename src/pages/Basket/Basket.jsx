@@ -1,52 +1,77 @@
-import React, {useEffect} from "react";
+import React, { useState} from "react";
 import * as style from './Basket.module.scss'
-import {useDispatch, useSelector} from "react-redux";
-import {fetchBasketParts, updateBasket} from "../../store/redusers/basketSlice";
+import { useSelector} from "react-redux";
 import Empty from "../../components/Empty/Empty";
-import BasketPart from "./components/BasketPart";
+import {GlobeEuropeAfricaIcon, CurrencyEuroIcon, CheckCircleIcon, ShoppingCartIcon, UserIcon} from "@heroicons/react/24/outline";
+import {Button} from "../../components/Button/Button";
+import {useNavigate} from "react-router-dom";
+import BasketParts from "./components/BasketParts";
+import BasketAddress from "./components/BasketAddress";
+import BasketPayment from "./components/BasketPayment";
+import BasketApprove from "./components/BasketApprove";
 
 export const Basket = () =>{
-  const dispatch = useDispatch()
-  const {basket_parts, ID_partsInBasket} = useSelector(state => state.basket)
+  const navigate = useNavigate()
+  const {isAuth} = useSelector(state => state.user)
+  const {ID_partsInBasket} = useSelector(state => state.basket)
+  const [currentStep, setCurrentStep] = useState(0);
+  const steps = [
+    {icon: <ShoppingCartIcon/>, template: <BasketParts/>, title: 'Shopping cart', button_name: 'Continue'},
+    {icon: <UserIcon/>},
+    {icon: <GlobeEuropeAfricaIcon/>, template: <BasketAddress/>, title: 'Delivery address', button_name: 'NEXT: Payment'},
+    {icon: <CurrencyEuroIcon/>, template: <BasketPayment nextStep={()=>{nextClick()}}/>, title: 'Payment methods'},
+    {icon: <CheckCircleIcon/>, template: <BasketApprove/>}
+  ]
 
-  useEffect(()=>{
-    (ID_partsInBasket.length > 0 || basket_parts.length > 0) && dispatch(fetchBasketParts(ID_partsInBasket.join('&part_id=')))
-  }, [dispatch, ID_partsInBasket])
+  const nextClick = () =>{
+    if (currentStep === 0){
+      return isAuth ? setCurrentStep(2) : navigate('/user')
+    }
+    setCurrentStep(currentStep + 1)
+  }
 
-  const totalParts = basket_parts.reduce((sum, item) => sum + item.price, 0).toFixed(2);
-  const totalDelivery = basket_parts.reduce((sum, item) => sum + Number(item.delivery_price.slice(0, -2)), 0).toFixed(2);
-  const totalFee = basket_parts.reduce((sum, item) => sum + item.service_fee, 0).toFixed(2);
-  const totalPrice = (parseFloat(totalParts) + parseFloat(totalDelivery) + parseFloat(totalFee)).toFixed(2);
+  const progressClick = (index) =>{
+    if (index >= currentStep) return
 
-  const removePart = (event, id) =>{
-    event.target.disabled
-    dispatch(updateBasket({actionType: 'remove', part: id}))
+    if (index === 1){
+      return isAuth ? setCurrentStep(2) : navigate('/user')
+    }
+    setCurrentStep(index)
   }
 
   return(
-    <section className={`${style.basket} container`}>
-      {basket_parts.length > 0 ? (
-        <div>
-          <div className={style.title}>Shopping cart</div>
-
-          {basket_parts.map(part => (
-            <BasketPart
-              part={part}
-              key={part.part_id}
-              onRemove={removePart}
-            />
-          ))}
-
-          <div className={style.total}>
-            <div className={style.total__text}>Total for the parts:	<span>{totalParts} €</span></div>
-            <div className={style.total__text}>Total for delivery:	<span>{totalDelivery} €</span></div>
-            <div className={style.total__text}>Service Fee: 	<span>{totalFee} €</span></div>
-            <div className={`${style.total__text} ${style.total_price}`}>Total amount:	<span>{totalPrice} €</span></div>
+    <main className={`${style.basket} container container_short`}>
+      {ID_partsInBasket.length > 0 ? (
+        <>
+          <div className={style.progress}>
+            {steps.map((step, index) => (
+              <div
+                onClick={()=>progressClick(index)}
+                key={index}
+                className={`${style.item} ${index <= currentStep ? style.active : ''}`}
+              >
+                {step.icon}
+              </div>
+            ))}
           </div>
-        </div>
+
+          {
+            steps[currentStep].title && <div className={style.title}>{steps[currentStep].title}</div>
+          }
+
+          {steps[currentStep].template}
+
+          {steps[currentStep].button_name && (
+            <Button
+              onClick={nextClick}
+            >
+              {steps[currentStep].button_name}
+            </Button>
+          )}
+        </>
       ) : (
         <Empty additionalClass="w-400">Shopping cart is empty</Empty>
       )}
-    </section>
+    </main>
   )
 }

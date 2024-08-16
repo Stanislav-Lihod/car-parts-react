@@ -1,0 +1,75 @@
+.payment {
+  display: flex;
+  gap: 40px;
+}
+
+.column{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 1;
+}
+
+.card{
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 6px;
+  flex-grow: 1;
+}
+
+.paymentMethod input {
+  margin-right: 10px;
+}
+
+.paymentMethodItem {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+
+  label{
+    font-weight: bold;
+    flex-grow: 1;
+  }
+}
+
+.total h2 {
+  padding: 20px 0;
+  text-align: right;
+}
+
+.methodOfReceiptItem {
+  display: flex;
+  gap: 20px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.totalPrice{
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.totalItem{
+  padding: 20px 0;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+
+  p{
+    font-weight: 700;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+  }
+}

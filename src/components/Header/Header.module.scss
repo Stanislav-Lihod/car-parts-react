@@ -34,7 +34,7 @@
       transition: .150s;
     }
 
-    &:hover{
+    &:hover, &.isAuth{
       svg{
         fill: white;
       }

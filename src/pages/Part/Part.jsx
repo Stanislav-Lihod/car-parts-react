@@ -5,13 +5,15 @@ import {Button} from "../../components/Button/Button";
 import PartShare from "./components/PartShare/PartShare";
 import CarDescription from "./components/CarDescription/CarDescription";
 import PartDescription from "./components/PartDescription/PartDescription";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import Empty from "../../components/Empty/Empty";
 import {useDispatch, useSelector} from "react-redux";
 import {updateBasket} from "../../store/redusers/basketSlice";
 import {getBreadcrumbs, getPart} from "../../store/redusers/partSlice";
+import RiskNotification from "../../components/RiskNotification/RiskNotification";
 
 export const Part = () =>{
+  const navigate = useNavigate()
   const {id} = useParams()
   const dispatch = useDispatch()
   const {ID_partsInBasket} = useSelector(state => state.basket)
@@ -31,11 +33,15 @@ export const Part = () =>{
   }, [dispatch, part]);
   const addBasket = (e) =>{
     e.preventDefault()
-    if (!inBasket){
+    if (inBasket){
+      navigate('/basket')
+    } else {
       setInBasket(true)
       dispatch(updateBasket({actionType: 'add', part: id}))
     }
   }
+
+  if (isLoading) return 'loading'
 
   return(
     <main>
@@ -44,13 +50,14 @@ export const Part = () =>{
         isLoading={isBreadcrumbsLoading}
       />
       {
-        part && Object.keys(part).length > 0 ? (
+        part ? (
           <div className={`container ${style.main}`}>
             <div className={style.main__general}>
               <img
                 src={part.image.full}
                 alt={part.part_name}
               />
+              <RiskNotification/>
             </div>
             <div className={style.main__description}>
               <h1>{part.car[0].manufacturer} - {part.part_name.toUpperCase()}</h1>
@@ -67,11 +74,7 @@ export const Part = () =>{
                 onClick={addBasket}
                 maxWidth={true}
               >
-                {inBasket ? (
-                  <Link to={'/basket'}>Shopping Cart</Link>
-                ):(
-                  'Buy'
-                )}
+                {inBasket ? 'Shopping cart' : 'Buy'}
               </Button>
               <CarDescription/>
             </div>
@@ -79,9 +82,9 @@ export const Part = () =>{
         ) : <Empty/>
       }
       <PartDescription
-        part_name={part.part_name}
-        // car_name={part.car[0].manufacturer}
-        part_number={part.manufacturer_code}
+        part_name={part.part_name || ''}
+        car_name={(part.car && part.car.length > 0) ? part.car[0].manufacturer : ''}
+        part_number={part.manufacturer_code || ''}
       />
     </main>
   )

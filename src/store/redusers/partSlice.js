@@ -21,9 +21,8 @@ export const getPart = (id) => async (dispatch) =>{
 
 export const getBreadcrumbs = (id) => async (dispatch) =>{
   try {
-    dispatch(partSlice.actions.showLoad())
     const response = await axios.get(`https://9aaca2b44dbb58a9.mokky.dev/modification?modification.id=${id}`)
-    dispatch(partSlice.actions.breadcrumbsFetching(response.data[0]))
+    dispatch(partSlice.actions.breadcrumbsFetching([response.data[0], id]))
   } catch (e){
     dispatch(partSlice.actions.errorHandling(e.message))
   }
@@ -47,8 +46,8 @@ export const partSlice = createSlice({
     },
     breadcrumbsFetching(state, action){
       state.error = ''
-      state.breadcrumbs = action.payload
-      state.breadcrumbs.modification = state.breadcrumbs.modification.filter(item => item.id === 2779)[0]
+      state.breadcrumbs = action.payload[0]
+      state.breadcrumbs.modification = state.breadcrumbs.modification.filter(item => item.id === action.payload[1])[0]
       state.isBreadcrumbsLoading = false
     }
   }

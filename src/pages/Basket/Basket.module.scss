@@ -1,7 +1,8 @@
 .basket{
   margin-top: 20px;
   margin-bottom: 40px;
-  height: 100%;
+  flex-grow: 1;
+  position: relative;
 
   .title{
     font-size: 22px;
@@ -104,5 +105,77 @@
       font-size: 18px;
       font-weight: bold;
     }
+  }
+}
+
+.progress{
+  margin: 40px 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+
+  .item{
+    border: 2px solid $gray2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    padding: 10px;
+    transition: .3s;
+
+    svg{
+      transition: .3s;
+      stroke: $gray2;
+    }
+
+    &.active{
+      cursor: pointer;
+      background-color: $primary;
+      border-color: $primary;
+      position: relative;
+      transition: .3s;
+
+      svg{
+        stroke: white;
+      }
+
+      &::before{
+        content: "";
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        border: 3px solid #075985;
+        position: absolute;
+        display: block;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}
+
+.approve{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: center;
+
+  svg{
+    width: 150px;
+    height: 150px;
+
+    stroke: #4caf50;
+  }
+
+  h2{
+    text-align: center;
   }
 }

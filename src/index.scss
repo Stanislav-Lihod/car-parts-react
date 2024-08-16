@@ -12,12 +12,24 @@ body{
   line-height: 1.5;
 }
 
+#root{
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .container{
+  width: 100%;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.container_short{
+  max-width: 840px;
 }
 
 .w-6{

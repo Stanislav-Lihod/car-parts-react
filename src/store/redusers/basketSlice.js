@@ -6,7 +6,8 @@ const initialState = {
   error: '',
   ID_partsInBasket: JSON.parse(localStorage.getItem('basketParts')) || [],
   counter: JSON.parse(localStorage.getItem('basketParts'))?.length || 0,
-  basket_parts: []
+  basket_parts: [],
+  total_price:{}
 }
 
 export const fetchBasketParts = (parts) => async (dispatch) =>{
@@ -44,12 +45,23 @@ export const basketSlice = createSlice({
       state.counter = state.ID_partsInBasket.length;
       localStorage.setItem('basketParts', JSON.stringify(state.ID_partsInBasket));
     },
+    hideCounter(state){
+      state.counter = 0
+    },
+    removeBasket(state){
+      state.ID_partsInBasket = [];
+      state.counter = state.ID_partsInBasket.length;
+      localStorage.setItem('basketParts', JSON.stringify(state.ID_partsInBasket));
+    },
     basketPartsFetching(state, action){
       state.basket_parts = action.payload
       state.isLoading = false
+    },
+    setPrice(state, action){
+      state.total_price = action.payload
     }
   }
 })
 
-export const {updateBasket} = basketSlice.actions
+export const {updateBasket,setPrice, removeBasket,hideCounter} = basketSlice.actions
 export default basketSlice.reducer

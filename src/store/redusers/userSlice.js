@@ -4,9 +4,9 @@ import Cookies from "js-cookie";
 import {setError} from "./errorSlice";
 
 const initialState = {
-  isLoading: true,
+  isLoading: false,
   token: Cookies.get('token') ?? '',
-  isAuth: false,
+  isAuth: Boolean(Cookies.get('token')) ?? false,
   user:{}
 }
 

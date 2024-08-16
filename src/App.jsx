@@ -9,7 +9,7 @@ import {Basket} from "./pages/Basket/Basket";
 import User from "./pages/User/User";
 export const App = () =>{
   return (
-    <div>
+    <>
       <Header/>
       <Routes>
         <Route path={'/parts'} element={<Parts />}/>
@@ -19,6 +19,6 @@ export const App = () =>{
         <Route path={'/'} element={<Main />}/>
       </Routes>
       <Footer/>
-    </div>
+    </>
   )
 }
