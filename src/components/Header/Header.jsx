@@ -21,7 +21,7 @@ export const Header = () => {
         </div>
         <div className={style.header__bottom}>
           <Link to={'/'}>
-            <img src="/images/logo.png" alt="Logo" width={80} height={55}/>
+            {/*<img src="/images/logo.png" alt="Logo" width={80} height={55}/>*/}
           </Link>
 
           <Search placeholder="Enter the part number, manufacturer or model"/>
