@@ -1,6 +1,6 @@
-const path = require('path')
+const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const webpack = require('webpack')
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -55,17 +55,24 @@ module.exports = {
           }
         ],
       },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[name][hash][ext][query]',
+        },
+      },
     ]
   },
   devtool: 'inline-source-map',
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'css/name.[contenthash:8].css',
-      chunkFilename: 'css/name.[contenthash:8].css'
+      filename: 'css/[name].[contenthash:8].css',
+      chunkFilename: 'css/[name].[contenthash:8].css'
     }),
     new webpack.ProgressPlugin(),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname,'public','index.html')
+      template: path.resolve(__dirname, 'public', 'index.html')
     }),
     new CopyWebpackPlugin({
       patterns: [
@@ -85,4 +92,4 @@ module.exports = {
   optimization: {
     runtimeChunk: 'single',
   },
-}
+};
