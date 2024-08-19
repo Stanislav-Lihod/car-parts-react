@@ -128,7 +128,7 @@ export const userSlice = createSlice({
         state.token = Cookies.get('token')
       }
     },
-    logout(state, action){
+    logout(state){
       state.isLoading = false
       state.user = {}
       state.isAuth = false
@@ -139,5 +139,5 @@ export const userSlice = createSlice({
   }
 })
 
-export const {setCurrentFilter} = userSlice.actions
+export const {setCurrentFilter,logout} = userSlice.actions
 export default userSlice.reducer

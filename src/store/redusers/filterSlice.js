@@ -96,5 +96,5 @@ export const filterSlice = createSlice({
   }
 })
 
-export const {setCurrentFilter} = filterSlice.actions
+export const {setCurrentFilter, removePageFilter} = filterSlice.actions
 export default filterSlice.reducer

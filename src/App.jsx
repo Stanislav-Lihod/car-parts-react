@@ -7,6 +7,7 @@ import {Header} from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import {Basket} from "./pages/Basket/Basket";
 import User from "./pages/User/User";
+import NotFoundPage from "./pages/NotFound/NotFound";
 export const App = () =>{
   return (
     <>
@@ -17,6 +18,8 @@ export const App = () =>{
         <Route path={'/basket'} element={<Basket />}/>
         <Route path={'/user'} element={<User />}/>
         <Route path={'/'} element={<Main />}/>
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer/>
     </>

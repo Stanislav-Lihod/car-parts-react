@@ -56,6 +56,42 @@
       transform: translate(-9px, 9px);
     }
   }
+
+  .user{
+    position: relative;
+
+    &:hover{
+      .user_menu{
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  .user_menu{
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s;
+    position: absolute;
+    background-color: white;
+    left: 50%;
+    bottom: -24px;
+    transform: translateX(-50%);
+    border-radius: 4px;
+    color: black;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+    overflow: hidden;
+
+    div{
+      padding: 5px 15px;
+      cursor: pointer;
+      transition: .3s;
+
+      &:hover{
+        background-color: $lightGray2;
+      }
+    }
+  }
 }
 
 a{

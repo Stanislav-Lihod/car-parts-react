@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import * as style from './Pagination.module.scss'
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -8,12 +8,18 @@ export default function Pagination(props) {
   const {pagination} = useSelector(state => state.parts)
   const {current_page, total_pages} = pagination
 
+  const [updateSearchParam, setUpdateSearchParam] = useState('')
+
+  useEffect(() => {
+    setUpdateSearchParam(searchParam.replace(/([&?])page=\d+(&|$)/, '$1').replace(/&$/, ''))
+  }, [searchParam]);
+
   return (
     <section className={style.pagination}>
       {
         current_page !== 1 && (
           <Link
-            to={`/parts?page=${1}&${searchParam}`}
+            to={`/parts?page=${1}&${updateSearchParam}`}
             className={`${style.pagination__item} ${current_page === 1 ? style.active : ''}`}
           >
             First
@@ -26,7 +32,7 @@ export default function Pagination(props) {
             return (
               <Link
                 key={index}
-                to={`/parts?page=${index + 1}&${searchParam}`}
+                to={`/parts?page=${index + 1}&${updateSearchParam}`}
                 className={`${style.pagination__item} ${current_page === index + 1 ? style.active : ''}`}
               >
                 {index + 1}

@@ -24,29 +24,24 @@ export default function Filter({isPartsPage}) {
     currentParams,
     searchParam
   } = useSelector(state => state.filters)
-  const currentBrand = currentParams["car.brand"]
-  const currentModel = currentParams["car.model"]
-  const currentModification = currentParams["car.modification"]
 
-  const prevBrandRef = useRef(currentBrand);
-  const prevModelRef = useRef(currentModel);
+  const {
+    "car.brand": currentBrand,
+    "car.model": currentModel
+  } = currentParams;
 
   useEffect(() => {
     dispatch(fetchBrands())
   }, [dispatch]);
 
   useEffect(() => {
-    if (currentBrand && currentBrand !== prevBrandRef.current) {
-      dispatch(fetchModels(currentBrand));
-    }
-    prevBrandRef.current = currentBrand;
+    console.log('model')
+    dispatch(fetchModels(currentBrand));
   }, [dispatch, currentBrand]);
 
   useEffect(() => {
-    if (currentBrand && currentModel && (currentBrand !== prevBrandRef.current || currentModel !== prevModelRef.current)) {
-      dispatch(fetchModification(currentBrand, currentModel));
-    }
-    prevModelRef.current = currentModel;
+    console.log('modification')
+    dispatch(fetchModification(currentBrand, currentModel));
   }, [dispatch, currentBrand, currentModel]);
 
   const selectHandler = (e)=>{
@@ -67,7 +62,7 @@ export default function Filter({isPartsPage}) {
     <section className={`${style.section} `}>
       <FilterSelect
         name="car.brand"
-        value={currentBrand || ''}
+        value={currentParams["car.brand"] || ''}
         onChange={selectHandler}
         defaultOption="Brand"
         options={brands}
@@ -75,7 +70,7 @@ export default function Filter({isPartsPage}) {
 
       <FilterSelect
         name="car.model"
-        value={currentModel || ''}
+        value={currentParams["car.model"] || ''}
         onChange={selectHandler}
         defaultOption="Model"
         options={models}
@@ -84,7 +79,7 @@ export default function Filter({isPartsPage}) {
 
       <FilterSelect
         name="car.modification"
-        value={currentModification || ''}
+        value={currentParams["car.modification"] || ''}
         onChange={selectHandler}
         defaultOption="Modification"
         options={modifications}

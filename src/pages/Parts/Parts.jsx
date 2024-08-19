@@ -7,16 +7,15 @@ import {useLocation, useNavigate} from "react-router-dom";
 import Empty from "../../components/Empty/Empty";
 import CarFilter from "./components/CarFilter/CarFilter";
 import {useDispatch, useSelector} from "react-redux";
-import {setCurrentFilter} from "../../store/redusers/filterSlice";
+import {removePageFilter, setCurrentFilter} from "../../store/redusers/filterSlice";
 import PartsSkeleton from "../../components/Preloader/PartsSkeleton/PartsSkeleton";
 import LineSkeleton from "../../components/Preloader/LineSkeleton/LineSkeleton";
 import {fetchParts} from "../../store/redusers/partsSlice";
 import Pagination from "../../components/Pagination/Pagination";
 
 export const Parts = () =>{
-  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const [isInitialized, setIsInitialized] = useState(false);
+  const navigate = useNavigate()
   const {
     currentParams,
     searchParam
@@ -41,6 +40,9 @@ export const Parts = () =>{
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     dispatch(fetchParts(searchParams));
+    searchParams.forEach((value, key) => {
+      dispatch(setCurrentFilter({ [key]: value }));
+    });
   }, [location.search]);
 
   const sortHandler = (e)=>{
@@ -49,7 +51,6 @@ export const Parts = () =>{
       [tag]: e.target.value
     }
     dispatch(setCurrentFilter(params))
-    // navigate(`/parts?${searchParam}`)
   }
 
   return(

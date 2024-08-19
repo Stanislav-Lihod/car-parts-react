@@ -28,9 +28,9 @@ export default function Registration({toggleScreen}) {
           <input name='first_name' type='text' placeholder='First name'/>
           <input name='second_name' type='text' placeholder='Second name'/>
           <input name='location' type='text' value='Lithuania' readOnly={true}/>
-          <input name='email' type='email' placeholder='email'/>
-          <input name='password' type='password' placeholder='password'/>
-          <input name='password_confirm' type='password' placeholder='password'/>
+          <input name='email' type='email' placeholder='Email'/>
+          <input name='password' type='password' placeholder='Password'/>
+          <input name='password_confirm' type='password' placeholder='Confirm password'/>
           <Button maxWidth={true} type='submit'>Registration</Button>
         </form>
       </div>
