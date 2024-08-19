@@ -77,6 +77,7 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         { from: path.resolve(__dirname, 'public', 'images'), to: 'images' },
+        { from: path.resolve(__dirname, 'public/_redirects'), to: '' }
       ],
     }),
   ],
