@@ -4,7 +4,7 @@ import CopyingFooter from "./CopyingFooter";
 export default function Footer(){
   return(
     <footer>
-      <FooterMenu/>
+      {/*<FooterMenu/>*/}
       <CopyingFooter/>
     </footer>
   )

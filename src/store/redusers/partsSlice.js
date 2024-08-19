@@ -14,9 +14,9 @@ const initialState = {
 }
 
 export const fetchParts = (searchParams) => async (dispatch) =>{
-  const params = Object.fromEntries(
-    Array.from(searchParams.entries())
-  );
+  const params = searchParams
+    ? Object.fromEntries(Array.from(searchParams.entries()))
+    : {}
 
   try {
     dispatch(partsSlice.actions.showLoad())

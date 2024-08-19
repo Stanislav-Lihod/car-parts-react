@@ -27,8 +27,10 @@ export default function BasketPayment({nextStep}) {
         <div className={style.card}>
           <h3>Method of Receipt</h3>
           <div className={style.methodOfReceiptItem}>
-            <p>{user.first_name} {user.second_name.slice(0,1)}.</p>
-            <p>03157 Vilnius</p>
+            <p>{user.first_name} {user.second_name.slice(0, 1)}.</p>
+            <p>
+              {`${user.zipCode ?? ''} ${user.city ?? ''} ${user.location ?? ''}`}
+            </p>
           </div>
         </div>
       </div>

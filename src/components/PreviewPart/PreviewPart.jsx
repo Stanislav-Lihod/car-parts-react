@@ -32,7 +32,7 @@ export default function PreviewPart({id, part}){
       setInBasket(true)
       dispatch(updateBasket({actionType: 'add', part: id}))
     } else {
-      navigate(`/used-part/${id}`)
+      navigate(`/basket`)
     }
   }
 

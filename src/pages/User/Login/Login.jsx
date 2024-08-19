@@ -2,8 +2,10 @@ import React from 'react';
 import * as style from './Login.module.scss'
 import {useDispatch} from "react-redux";
 import {loginUser} from "../../../store/redusers/userSlice";
+import {Button} from "../../../components/Button/Button";
+import {UserIcon} from "@heroicons/react/24/outline";
 
-export default function Login(props) {
+export default function Login({toggleScreen}) {
   const dispatch = useDispatch()
   const onLogin = (e) =>{
     e.preventDefault()
@@ -16,14 +18,21 @@ export default function Login(props) {
   }
 
   return (
-    <section className={style.login}>
-      <div className={'container'}>
+    <div className={style.login}>
+      <div>
         <form onSubmit={onLogin}>
+
+          <div className={style.title}>
+            <UserIcon/>
+            Login
+          </div>
+
           <input name='email' type='email' placeholder='email'/>
           <input name='password' type='password' placeholder='password'/>
-          <button type='submit'>Login</button>
+          <Button maxWidth={true} type='submit'>Login</Button>
         </form>
       </div>
-    </section>
+      <div className={style.notification}>Don’t have an account? <span onClick={toggleScreen}>Register now</span></div>
+    </div>
   );
 }

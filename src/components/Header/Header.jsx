@@ -12,13 +12,13 @@ export const Header = () => {
   return (
     <header className={style.header}>
       <div className={`container ${style.content}`}>
-        <div className={style.header__top}>
-          <Link to={"/delivery"} className="hover:underline">Delivery</Link>
-          <Link to={"/returns"} className="hover:underline">Returns</Link>
-          <Link to={"/payment"} className="hover:underline">Payment</Link>
-          <Link to={"/contacts"} className="hover:underline">Contacts</Link>
-          <Link to={"/sell"} className="hover:underline">Sell</Link>
-        </div>
+        {/*<div className={style.header__top}>*/}
+        {/*  <Link to={"/delivery"} className="hover:underline">Delivery</Link>*/}
+        {/*  <Link to={"/returns"} className="hover:underline">Returns</Link>*/}
+        {/*  <Link to={"/payment"} className="hover:underline">Payment</Link>*/}
+        {/*  <Link to={"/contacts"} className="hover:underline">Contacts</Link>*/}
+        {/*  <Link to={"/sell"} className="hover:underline">Sell</Link>*/}
+        {/*</div>*/}
         <div className={style.header__bottom}>
           <Link to={'/'}>
             <img src="/images/logo.png" alt="Logo" width={80} height={55}/>

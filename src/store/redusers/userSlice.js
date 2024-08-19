@@ -22,8 +22,30 @@ export const checkUser = () => async (dispatch, getState) =>{
     dispatch(userSlice.actions.setUser(response.data))
   } catch (e){
     console.error(e.message)
-    console.error('check token')
     dispatch(userSlice.actions.hideLoad())
+  }
+}
+
+export const updateUser = (body) => async (dispatch, getState) =>{
+  const {user, token} = getState().user
+  try {
+    dispatch(userSlice.actions.showLoad())
+    const response = await axios.patch(`https://9aaca2b44dbb58a9.mokky.dev/users/${user.id}`,
+      body,
+      {  headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
+    dispatch(userSlice.actions.setUser(response.data))
+  } catch (e){
+    dispatch(userSlice.actions.hideLoad())
+    if (e.response.status === 401){
+      dispatch(setError('Incorrect data entry'));
+    } else {
+      dispatch(setError("User doesn't exist"));
+    }
   }
 }
 
@@ -52,7 +74,7 @@ export const registerUser = (body) => async (dispatch) =>{
   try {
     dispatch(userSlice.actions.showLoad())
     const response = await axios.post('https://9aaca2b44dbb58a9.mokky.dev/register',
-      body,
+      {...body, id: Date.now(), orders: []},
     {  headers: {
         Accept: "application/json",
         "Content-Type": "application/json"

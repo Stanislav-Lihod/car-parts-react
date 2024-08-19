@@ -1,8 +1,9 @@
 .head{
-  background-image: url("/images/bg_main.jpg");
-  background-repeat: repeat;
+  background-image: url("/images/bg_main.webp");
+  background-repeat: repeat-x;
   flex-grow: 1;
-  background-size: contain;
+  background-position: bottom left;
+  background-size: 70%;
 }
 
 .content{
@@ -16,5 +17,9 @@
       color: $primary;
       font-weight: bold;
     }
+  }
+
+  .content__desc{
+    margin: 20px 0;
   }
 }

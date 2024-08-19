@@ -9,6 +9,7 @@ import {
   setCurrentFilter
 } from "../../../../store/redusers/filterSlice";
 import FilterSelect from "./components/FilterSelect";
+import {Button} from "../../../../components/Button/Button";
 
 export default function Filter({isPartsPage}) {
   const dispatch = useDispatch()
@@ -63,7 +64,7 @@ export default function Filter({isPartsPage}) {
   }
 
   return (
-    <section className={`${style.section} ${isPartsPage && style.parts__page}`}>
+    <section className={`${style.section} `}>
       <FilterSelect
         name="car.brand"
         value={currentBrand || ''}
@@ -90,9 +91,9 @@ export default function Filter({isPartsPage}) {
         disabled={currentModel === ''}
       />
 
-      <button onClick={searchButton}>
+      <Button onClick={searchButton}>
         {isPartsPage ? 'Filter Car' : 'Search'}
-      </button>
+      </Button>
 
 
     </section>

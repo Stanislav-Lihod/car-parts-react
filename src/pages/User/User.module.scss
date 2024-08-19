@@ -1,3 +1,27 @@
 .user{
-  min-height: 80vh;
+  flex-grow: 1;
+  margin-top: 40px;
+
+  .titles{
+    display: flex;
+  }
+
+  .title{
+    padding: 15px;
+    border: 1px solid $gray;
+    color: black;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: .3s;
+    flex-basis: 50%;
+    flex-shrink: 0;
+    text-align: center;
+
+    &:hover, &.active{
+      background-color: $primary;
+      color: white;
+    }
+  }
 }
