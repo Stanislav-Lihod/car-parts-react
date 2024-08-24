@@ -17,7 +17,7 @@ export const Parts = () =>{
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {
-    currentParams,
+    selectedFilters,
     searchParam
   } = useSelector(state => state.filters)
 
@@ -38,20 +38,16 @@ export const Parts = () =>{
   }, []);
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-    dispatch(fetchParts(searchParams));
-    searchParams.forEach((value, key) => {
-      dispatch(setCurrentFilter({ [key]: value }));
-    });
-  }, [location.search]);
+    dispatch(fetchParts(searchParam));
+    navigate(`/parts${searchParam ? `?${searchParam}` : ''}`)
+  }, [searchParam]);
 
-  const sortHandler = (e)=>{
-    const tag = e.target.getAttribute('name')
+  const sortHandler = (name, value) => {
     const params = {
-      [tag]: e.target.value
-    }
-    dispatch(setCurrentFilter(params))
-  }
+      [name]: value
+    };
+    dispatch(setCurrentFilter(params));
+  };
 
   return(
     <main className={style.main}>
@@ -69,8 +65,8 @@ export const Parts = () =>{
               )}
               <select
                 name="sortBy"
-                value={currentParams['sortBy']}
-                onChange={sortHandler}
+                value={selectedFilters['sortBy']}
+                onChange={(e) => sortHandler(e.target.name, e.target.value)}
               >
                 <option value="">Standart</option>
                 <option value="price">Lowest price</option>

@@ -13,16 +13,12 @@ const initialState = {
   }
 }
 
-export const fetchParts = (searchParams) => async (dispatch) =>{
-  const params = searchParams
-    ? Object.fromEntries(Array.from(searchParams.entries()))
-    : {}
+export const fetchParts = () => async (dispatch, getState) =>{
+  const {searchParam} = getState().filters
 
   try {
     dispatch(partsSlice.actions.showLoad())
-    const response = await axios.get('https://9aaca2b44dbb58a9.mokky.dev/parts2?limit=9',{
-      params
-    })
+    const response = await axios.get(`https://9aaca2b44dbb58a9.mokky.dev/parts2?limit=9&${searchParam}`)
     dispatch(partsSlice.actions.partsFetching(response.data.items))
     dispatch(partsSlice.actions.setPagination(response.data.meta))
   } catch (e){

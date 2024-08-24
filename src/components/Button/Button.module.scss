@@ -27,6 +27,23 @@
     background-color: $secondary;
   }
 }
+
 .w__full {
   width: 100%;
+}
+
+.pagination{
+  background-color: white;
+  color: $primary;
+  border: 1px solid $lightGray2;
+
+  &:hover{
+    background-color: $lightGray2;
+    text-decoration: none;
+  }
+
+  &.active{
+    background-color: $lightGray2;
+    font-weight: 700;
+  }
 }

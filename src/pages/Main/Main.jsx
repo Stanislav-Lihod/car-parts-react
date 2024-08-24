@@ -4,12 +4,14 @@ import Filter from "./components/Filter/Filter";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchParts} from "../../store/redusers/partsSlice";
 import LineSkeleton from "../../components/Preloader/LineSkeleton/LineSkeleton";
+import {clearFilters} from "../../store/redusers/filterSlice";
 
 export const Main = () =>{
   const {pagination} = useSelector(state => state.parts)
   const dispatch = useDispatch()
 
   useEffect(()=>{
+    dispatch(clearFilters())
     dispatch(fetchParts())
   }, [dispatch])
 

@@ -1,42 +1,53 @@
 import React, {useEffect, useState} from 'react';
 import * as style from './Pagination.module.scss'
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {Button} from "../Button/Button";
+import {setCurrentFilter} from "../../store/redusers/filterSlice";
 
 export default function Pagination(props) {
-  const {searchParam} = useSelector(state => state.filters)
+  const [page, setPage] = useState(1)
   const {pagination} = useSelector(state => state.parts)
   const {current_page, total_pages} = pagination
+  const dispatch = useDispatch()
 
-  const [updateSearchParam, setUpdateSearchParam] = useState('')
+  const paginationHandler = (number)=>{
+    setPage(number)
+  }
 
   useEffect(() => {
-    setUpdateSearchParam(searchParam.replace(/([&?])page=\d+(&|$)/, '$1').replace(/&$/, ''))
-  }, [searchParam]);
+    dispatch(setCurrentFilter({page}))
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [page]);
 
   return (
     <section className={style.pagination}>
       {
         current_page !== 1 && (
-          <Link
-            to={`/parts?page=${1}&${updateSearchParam}`}
-            className={`${style.pagination__item} ${current_page === 1 ? style.active : ''}`}
+          <Button
+            onClick={()=>{paginationHandler(1)}}
+            bgColor='pagination'
+            // additionalStyle={`${current_page === page ? 'active' : ''}`}
           >
             First
-          </Link>
+          </Button>
         )
       }
       {
         Array.from({length: total_pages}).map((_, index) => {
           if (index + 1 >= current_page - 2 && index + 1 <= current_page + 2) {
             return (
-              <Link
+              <Button
+                onClick={()=>{paginationHandler(index + 1)}}
                 key={index}
-                to={`/parts?page=${index + 1}&${updateSearchParam}`}
-                className={`${style.pagination__item} ${current_page === index + 1 ? style.active : ''}`}
+                bgColor='pagination'
+                additionalStyle={`${current_page === index + 1 ? 'active' : ''}`}
               >
                 {index + 1}
-              </Link>
+              </Button>
             );
           }
           return null;
@@ -44,12 +55,13 @@ export default function Pagination(props) {
       }
       {
         current_page !== total_pages && (
-          <Link
-            to={`/parts?page=${total_pages}&${searchParam}`}
-            className={`${style.pagination__item} ${current_page === total_pages ? style.active : ''}`}
+          <Button
+            onClick={()=>{paginationHandler(total_pages)}}
+            bgColor='pagination'
+            // additionalStyle={`${current_page === page ? 'active' : ''}`}
           >
             Last
-          </Link>
+          </Button>
         )
       }
 

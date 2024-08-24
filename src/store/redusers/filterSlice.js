@@ -12,7 +12,8 @@ const initialState = {
     "car.brand": '',
     "car.model": '',
     "car.modification": ''
-  }
+  },
+  selectedFilters:{}
 }
 
 export const fetchBrands = () => async (dispatch) =>{
@@ -75,26 +76,69 @@ export const filterSlice = createSlice({
       state.modifications = action.payload
       state.isLoading = false
     },
-    setCurrentFilter(state, action){
+    setCurrentCar(state, action){
       const key = Object.keys(action.payload)[0];
-
-      switch (key){
-        case 'car.brand':
-          state['models'] = []
-          state.currentParams[`car.model`] = ''
-        case 'car.model':
-          state['modifications'] = []
-          state.currentParams[`car.modification`] = ''
-      }
-
       state.currentParams[key] = action.payload[key];
-      state.searchParam = Object.entries(state.currentParams)
-        .filter(([key, value]) => value !== '')
-        .map(([key, value]) => `${key}=${value}`)
-        .join('&');
+    },
+    setCurrentFilter(state, action){
+      state.selectedFilters.page = [1]
+      const key = Object.keys(action.payload)[0];
+      if (key.includes('car.')){
+        state.currentParams[key] = action.payload[key];
+      } else {
+        state.selectedFilters[key] = [action.payload[key]];
+        console.log(action.payload[key])
+        console.log(state.selectedFilters.page)
+      }
+      filterSlice.caseReducers.updateSearchParam(state);
+    },
+    toggleFilter(state, action) {
+      state.selectedFilters.page = [1]
+      const { type, value } = action.payload;
+
+      if (!state.selectedFilters[type]) {
+        state.selectedFilters[type] = [value];
+      } else if (state.selectedFilters[type].includes(value)) {
+        state.selectedFilters[type] = state.selectedFilters[type].filter((item) => item !== value);
+      } else {
+        state.selectedFilters[type].push(value);
+      }
+      state.currentParams.page = ''
+      filterSlice.caseReducers.updateSearchParam(state);
+    },
+    setRangeFilter(state, action) {
+      state.selectedFilters.page = [1]
+      const { type, value } = action.payload;
+      state.selectedFilters[type] = [value];
+      filterSlice.caseReducers.updateSearchParam(state);
+    },
+    updateSearchParam(state){
+      const currentParamsString = Object.entries(state.currentParams)
+        .filter(([key, value]) => value !== '' && value != null)
+        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+
+      const selectedParamsString = Object.entries(state.selectedFilters)
+        .flatMap(([key, values]) =>
+          (Array.isArray(values) ? values : [])
+            .filter(value => value !== '' && value != null)
+            .map(value => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+        );
+      state.searchParam = decodeURIComponent([...currentParamsString, ...selectedParamsString].join('&'))
+    },
+    clearFilters(state){
+      state.selectedFilters = {}
+      filterSlice.caseReducers.updateSearchParam(state);
     }
   }
 })
 
-export const {setCurrentFilter, removePageFilter} = filterSlice.actions
+export const {
+  setCurrentFilter,
+  removePageFilter,
+  toggleFilter,
+  setCurrentCar,
+  updateSearchParam,
+  setRangeFilter,
+  clearFilters
+} = filterSlice.actions
 export default filterSlice.reducer
