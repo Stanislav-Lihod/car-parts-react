@@ -38,7 +38,7 @@ export const Part = () =>{
       navigate('/basket')
     } else {
       setInBasket(true)
-      dispatch(updateBasket({actionType: 'add', part: id}))
+      dispatch(updateBasket({actionType: 'add', part: Number(id)}))
     }
   }
 
