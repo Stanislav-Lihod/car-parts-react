@@ -29,8 +29,7 @@ export default function Pagination(props) {
         current_page !== 1 && (
           <Button
             onClick={()=>{paginationHandler(1)}}
-            bgColor='pagination'
-            // additionalStyle={`${current_page === page ? 'active' : ''}`}
+            bgColor='clear'
           >
             First
           </Button>
@@ -43,7 +42,7 @@ export default function Pagination(props) {
               <Button
                 onClick={()=>{paginationHandler(index + 1)}}
                 key={index}
-                bgColor='pagination'
+                bgColor='clear'
                 additionalStyle={`${current_page === index + 1 ? 'active' : ''}`}
               >
                 {index + 1}
@@ -57,8 +56,7 @@ export default function Pagination(props) {
         current_page !== total_pages && (
           <Button
             onClick={()=>{paginationHandler(total_pages)}}
-            bgColor='pagination'
-            // additionalStyle={`${current_page === page ? 'active' : ''}`}
+            bgColor='clear'
           >
             Last
           </Button>

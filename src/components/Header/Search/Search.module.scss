@@ -20,14 +20,13 @@
     color: black;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    padding-left: 2.5rem;
-    padding-top: 9px;
-    padding-bottom: 9px;
+    padding: 9px 12px;
     border-color: rgb(229 231 235 / 1);
     border-width: 1px;
     border-radius: 0.375rem;
     width: 100%;
     display: block;
+    outline: none;
 
     &Icon{
       width: 18px;
@@ -37,6 +36,29 @@
       position: absolute;
       color: rgb(107 114 128 / 1);
       transform: translateY(-50%);
+    }
+  }
+
+  .close{
+    padding: 6px;
+    position: absolute;
+    top: 50%;
+    right: 45px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-50%);
+
+    &:hover{
+      svg{
+        fill: black;
+      }
+    }
+
+    svg{
+      transition: .3s;
+      fill: $gray2;
     }
   }
 }

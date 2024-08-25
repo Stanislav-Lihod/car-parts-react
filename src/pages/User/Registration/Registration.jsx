@@ -25,12 +25,12 @@ export default function Registration({toggleScreen}) {
             <CheckBadgeIcon/>
             Registration
           </div>
-          <input name='first_name' type='text' placeholder='First name'/>
-          <input name='second_name' type='text' placeholder='Second name'/>
+          <input name='first_name' type='text' placeholder='First name' required/>
+          <input name='second_name' type='text' placeholder='Second name' required/>
           <input name='location' type='text' value='Lithuania' readOnly={true}/>
-          <input name='email' type='email' placeholder='Email'/>
-          <input name='password' type='password' placeholder='Password'/>
-          <input name='password_confirm' type='password' placeholder='Confirm password'/>
+          <input name='email' type='email' placeholder='Email' required/>
+          <input name='password' type='password' placeholder='Password' required/>
+          <input name='password_confirm' type='password' placeholder='Confirm password' required/>
           <Button maxWidth={true} type='submit'>Registration</Button>
         </form>
       </div>

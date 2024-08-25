@@ -78,6 +78,17 @@ export const filterSlice = createSlice({
     },
     setCurrentCar(state, action){
       const key = Object.keys(action.payload)[0];
+
+      switch (key){
+        case 'car.brand':
+          state.currentParams["car.model"] = ''
+          state.currentParams["car.modification"] = ''
+          break
+        case 'car.model':
+          state.currentParams["car.modification"] = ''
+          break
+      }
+
       state.currentParams[key] = action.payload[key];
     },
     setCurrentFilter(state, action){
@@ -87,8 +98,6 @@ export const filterSlice = createSlice({
         state.currentParams[key] = action.payload[key];
       } else {
         state.selectedFilters[key] = [action.payload[key]];
-        console.log(action.payload[key])
-        console.log(state.selectedFilters.page)
       }
       filterSlice.caseReducers.updateSearchParam(state);
     },
@@ -103,7 +112,7 @@ export const filterSlice = createSlice({
       } else {
         state.selectedFilters[type].push(value);
       }
-      state.currentParams.page = ''
+
       filterSlice.caseReducers.updateSearchParam(state);
     },
     setRangeFilter(state, action) {

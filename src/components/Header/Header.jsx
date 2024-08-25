@@ -30,7 +30,7 @@ export const Header = () => {
             <img src="/images/logo.png" alt="Logo" width={80} height={55}/>
           </Link>
 
-          <Search placeholder="Enter the part number, manufacturer or model"/>
+          <Search placeholder="Enter the part name"/>
           <div className={style.user_action}>
             <div className={style.user}>
               <Link className={isAuth ? style.isAuth : ''} to={"/user"}>

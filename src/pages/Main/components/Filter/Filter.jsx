@@ -19,7 +19,6 @@ export default function Filter({isPartsPage}) {
     brands,
     models,
     modifications,
-    isLoading,
     currentParams,
   } = useSelector(state => state.filters)
 

@@ -27,8 +27,8 @@ export default function Login({toggleScreen}) {
             Login
           </div>
 
-          <input name='email' type='email' placeholder='Email'/>
-          <input name='password' type='password' placeholder='Password'/>
+          <input name='email' type='email' placeholder='Email' required/>
+          <input name='password' type='password' placeholder='Password' required/>
           <Button maxWidth={true} type='submit'>Login</Button>
         </form>
       </div>

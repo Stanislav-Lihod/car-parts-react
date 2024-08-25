@@ -50,7 +50,7 @@ export const filtersData = [
   },
   {
     name: 'Driving wheels',
-    type: 'driving_wheels[]',
+    type: 'wheels[]',
     optionsType: 'checkbox',
     options: [
       { label: 'Front', value: 'front' },
@@ -59,11 +59,11 @@ export const filtersData = [
   },
   {
     name: 'Steering wheel position',
-    type: 'steering_wheel_position[]',
+    type: 'rhd[]',
     optionsType: 'checkbox',
     options: [
-      { label: 'Left', value: 'left' },
-      { label: 'Right', value: 'right'},
+      { label: 'Left', value: '0' },
+      { label: 'Right', value: '1'},
     ],
   },
 ];

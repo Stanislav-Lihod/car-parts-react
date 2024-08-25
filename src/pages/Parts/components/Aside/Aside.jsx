@@ -1,10 +1,11 @@
 import React from 'react';
 import * as style from './Aside.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {setRangeFilter, toggleFilter} from "../../../../store/redusers/filterSlice";
+import {clearFilters, setRangeFilter, toggleFilter} from "../../../../store/redusers/filterSlice";
 import {filtersData} from "./initialFilters";
 import CheckboxFilter from "./CheckboxFilter";
 import SelectFilter from "./SelectFilter";
+import {Button} from "../../../../components/Button/Button";
 
 export const Aside = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,10 @@ export const Aside = () => {
     dispatch(setRangeFilter({ type, value}));
   };
 
+  const clearFilter = ()=>{
+    dispatch(clearFilters())
+  }
+
   return (
     <aside className={style.aside}>
       {filtersData.map((filter) => (
@@ -28,6 +33,13 @@ export const Aside = () => {
           onRangeChange={handleRangeChange}
         />
       ))}
+      <Button
+        onClick={clearFilter}
+        maxWidth={true}
+        bgColor='clear'
+      >
+        Clear filters
+      </Button>
     </aside>
   );
 };
