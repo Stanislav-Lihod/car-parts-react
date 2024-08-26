@@ -20,13 +20,16 @@
     display: flex;
     gap: 8px;
 
-    a{
-      svg{
-        fill: white;
-        transition: .150s;
+    svg{
+      fill: white;
+      transition: .150s;
+      cursor: pointer;
+
+      &.active{
+        fill: black;
       }
 
-      &:hover svg{
+      &:hover{
         fill: black;
       }
     }

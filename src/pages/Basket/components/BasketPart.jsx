@@ -18,7 +18,7 @@ function BasketPart({part, onRemove}) {
           right: '20px',
           top: '20px'
         }}
-        additionalClass={'fill'}
+        additionalClass={['fill', 'basket__remove']}
         onClick={handleRemoveClick}
       >
         <TrashIcon style={{width: '16px'}}/>

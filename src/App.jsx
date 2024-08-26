@@ -8,6 +8,7 @@ import Footer from "./components/Footer/Footer";
 import {Basket} from "./pages/Basket/Basket";
 import User from "./pages/User/User";
 import NotFoundPage from "./pages/NotFound/NotFound";
+import Wishlist from "./pages/Wishlist/Wishlist";
 export const App = () =>{
   return (
     <>
@@ -16,6 +17,7 @@ export const App = () =>{
         <Route path={'/parts'} element={<Parts />}/>
         <Route path={'/used-part/:id'} element={<Part />}/>
         <Route path={'/basket'} element={<Basket />}/>
+        <Route path={'/wishlist'} element={<Wishlist />}/>
         <Route path={'/user'} element={<User />}/>
         <Route path={'/'} element={<Main />}/>
 

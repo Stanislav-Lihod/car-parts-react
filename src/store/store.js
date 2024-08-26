@@ -5,6 +5,7 @@ import basketReducer from "./redusers/basketSlice";
 import partReducer from "./redusers/partSlice";
 import userReducer from "./redusers/userSlice";
 import errorReducer from "./redusers/errorSlice";
+import wishlistReducer from "./redusers/wishlistSlice";
 
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   part: partReducer,
   user: userReducer,
   error: errorReducer,
+  wishlist: wishlistReducer
 })
 
 export const setupStore = ()=>{

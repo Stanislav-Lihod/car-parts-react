@@ -1,60 +1,84 @@
-import React from "react";
-import * as style from './CarDescription.module.scss'
+import React, {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import {Link} from "react-router-dom";
+import PartDescription from "../PartDescription/PartDescription";
 
-const data = [
-  {
-    title: 'Manufacturer',
-    description: 'Volkswagen',
-    link: 'https://rrr.lt/en/cars-list/volkswagen'
-  },{
-    title: 'Manufacturer',
-    description: 'Volkswagen',
-    link: 'https://rrr.lt/en/cars-list/volkswagen'
-  },{
-    title: 'Series',
-    description: 'Multivan',
-    link: 'https://rrr.lt/en/cars-list/volkswagen/multivan_1057'
-  },{
-    title: 'Model',
-    description: 'Multivan T5',
-    link: 'https://rrr.lt/en/cars-list/volkswagen/multivan-t5-2003-2015'
-  },{
-    title: 'Year',
-    description: '2003-2015',
-  },{
-    title: 'Model year',
-    description: '2008',
-  },{
-    title: 'Body type',
-    description: 'Other',
-  },{
-    title: 'Steering wheel position',
-    description: 'Left',
-  },{
-    title: 'Fuel type',
-    description: 'Disiel',
-  },{
-    title: 'Driving wheels',
-    description: '-',
-  },{
-    title: 'Gearbox type',
-    description: 'Manual',
-  },{
-    title: 'Color',
-    description: '-',
-  },
-]
+export default function CarDescription ({part}){
+  const {breadcrumbs} = useSelector(state => state.part)
+  const [carInfo, setCarInfo] = useState('')
 
-export default function CarDescription (){
+  useEffect(()=>{
+    setCarInfo(part.car[0])
+  },[])
+
   return(
-    <div className={style.car__description}>
-      <h3>Car Description</h3>
-      <dl className="">
-        {/*{data.map(el => (*/}
-        {/*  <dt>{el.title}</dt>*/}
-        {/*  <dd>{el.link ? `<a href="${el.link}">${el.description}</a>` : el.description>}</dd>*/}
-        {/*))}*/}
+    <PartDescription title={'Car Description'}>
+      <dl>
+        <>
+          <dt>Manufacturer</dt>
+          <dd>
+            <Link
+              to={`/parts?car.brand=${carInfo.brand}`}
+            >
+              {breadcrumbs?.modification?.brandName || '-'}
+            </Link>
+          </dd>
+        </>
+        <>
+          <dt>Series</dt>
+          <dd>
+            <Link
+              to={`/parts?car.brand=${carInfo.brand}&car.model=${carInfo.model}`}
+            >
+              {breadcrumbs?.modification?.modelName || '-'}
+            </Link>
+          </dd>
+        </>
+        <>
+          <dt>Model</dt>
+          <dd>
+            <Link
+              to={`/parts?car.brand=${carInfo.brand}&car.model=${carInfo.model}&car.modification=${carInfo.modification}`}
+            >
+              {breadcrumbs?.modification?.name || '-'}
+            </Link>
+          </dd>
+        </>
+        <>
+          <dt>Year</dt>
+          <dd>
+            {`${breadcrumbs?.modification?.yearStart} - ${breadcrumbs?.modification?.yearEnd}`}
+          </dd>
+        </>
+        <>
+          <dt>Model Year</dt>
+          <dd>{part.year || '-'}</dd>
+        </>
+        <>
+          <dt>Steering wheel position</dt>
+          <dd>{part.rhd === '0' ? 'Left' : 'Right'}</dd>
+        </>
+        <>
+          <dt>Fuel type</dt>
+          <dd>{part.fuel_type !== 'not specified' ? part.fuel_type : 'Diesel'}</dd>
+        </>
+        <>
+          <dt>Driving wheels</dt>
+          <dd>{part.wheels.toUpperCase()}</dd>
+        </>
+        <>
+          <dt>Gearbox type</dt>
+          <dd>{part.gearbox_type || '-'}</dd>
+        </>
+        <>
+          <dt>Engine capacity, cm3</dt>
+          <dd>{part.capacity || '-'}</dd>
+        </>
+        <>
+          <dt>Engine power, kW</dt>
+          <dd>{part.power || '-'}</dd>
+        </>
       </dl>
-    </div>
+    </PartDescription>
   )
 }

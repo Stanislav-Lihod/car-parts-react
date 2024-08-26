@@ -14,7 +14,7 @@ export default function BasketAddress(props) {
     !isAuth && navigate('/user')
     isAuth && dispatch(checkUser())
   }, []);
-  console.log(user)
+
   return (
     <div>
       {isLoading ? (

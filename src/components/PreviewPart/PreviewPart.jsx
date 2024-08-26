@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import * as style from './PreviewPart.module.scss'
-import {ShoppingCartIcon, TrophyIcon} from "@heroicons/react/24/outline";
+import {HeartIcon, ShoppingCartIcon, TrophyIcon} from "@heroicons/react/24/outline";
 import {updateBasket} from "../../store/redusers/basketSlice";
 import {useDispatch, useSelector} from "react-redux";
 import IconButton from "../Button/IconButton";
+import {updateWishlist} from "../../store/redusers/wishlistSlice";
 
 export default function PreviewPart({id, part}){
   const navigate = useNavigate();
@@ -19,13 +20,16 @@ export default function PreviewPart({id, part}){
   } = part
 
   const [inBasket, setInBasket] = useState(false)
+  const [inWishlist, setInWishlist] = useState(false)
   const {ID_partsInBasket} = useSelector(state => state.basket)
+  const {ID_partsInWishlist} = useSelector(state => state.wishlist)
 
   useEffect(() => {
     setInBasket(ID_partsInBasket.includes(id))
+    setInWishlist(ID_partsInWishlist.includes(id))
   }, [dispatch]);
 
-  const addPartInCart = (e, id) =>{
+  const addPartInCart = (e) =>{
     e.stopPropagation()
     e.preventDefault()
     if (!inBasket){
@@ -36,12 +40,23 @@ export default function PreviewPart({id, part}){
     }
   }
 
+  const addPartInWishlist = (e)=>{
+    e.stopPropagation()
+    e.preventDefault()
+
+    inWishlist
+      ? dispatch(updateWishlist({actionType: 'remove', part: Number(id)}))
+      : dispatch(updateWishlist({actionType: 'add', part: Number(id)}))
+
+    setInWishlist(prev => !prev)
+  }
+
   return(
     <Link
       to={`/used-part/${id}`}
       className={style.link}
     >
-      <div className={style.part}>
+      <div className={`${style.part} ${inBasket || inWishlist ? style.active : ''}`}>
         <div className={style.image}>
           <img
             src={image.full}
@@ -63,13 +78,25 @@ export default function PreviewPart({id, part}){
             {scrapheap.city !== '' && `${scrapheap.city},`} {scrapheap.country}
           </div>
           <div className={style.actions}>
+
             <IconButton
-              additionalClass={inBasket && 'inBasket'}
-              style={{
+              additionalClass={[`${inWishlist ? 'inBasket': ''}`]}
+              styles={{
                 bottom: 0,
                 right: 0
               }}
-              onClick={(e) => {addPartInCart(e, id)}}
+              onClick={addPartInWishlist}
+            >
+              <HeartIcon style={{width: '24px'}}/>
+            </IconButton>
+
+            <IconButton
+              additionalClass={[`${inBasket ? 'inBasket': ''}`]}
+              styles={{
+                bottom: 0,
+                right: 0
+              }}
+              onClick={addPartInCart}
             >
               <ShoppingCartIcon style={{width: '24px'}}/>
             </IconButton>

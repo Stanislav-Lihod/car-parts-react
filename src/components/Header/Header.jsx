@@ -7,7 +7,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../../store/redusers/userSlice";
 
 export const Header = () => {
-  const {counter} = useSelector(state => state.basket)
+  const {counter: basketCounter} = useSelector(state => state.basket)
+  const {counter: wishlistCounter} = useSelector(state => state.wishlist)
   const {isAuth} = useSelector(state => state.user)
   const dispatch = useDispatch()
 
@@ -43,11 +44,14 @@ export const Header = () => {
               )}
             </div>
             <Link to={"/wishlist"}>
+              {
+                wishlistCounter > 0 && (<span className={style.counter}>{wishlistCounter}</span>)
+              }
               <HeartIcon className="w-6"/>
             </Link>
             <Link to={"/basket"}>
               {
-                counter > 0 && (<span className={style.counter}>{counter}</span>)
+                basketCounter > 0 && (<span className={style.counter}>{basketCounter}</span>)
               }
               <ShoppingCartIcon className="w-6"/>
             </Link>

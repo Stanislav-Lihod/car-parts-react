@@ -54,7 +54,7 @@ export default function Search({ placeholder }) {
       />
       <Button
         type='submit'
-        additionalStyle='search'>
+        additionalStyle={['search']}>
         <MagnifyingGlassIcon
           style={{width: '24px'}}/>
       </Button>

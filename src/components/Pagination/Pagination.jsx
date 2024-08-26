@@ -43,7 +43,7 @@ export default function Pagination(props) {
                 onClick={()=>{paginationHandler(index + 1)}}
                 key={index}
                 bgColor='clear'
-                additionalStyle={`${current_page === index + 1 ? 'active' : ''}`}
+                additionalStyle={[`${current_page === index + 1 ? 'active' : ''}`]}
               >
                 {index + 1}
               </Button>
