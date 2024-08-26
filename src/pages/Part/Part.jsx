@@ -13,7 +13,6 @@ import {getBreadcrumbs, getPart} from "../../store/redusers/partSlice";
 import RiskNotification from "../../components/RiskNotification/RiskNotification";
 import Loading from "../../components/Preloader/Loading";
 import {updateWishlist} from "../../store/redusers/wishlistSlice";
-import PartDescription from "./components/PartDescription/PartDescription";
 import PartDetails from "./components/PartDetails/PartDetails";
 
 export const Part = () =>{
@@ -79,7 +78,9 @@ export const Part = () =>{
                   </div>
                   <div className={style.main__description}>
                     <h1>{part.car[0].manufacturer} - {part.part_name.toUpperCase()}</h1>
-                    <div className={style.main__description__seller}> Top Seller Merstoja, UAB</div>
+                    <div className={style.main__description__seller}>
+                      {part.scrapheap.top_seller && (<span>Top seller </span>)}
+                      {part.scrapheap.title}</div>
                     <PartShare
                       id={id}
                       wishlistHandler={wishlistHandler}
