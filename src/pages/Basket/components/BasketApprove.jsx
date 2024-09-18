@@ -4,19 +4,20 @@ import * as style from '../Basket.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {hideCounter, removeBasket} from "../../../store/redusers/basketSlice";
 import {useNavigate} from "react-router-dom";
-import {updateUser} from "../../../store/redusers/userSlice";
+import {useUpdateUserMutation} from "../../../services/UserService";
 
 export default function BasketApprove(props) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {isAuth, isLoading, user} = useSelector(state => state.user)
-  const {basket_parts, total_price} = useSelector(state => state.basket)
+  const {basketParts, totalPrice} = useSelector(state => state.basket)
+  const [updateUser] = useUpdateUserMutation();
 
   useEffect(() => {
     !isAuth && navigate('/user')
 
     const currentUserOrders = user.orders
-    const currentParts = basket_parts.map(part => {
+    const currentParts = basketParts.map(part => {
       return {
         id: part.part_id,
         image: part.image.thumb,
@@ -25,16 +26,13 @@ export default function BasketApprove(props) {
       }
     })
 
-    dispatch(
-      updateUser(
-        {
-          orders: [...currentUserOrders,
-            { id: 1,
-              total_price: total_price.totalPrice,
-              date: Date.now(),
-              parts: currentParts
-            }]}
-      ))
+    const orders = [...currentUserOrders,
+      { id: 1,
+        totalPrice: totalPrice.totalPrice,
+        date: Date.now(),
+        parts: currentParts
+      }]
+    updateUser({body:orders, userId:user.id});
     dispatch(hideCounter())
 
     return () => dispatch(removeBasket())

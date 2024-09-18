@@ -7,18 +7,18 @@ import Empty from "../../components/Empty/Empty";
 import WishlistPart from "./components/WishlistPart";
 
 export default function Wishlist(props) {
-  const {isLoading, wishlist_parts, ID_partsInWishlist} = useSelector(state => state.wishlist)
+  const {isLoading, wishlistParts, idPartsInWishlist} = useSelector(state => state.wishlist)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchWishlistParts(ID_partsInWishlist.join('&part_id=')))
-  }, [dispatch,ID_partsInWishlist]);
+    dispatch(fetchWishlistParts(idPartsInWishlist.join('&part_id=')))
+  }, [dispatch,idPartsInWishlist]);
 
-  const totalPrice = wishlist_parts.reduce((sum, item) => sum + item.price, 0).toFixed(2)
+  const totalPrice = wishlistParts.reduce((sum, item) => sum + item.price, 0).toFixed(2)
 
   return (
     <main className={`${style.wishlist} container`}>
-      {ID_partsInWishlist.length > 0 ? (
+      {idPartsInWishlist.length > 0 ? (
         <>
           {
             isLoading ? (
@@ -37,7 +37,7 @@ export default function Wishlist(props) {
                   <div>Price</div>
                 </div>
                 <div className={style.list}>
-                  {wishlist_parts.map(part => (
+                  {wishlistParts.map(part => (
                     <WishlistPart
                       part={part}
                       key={part.part_id}

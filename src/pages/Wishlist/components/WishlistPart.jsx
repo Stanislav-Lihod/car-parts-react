@@ -12,10 +12,10 @@ export default function WishlistPart({part}) {
   const dispatch = useDispatch()
   const  navigate = useNavigate()
   const [isInBasket, setIsInBasket] = useState(false)
-  const {ID_partsInBasket} = useSelector(state => state.basket)
+  const {idPartsInBasket} = useSelector(state => state.basket)
 
   useEffect(() => {
-    setIsInBasket(ID_partsInBasket.includes(part.part_id))
+    setIsInBasket(idPartsInBasket.includes(part.part_id))
   }, []);
 
   const addPartInCart = (e) =>{

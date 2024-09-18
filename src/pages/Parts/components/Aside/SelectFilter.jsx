@@ -1,7 +1,7 @@
 import React from 'react';
 import * as style from "./Aside.module.scss";
 
-export default function SelectFilter({filter, selectedFilters, onRangeChange}) {
+export default function SelectFilter({filter, selectedFilters, onFilterChange}) {
   const generateOptions = (min, max, range, reverse = false) => {
     const result = [];
     for (let i = min; i <= max; i += range) {
@@ -18,7 +18,7 @@ export default function SelectFilter({filter, selectedFilters, onRangeChange}) {
       <div className={style.range}>
         <select
           value={selectedFilters[filter.type + '[from]'] || ''}
-          onChange={(e) => onRangeChange(filter.type + '[from]', e.target.value)}
+          onChange={(e) => onFilterChange(filter.type + '[from]', e.target.value)}
         >
           <option value="">From</option>
           {optionValues.map(value => (
@@ -29,7 +29,7 @@ export default function SelectFilter({filter, selectedFilters, onRangeChange}) {
         </select>
         <select
           value={selectedFilters[filter.type + '[to]'] || ''}
-          onChange={(e) => onRangeChange(filter.type + '[to]', e.target.value)}
+          onChange={(e) => onFilterChange(filter.type + '[to]', e.target.value)}
         >
           <option value="">To</option>
           {optionValues.map(value => (

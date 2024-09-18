@@ -19,16 +19,16 @@ export const Part = () =>{
   const navigate = useNavigate()
   const {id} = useParams()
   const dispatch = useDispatch()
-  const {ID_partsInBasket} = useSelector(state => state.basket)
-  const {ID_partsInWishlist} = useSelector(state => state.wishlist)
+  const {idPartsInBasket} = useSelector(state => state.basket)
+  const {idPartsInWishlist} = useSelector(state => state.wishlist)
   const {part, isLoading, isBreadcrumbsLoading, breadcrumbs} = useSelector(state => state.part)
 
   const [inBasket, setInBasket] = useState(false)
   const [inWishlist, setInWishlist] = useState(false)
 
   useEffect(()=>{
-    setInBasket(ID_partsInBasket.includes(Number(id)))
-    setInWishlist(ID_partsInWishlist.includes(Number(id)))
+    setInBasket(idPartsInBasket.includes(Number(id)))
+    setInWishlist(idPartsInWishlist.includes(Number(id)))
     dispatch(getPart(id))
   },[dispatch])
 
@@ -79,7 +79,7 @@ export const Part = () =>{
                   <div className={style.main__description}>
                     <h1>{part.car[0].manufacturer} - {part.part_name.toUpperCase()}</h1>
                     <div className={style.main__description__seller}>
-                      {part.scrapheap.top_seller && (<span>Top seller </span>)}
+                      {part.scrapheap.top_seller ? (<span>Top seller </span>): null}
                       {part.scrapheap.title}</div>
                     <PartShare
                       id={id}
@@ -90,8 +90,8 @@ export const Part = () =>{
                     <div className={style.price}>
                       <div className={style.price__general}>{part.price_final}</div>
                       <span>incl. VAT</span>
-                      <div className={`${style.price__fee} mt-12`}>+ Service Fee: {part.service_fee} €</div>
-                      <div className={`${style.price__fee} mt-6`}>+ Delivery: {part.delivery_price}</div>
+                      <div className={style.price__fee}>+ Service Fee: {part.service_fee} €</div>
+                      <div className={style.price__fee}>+ Delivery: {part.delivery_price}</div>
                     </div>
 
                     <Button

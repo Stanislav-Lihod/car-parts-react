@@ -2,17 +2,16 @@ import React, {useEffect} from "react";
 import * as style from './Main.module.scss'
 import Filter from "./components/Filter/Filter";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchParts} from "../../store/redusers/partsSlice";
 import LineSkeleton from "../../components/Preloader/LineSkeleton/LineSkeleton";
 import {clearFilters} from "../../store/redusers/filterSlice";
+import {useFetchPartsQuery} from "../../services/PartsService";
 
 export const Main = () =>{
-  const {pagination} = useSelector(state => state.parts)
   const dispatch = useDispatch()
+  const { data} = useFetchPartsQuery()
 
   useEffect(()=>{
     dispatch(clearFilters())
-    dispatch(fetchParts())
   }, [dispatch])
 
   return (
@@ -21,8 +20,8 @@ export const Main = () =>{
         <h1>Used car parts online from <span>3,681</span> European sellers</h1>
         <div className={style.content__desc}>
           Choose from <span>{
-            pagination.totalParts ? (
-              pagination.totalParts
+            data?.meta.total_items ? (
+              data?.meta.total_items
             ):(
               <LineSkeleton length={'extra_short'} style={{display: 'inline-block'}} />
             )

@@ -8,20 +8,20 @@ import PartsSkeleton from "../../../components/Preloader/PartsSkeleton/PartsSkel
 
 export default function BasketParts(props) {
   const dispatch = useDispatch()
-  const {isLoading, basket_parts, ID_partsInBasket} = useSelector(state => state.basket)
+  const {isLoading, basketParts, idPartsInBasket} = useSelector(state => state.basket)
 
   useEffect(()=>{
-    (ID_partsInBasket.length > 0 || basket_parts.length > 0) && dispatch(fetchBasketParts(ID_partsInBasket.join('&part_id=')))
-  }, [dispatch, ID_partsInBasket])
+    (idPartsInBasket.length > 0 || basketParts.length > 0) && dispatch(fetchBasketParts(idPartsInBasket.join('&part_id=')))
+  }, [dispatch, idPartsInBasket])
 
   const removePart = (event, id) =>{
     event.target.disabled
     dispatch(updateBasket({actionType: 'remove', part: id}))
   }
 
-  const totalParts = basket_parts.reduce((sum, item) => sum + item.price, 0).toFixed(2);
-  const totalDelivery = basket_parts.reduce((sum, item) => sum + Number(item.delivery_price.slice(0, -2)), 0).toFixed(2);
-  const totalFee = basket_parts.reduce((sum, item) => sum + item.service_fee, 0).toFixed(2);
+  const totalParts = basketParts.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+  const totalDelivery = basketParts.reduce((sum, item) => sum + Number(item.delivery_price.slice(0, -2)), 0).toFixed(2);
+  const totalFee = basketParts.reduce((sum, item) => sum + item.service_fee, 0).toFixed(2);
   const totalPrice = (parseFloat(totalParts) + parseFloat(totalDelivery) + parseFloat(totalFee)).toFixed(2);
 
 
@@ -40,7 +40,7 @@ export default function BasketParts(props) {
           </>
         ):(
           <>
-            {basket_parts.map(part => (
+            {basketParts.map(part => (
               <BasketPart
                 part={part}
                 key={part.part_id}
@@ -52,7 +52,7 @@ export default function BasketParts(props) {
               <div className={style.total__text}>Total for the parts:	<span>{totalParts} €</span></div>
               <div className={style.total__text}>Total for delivery:	<span>{totalDelivery} €</span></div>
               <div className={style.total__text}>Service Fee: 	<span>{totalFee} €</span></div>
-              <div className={`${style.total__text} ${style.total_price}`}>Total amount:	<span>{totalPrice} €</span></div>
+              <div className={`${style.total__text} ${style.totalPrice}`}>Total amount:	<span>{totalPrice} €</span></div>
             </div>
 
             <RiskNotification/>

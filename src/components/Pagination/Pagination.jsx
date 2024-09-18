@@ -3,37 +3,39 @@ import * as style from './Pagination.module.scss'
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {Button} from "../Button/Button";
-import {setCurrentFilter} from "../../store/redusers/filterSlice";
+import {setCurrentFilter, updateFilter} from "../../store/redusers/filterSlice";
 
-export default function Pagination(props) {
-  const [page, setPage] = useState(1)
-  const {pagination} = useSelector(state => state.parts)
-  const {current_page, total_pages} = pagination
+export default function Pagination({pagination}) {
+  const {current_page = 1, total_pages = 1} = pagination
   const dispatch = useDispatch()
 
   const paginationHandler = (number)=>{
-    setPage(number)
-  }
-
-  useEffect(() => {
-    dispatch(setCurrentFilter({page}))
+    dispatch(updateFilter({type: 'page', value: number === 1 ? '' : number}))
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
-  }, [page]);
+  }
+
+  // useEffect(() => {
+  //   dispatch(updateFilter({type: 'page', value: page}))
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: "smooth",
+  //   });
+  // }, [page]);
 
   return (
     <section className={style.pagination}>
       {
-        current_page !== 1 && (
+        current_page !== 1 ? (
           <Button
             onClick={()=>{paginationHandler(1)}}
             bgColor='clear'
           >
             First
           </Button>
-        )
+        ) : null
       }
       {
         Array.from({length: total_pages}).map((_, index) => {

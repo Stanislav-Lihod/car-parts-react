@@ -1,6 +1,9 @@
 .part__description{
   margin-top: 32px;
   margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
   h2{
     font-size: 18px;

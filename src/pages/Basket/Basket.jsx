@@ -13,7 +13,7 @@ import BasketApprove from "./components/BasketApprove";
 export const Basket = () =>{
   const navigate = useNavigate()
   const {isAuth} = useSelector(state => state.user)
-  const {ID_partsInBasket} = useSelector(state => state.basket)
+  const {idPartsInBasket} = useSelector(state => state.basket)
   const [currentStep, setCurrentStep] = useState(0);
   const steps = [
     {icon: <ShoppingCartIcon/>, template: <BasketParts/>, title: 'Shopping cart', button_name: 'Continue'},
@@ -41,7 +41,7 @@ export const Basket = () =>{
 
   return(
     <main className={`${style.basket} container container_short`}>
-      {ID_partsInBasket.length > 0 ? (
+      {idPartsInBasket.length > 0 ? (
         <>
           <div className={style.progress}>
             {steps.map((step, index) => (
@@ -56,7 +56,7 @@ export const Basket = () =>{
           </div>
 
           {
-            steps[currentStep].title && <div className={style.title}>{steps[currentStep].title}</div>
+            steps[currentStep].title ? <div className={style.title}>{steps[currentStep].title}</div> : null
           }
 
           {steps[currentStep].template}

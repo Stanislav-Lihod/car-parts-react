@@ -2,10 +2,10 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import React, {useEffect, useState} from "react";
 import * as style from "./Search.module.scss"
 import {Button} from "../../Button/Button";
-import {setCurrentFilter} from "../../../store/redusers/filterSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {XMarkIcon} from "@heroicons/react/16/solid";
 import {useLocation, useNavigate} from "react-router-dom";
+import {updateFilter} from "../../../store/redusers/filterSlice";
 
 export default function Search({ placeholder }) {
   const location = useLocation();
@@ -26,7 +26,7 @@ export default function Search({ placeholder }) {
   const search = (e) =>{
     e.preventDefault()
     e.stopPropagation()
-    dispatch(setCurrentFilter({"part_name": searchLine.length > 1 ? '*' + searchLine : ''}))
+    dispatch(updateFilter({"part_name": searchLine.length > 1 ? '*' + searchLine : ''}))
     if (location.pathname !== '/parts') {
       navigate('/parts')
     }
@@ -58,13 +58,13 @@ export default function Search({ placeholder }) {
         <MagnifyingGlassIcon
           style={{width: '24px'}}/>
       </Button>
-      {searchLine.length > 0 && (
+      {searchLine.length > 0 ? (
         <span
           onClick={clearSearch}
           className={style.close}>
           <XMarkIcon style={{width: '16px'}}/>
         </span>
-      )}
+      ): null}
     </form>
   );
 }

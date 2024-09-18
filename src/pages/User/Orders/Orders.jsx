@@ -28,7 +28,7 @@ export default function Orders(props) {
                   <div className={style.item}>
                     <div className={style.number}># {order.id}</div>
                     <div>{formattedDate}</div>
-                    <div className={style.amount}>{order.total_price} €</div>
+                    <div className={style.amount}>{order.totalPrice} €</div>
                   </div>
                   <div className={style.body}>
                     {

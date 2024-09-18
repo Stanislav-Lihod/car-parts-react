@@ -4,13 +4,8 @@ import LineSkeleton from "../../../../components/Preloader/LineSkeleton/LineSkel
 import {useSelector} from "react-redux";
 
 export default function ModelTitle () {
-  const {searchParam, currentParams, brands, models, modifications} = useSelector(state => state.filters)
+  const {currentCar} = useSelector(state => state.filters)
   const [carsLine, setCarsLine] = useState('')
-  const {
-    "car.brand": currentBrand,
-    "car.model": currentModel,
-    "car.modification": currentModification,
-  } = currentParams;
 
   // useEffect(()=>{
   //   const brand = brands.find(b => b.id.toString() === currentBrand)?.brand || '';

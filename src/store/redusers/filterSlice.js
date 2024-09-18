@@ -1,138 +1,81 @@
 import {createSlice} from "@reduxjs/toolkit";
-import axios from "axios";
 
 const initialState = {
   isLoading: false,
-  error: '',
-  brands: [],
-  models: [],
-  modifications: [],
+  isCarFilterLoading: false,
   searchParam: '',
-  currentParams: {
-    "car.brand": '',
-    "car.model": '',
-    "car.modification": ''
-  },
-  selectedFilters:{}
-}
-
-export const fetchBrands = () => async (dispatch) =>{
-  try {
-    dispatch(filterSlice.actions.showLoad())
-    const response = await axios.get('https://9aaca2b44dbb58a9.mokky.dev/brands')
-    dispatch(filterSlice.actions.brandsFetching(response.data))
-  } catch (e){
-    dispatch(filterSlice.actions.errorHandling(e.message))
-  }
-}
-
-export const fetchModels = (brandId) => async (dispatch) =>{
-  if (brandId !== ''){
-    try {
-      dispatch(filterSlice.actions.showLoad())
-      const response = await axios.get(`https://9aaca2b44dbb58a9.mokky.dev/models/${brandId}`)
-      dispatch(filterSlice.actions.modelsFetching(response.data.models))
-    } catch (e){
-      dispatch(filterSlice.actions.errorHandling(e.message))
-    }
-  }
-}
-
-export const fetchModification = (brandId,modelId) => async (dispatch) =>{
-  if (brandId !== '' && modelId !== ''){
-    try {
-      dispatch(filterSlice.actions.showLoad())
-      const response = await axios.get(`https://9aaca2b44dbb58a9.mokky.dev/modification?brand=${brandId}&model=${modelId}`)
-      dispatch(filterSlice.actions.modificationFetching(response.data[0]?.modification) ?? [])
-    } catch (e){
-      dispatch(filterSlice.actions.errorHandling(e.message))
-    }
-  }
+  selectedFilters:{},
+  currentCarFilter: {}
 }
 
 export const filterSlice = createSlice({
   name: 'filters',
   initialState,
   reducers:{
-    showLoad(state){
-      state.isLoading = true
+    setLoading(state, action){
+      state.isLoading = action.payload
     },
-    errorHandling(state, action){
-      state.error = action.payload
-      state.isLoading = false
+    setCarFilterLoading(state, action){
+      state.isCarFilterLoading = action.payload
     },
-    brandsFetching(state, action){
-      state.error = ''
-      state.brands = action.payload
-      state.isLoading = false
-    },
-    modelsFetching(state, action){
-      state.error = ''
-      state.models = action.payload
-      state.isLoading = false
-    },
-    modificationFetching(state, action){
-      state.error = ''
-      state.modifications = action.payload
-      state.isLoading = false
-    },
-    setCurrentCar(state, action){
-      const key = Object.keys(action.payload)[0];
+    updateFilter(state, action){
+      delete state.selectedFilters.page
+      const { type, value, isMultipleChoice = false } = action.payload;
 
-      switch (key){
-        case 'car.brand':
-          state.currentParams["car.model"] = ''
-          state.currentParams["car.modification"] = ''
-          break
-        case 'car.model':
-          state.currentParams["car.modification"] = ''
-          break
-      }
-
-      state.currentParams[key] = action.payload[key];
-    },
-    setCurrentFilter(state, action){
-      state.selectedFilters.page = [1]
-      const key = Object.keys(action.payload)[0];
-      if (key.includes('car.')){
-        state.currentParams[key] = action.payload[key];
+      if (!isMultipleChoice) {
+        value !== ''
+          ? state.selectedFilters[type] = [value]
+          : delete state.selectedFilters[type];
       } else {
-        state.selectedFilters[key] = [action.payload[key]];
-      }
-      filterSlice.caseReducers.updateSearchParam(state);
-    },
-    toggleFilter(state, action) {
-      state.selectedFilters.page = [1]
-      const { type, value } = action.payload;
+        state.selectedFilters[type] = state.selectedFilters[type] || [];
+        state.selectedFilters[type] = state.selectedFilters[type].includes(value)
+          ? state.selectedFilters[type].filter(item => item !== value)
+          : [...state.selectedFilters[type], value];
 
-      if (!state.selectedFilters[type]) {
-        state.selectedFilters[type] = [value];
-      } else if (state.selectedFilters[type].includes(value)) {
-        state.selectedFilters[type] = state.selectedFilters[type].filter((item) => item !== value);
-      } else {
-        state.selectedFilters[type].push(value);
+        if (!state.selectedFilters[type].length) delete state.selectedFilters[type];
       }
 
       filterSlice.caseReducers.updateSearchParam(state);
     },
-    setRangeFilter(state, action) {
-      state.selectedFilters.page = [1]
-      const { type, value } = action.payload;
-      state.selectedFilters[type] = [value];
+    updateCarFilter(state, action){
+      delete state.selectedFilters.page
+      const clearFilter = {}
+      for(var key in action.payload) {
+        if(action.payload[key] !== '') {
+          clearFilter[key] = action.payload[key]
+        }
+      }
+      state.currentCarFilter = clearFilter
+
       filterSlice.caseReducers.updateSearchParam(state);
     },
     updateSearchParam(state){
-      const currentParamsString = Object.entries(state.currentParams)
-        .filter(([key, value]) => value !== '' && value != null)
-        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+      const searchParams = new URLSearchParams({
+        ...state.selectedFilters,
+        ...state.currentCarFilter
+      })
+      state.searchParam = decodeURIComponent(searchParams.toString())
+    },
+    decodeSearchParams(state, action){
+      const searchParams = new URLSearchParams(action.payload);
+      const carFilterArray = ['brand', 'model', 'modification']
 
-      const selectedParamsString = Object.entries(state.selectedFilters)
-        .flatMap(([key, values]) =>
-          (Array.isArray(values) ? values : [])
-            .filter(value => value !== '' && value != null)
-            .map(value => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
-        );
-      state.searchParam = decodeURIComponent([...currentParamsString, ...selectedParamsString].join('&'))
+      searchParams.forEach((value, type) => {
+        if (carFilterArray.includes(type)) {
+          if (value !== ''){
+            state.currentCarFilter[type] = value
+          }
+        } else {
+          const values = value.split(',');
+          values.forEach(value => {
+            if (value !== '') {
+              filterSlice.caseReducers.updateFilter(state, { payload: { type, value, isMultipleChoice: values.length > 1} });
+            }
+          });
+        }
+      });
+
+      filterSlice.caseReducers.updateSearchParam(state);
     },
     clearFilters(state){
       state.selectedFilters = {}
@@ -142,12 +85,11 @@ export const filterSlice = createSlice({
 })
 
 export const {
-  setCurrentFilter,
-  removePageFilter,
-  toggleFilter,
-  setCurrentCar,
-  updateSearchParam,
-  setRangeFilter,
+  setLoading,
+  setCarFilterLoading,
+  updateFilter,
+  updateCarFilter,
+  decodeSearchParams,
   clearFilters
 } = filterSlice.actions
 export default filterSlice.reducer

@@ -12,7 +12,7 @@ export default function CheckboxFilter({filter, selectedFilters, onFilterChange}
               <input
                 type="checkbox"
                 checked={selectedFilters[filter.type]?.includes(option.value) || false}
-                onChange={() => onFilterChange(filter.type, option.value)}
+                onChange={() => onFilterChange(filter.type, option.value, true)}
               />
               {option.label}
             </label>

@@ -14,7 +14,7 @@ export default function PartDetails({part}) {
       <dl>
         <dt>Condition</dt>
         <dd>{part.quality === '' ? 'Used' : 'New'}</dd>
-        {codes.length > 0 && (
+        {codes.length > 0 ? (
           <>
             <dt>Manufacturer code:</dt>
             <dd>{
@@ -26,7 +26,7 @@ export default function PartDetails({part}) {
               ))
             }</dd>
           </>
-        )}
+        ): null}
       </dl>
     </PartDescription>
   );

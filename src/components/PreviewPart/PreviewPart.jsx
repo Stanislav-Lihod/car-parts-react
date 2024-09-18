@@ -21,12 +21,12 @@ export default function PreviewPart({id, part}){
 
   const [inBasket, setInBasket] = useState(false)
   const [inWishlist, setInWishlist] = useState(false)
-  const {ID_partsInBasket} = useSelector(state => state.basket)
-  const {ID_partsInWishlist} = useSelector(state => state.wishlist)
+  const {idPartsInBasket} = useSelector(state => state.basket)
+  const {idPartsInWishlist} = useSelector(state => state.wishlist)
 
   useEffect(() => {
-    setInBasket(ID_partsInBasket.includes(id))
-    setInWishlist(ID_partsInWishlist.includes(id))
+    setInBasket(idPartsInBasket.includes(id))
+    setInWishlist(idPartsInWishlist.includes(id))
   }, [dispatch]);
 
   const addPartInCart = (e) =>{
@@ -66,7 +66,7 @@ export default function PreviewPart({id, part}){
         <div className={style.content}>
           <h2 className={style.content__title}>{part_name}</h2>
           <div className={style.content__description} dangerouslySetInnerHTML={{__html: description}}/>
-          <div className={`mt-6 ${style.content__price}`}>{price_final}</div>
+          <div className={style.content__price}>{price_final}</div>
           <div className={style.content__fee}>+ Service Fee</div>
           <div className={style.content__fee}>+ Delivery: {delivery_price}</div>
           {}
@@ -75,7 +75,7 @@ export default function PreviewPart({id, part}){
             {scrapheap.title}
           </div>
           <div className={style.content__region}>
-            {scrapheap.city !== '' && `${scrapheap.city},`} {scrapheap.country}
+            {scrapheap.city !== '' ? `${scrapheap.city},` : null} {scrapheap.country}
           </div>
           <div className={style.actions}>
 

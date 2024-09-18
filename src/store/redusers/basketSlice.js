@@ -4,10 +4,10 @@ import axios from "axios";
 const initialState = {
   isLoading: true,
   error: '',
-  ID_partsInBasket: JSON.parse(localStorage.getItem('basketParts')) || [],
+  idPartsInBasket: JSON.parse(localStorage.getItem('basketParts')) || [],
   counter: JSON.parse(localStorage.getItem('basketParts'))?.length || 0,
-  basket_parts: [],
-  total_price:{}
+  basketParts: [],
+  totalPrice:{}
 }
 
 export const fetchBasketParts = (parts) => async (dispatch) =>{
@@ -41,24 +41,24 @@ export const basketSlice = createSlice({
         currentBasket.delete(action.payload.part);
       }
 
-      state.ID_partsInBasket = [...currentBasket];
-      state.counter = state.ID_partsInBasket.length;
-      localStorage.setItem('basketParts', JSON.stringify(state.ID_partsInBasket));
+      state.idPartsInBasket = [...currentBasket];
+      state.counter = state.idPartsInBasket.length;
+      localStorage.setItem('basketParts', JSON.stringify(state.idPartsInBasket));
     },
     hideCounter(state){
       state.counter = 0
     },
     removeBasket(state){
-      state.ID_partsInBasket = [];
-      state.counter = state.ID_partsInBasket.length;
-      localStorage.setItem('basketParts', JSON.stringify(state.ID_partsInBasket));
+      state.idPartsInBasket = [];
+      state.counter = state.idPartsInBasket.length;
+      localStorage.setItem('basketParts', JSON.stringify(state.idPartsInBasket));
     },
     basketPartsFetching(state, action){
-      state.basket_parts = action.payload
+      state.basketParts = action.payload
       state.isLoading = false
     },
     setPrice(state, action){
-      state.total_price = action.payload
+      state.totalPrice = action.payload
     }
   }
 })

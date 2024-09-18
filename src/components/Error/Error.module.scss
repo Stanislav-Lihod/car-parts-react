@@ -1,14 +1,37 @@
 .error{
+  opacity: 0;
   padding: 30px;
   max-width: 300px;
   width: 100%;
-  background-color: indianred;
+  background-color: rgba(229, 60, 60, 1);
+  border-radius: 6px;
   color: white;
   font-size: 18px;
   text-align: center;
   position: fixed;
   top: 30px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(-30px);
+  transition: .3s;
   z-index: 100;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+  &.active{
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.close{
+  position: absolute;
+  width: 20px;
+  height: auto;
+  cursor: pointer;
+  top: 5px;
+  right: 5px;
+  transition: .3s;
+
+  &:hover{
+    transform: rotate(180deg);
+  }
 }

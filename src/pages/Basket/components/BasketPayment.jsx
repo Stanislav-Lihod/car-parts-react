@@ -7,7 +7,7 @@ import {Button} from "../../../components/Button/Button";
 export default function BasketPayment({nextStep}) {
   const navigate = useNavigate()
   const {isAuth, user} = useSelector(state => state.user)
-  const {counter, total_price} = useSelector(state => state.basket)
+  const {counter, totalPrice} = useSelector(state => state.basket)
 
   useEffect(() => {
     !isAuth && navigate('/user')
@@ -35,16 +35,16 @@ export default function BasketPayment({nextStep}) {
         </div>
       </div>
       <div className={style.card}>
-        <h3 className={style.totalPrice}>Total <span>{total_price.totalPrice} €</span></h3>
+        <h3 className={style.totalPrice}>Total <span>{totalPrice.totalPrice} €</span></h3>
         <div className={style.totalItem}>
           <p>Items <span>{counter}</span></p>
-          <p>Shipping Cost <span>{total_price.totalDelivery} €</span></p>
+          <p>Shipping Cost <span>{totalPrice.totalDelivery} €</span></p>
         </div>
         <Button
           onClick={nextStep}
           maxWidth={'w_full'}
         >
-          Pay {total_price.totalPrice} €
+          Pay {totalPrice.totalPrice} €
         </Button>
       </div>
     </div>

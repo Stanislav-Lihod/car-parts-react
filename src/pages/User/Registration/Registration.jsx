@@ -1,21 +1,20 @@
 import React from 'react';
 import * as style from "./Registration.module.scss";
-import {useDispatch, useSelector} from "react-redux";
-import {registerUser} from "../../../store/redusers/userSlice";
+import {useDispatch} from "react-redux";
+import {setUser} from "../../../store/redusers/userSlice";
 import {CheckBadgeIcon, UserIcon} from "@heroicons/react/24/outline";
 import {Button} from "../../../components/Button/Button";
+import { useRegistrationMutation} from "../../../services/UserService";
 
 export default function Registration({toggleScreen}) {
   const dispatch = useDispatch()
-  const onRegistration = (e) => {
-    e.preventDefault()
-    const formData = new FormData(e.target)
-    const formDataObject = {};
-    formData.forEach((value, key) => {
-      formDataObject[key] = value;
-    });
-    dispatch(registerUser(formDataObject))
-  }
+  const [registration] = useRegistrationMutation();
+  const onRegistration = async (e) => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.target));
+    const result = await registration(formData).unwrap();
+    dispatch(setUser(result));
+  };
 
   return (
     <div className={style.registration}>

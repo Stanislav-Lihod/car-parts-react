@@ -1,88 +1,80 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import * as style from './Filter.module.scss'
-import {Link, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {
-  fetchBrands,
-  fetchModels,
-  fetchModification, setCurrentCar, updateSearchParam
-} from "../../../../store/redusers/filterSlice";
+import { useNavigate} from "react-router-dom";
+import { useDispatch, useSelector} from "react-redux";
 import FilterSelect from "./components/FilterSelect";
 import {Button} from "../../../../components/Button/Button";
+import {useFetchBrandsQuery, useFetchModelsQuery, useFetchModificationQuery} from "../../../../services/GetCarsService";
+import {updateCarFilter} from "../../../../store/redusers/filterSlice";
 
 export default function Filter({isPartsPage}) {
   const dispatch = useDispatch()
   const navigate = useNavigate();
-
-  //store variables
-  const {
-    brands,
-    models,
-    modifications,
-    currentParams,
-  } = useSelector(state => state.filters)
-
-  const {
-    "car.brand": currentBrand,
-    "car.model": currentModel,
-    "car.modification": currentModification,
-  } = currentParams;
+  const [carFilter, setCarFilter] = useState({  brand: '', model: '', modification: '' });
+  const { isCarFilterLoading: isLoading ,currentCarFilter} = useSelector(state => state.filters)
+  const { data: brands} = useFetchBrandsQuery();
+  const { data: models} = useFetchModelsQuery(carFilter.brand, {
+    skip: carFilter.brand === '',
+  });
+  const { data: modifications } = useFetchModificationQuery(
+    { brand: carFilter.brand, model: carFilter.model },
+    {skip: carFilter.brand === ''  || carFilter.model === ''});
 
   useEffect(() => {
-    dispatch(fetchBrands())
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchModels(currentBrand));
-  }, [dispatch, currentBrand]);
-
-  useEffect(() => {
-    dispatch(fetchModification(currentBrand, currentModel));
-  }, [dispatch, currentBrand, currentModel]);
-
-  const selectHandler = (name, value) => {
-    dispatch(setCurrentCar({ [name]: value}));
-  };
+    setCarFilter({...carFilter,...currentCarFilter})
+  }, [currentCarFilter]);
 
   const searchButton = (e) =>{
     e.preventDefault()
     e.stopPropagation()
-    dispatch(updateSearchParam())
-    !isPartsPage && navigate('/parts')
+    dispatch(updateCarFilter(carFilter))
+    !isPartsPage && navigate('/parts');
   }
 
   return (
-    <section className={`${style.section} `}>
+    <section className={`${style.section} ${isLoading ? style.loading : ''}`}>
       <FilterSelect
-        name="car.brand"
-        value={currentBrand || ''}
-        onChange={(e) => selectHandler(e.target.name, e.target.value)}
+        name="brand"
+        value={carFilter.brand}
+        onChange={(e) => {
+          setCarFilter({
+            brand: e.target.value,
+            model: '',
+            modification: ''
+          })
+        }}
         defaultOption="Brand"
         options={brands}
       />
 
       <FilterSelect
-        name="car.model"
-        value={currentModel || ''}
-        onChange={(e) => selectHandler(e.target.name, e.target.value)}
+        name="model"
+        value={carFilter.model}
+        onChange={(e) => {
+          setCarFilter({
+            ...carFilter,
+            model: e.target.value,
+            modification: ''
+          })
+        }}
         defaultOption="Model"
-        options={models}
-        disabled={currentBrand === ''}
+        options={models?.models}
+        disabled={!carFilter.brand}
       />
 
       <FilterSelect
-        name="car.modification"
-        value={currentModification || ''}
-        onChange={(e) => selectHandler(e.target.name, e.target.value)}
+        name="modification"
+        value={carFilter.modification}
+        // onChange={(e) => dispatch(setCurrentModification(e.target.value))}
+        onChange={(e) => setCarFilter({...carFilter, modification: e.target.value})}
         defaultOption="Modification"
-        options={modifications}
-        disabled={currentModel === ''}
+        options={modifications ? modifications[0].modification : []}
+        disabled={!carFilter.model}
       />
 
       <Button onClick={searchButton}>
         {isPartsPage ? 'Filter Car' : 'Search'}
       </Button>
-
 
     </section>
   );

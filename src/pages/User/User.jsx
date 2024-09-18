@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import Login from "./Login/Login";
 import * as style from './User.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {checkUser, logoutUser} from "../../store/redusers/userSlice";
+import {checkUser} from "../../store/redusers/userSlice";
 import Registration from "./Registration/Registration";
 import Orders from "./Orders/Orders";
 import Profile from "./Profile/Profile";
 import Loading from "../../components/Preloader/Loading";
+import {Login} from "./Login/Login";
 
 export default function User(props) {
 
@@ -18,10 +18,6 @@ export default function User(props) {
   useEffect(()=>{
     dispatch(checkUser())
   }, [])
-
-  const logout = ()=>{
-    dispatch(logoutUser())
-  }
 
   const toggleLoginScreen = () => {
     setRegistrationPage(prevState => !prevState)

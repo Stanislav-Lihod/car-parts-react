@@ -49,7 +49,7 @@ module.exports = {
             loader: 'sass-resources-loader',
             options: {
               resources: [
-                path.resolve(__dirname, './src/styles/global.scss'),
+                path.resolve(__dirname, './src/styles/main.scss'),
               ],
             },
           }
@@ -76,7 +76,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: path.resolve(__dirname, 'public', 'images'), to: 'images' },
+        { from: path.resolve(__dirname, 'src', 'images'), to: 'images' },
         { from: path.resolve(__dirname, 'public/_redirects'), to: '' }
       ],
     }),

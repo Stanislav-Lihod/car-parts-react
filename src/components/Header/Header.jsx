@@ -37,21 +37,21 @@ export const Header = () => {
               <Link className={isAuth ? style.isAuth : ''} to={"/user"}>
                 <UserIcon className="w-6"/>
               </Link>
-              { isAuth && (
+              { isAuth ? (
                 <div className={style.user_menu}>
                   <div onClick={logoutUser}>logout</div>
                 </div>
-              )}
+              ): null}
             </div>
             <Link to={"/wishlist"}>
               {
-                wishlistCounter > 0 && (<span className={style.counter}>{wishlistCounter}</span>)
+                wishlistCounter > 0 ? (<span className={style.counter}>{wishlistCounter}</span>) : null
               }
               <HeartIcon className="w-6"/>
             </Link>
             <Link to={"/basket"}>
               {
-                basketCounter > 0 && (<span className={style.counter}>{basketCounter}</span>)
+                basketCounter > 0 ? (<span className={style.counter}>{basketCounter}</span>) : null
               }
               <ShoppingCartIcon className="w-6"/>
             </Link>

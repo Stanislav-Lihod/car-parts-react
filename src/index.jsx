@@ -1,8 +1,9 @@
 import { createRoot } from 'react-dom/client';
 import React from "react";
+import { StrictMode } from 'react';
 import {App} from "./App";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import "./index.scss"
+import {BrowserRouter} from "react-router-dom";
+import "./styles/main.scss"
 import {Provider} from "react-redux";
 import {setupStore} from "./store/store";
 import Error from "./components/Error/Error";
@@ -13,10 +14,12 @@ const root = createRoot(container);
 const store = setupStore()
 
 root.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <Error/>
-      <App/>
-    </BrowserRouter>
-  </Provider>
-);;
+  <StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Error/>
+        <App/>
+      </BrowserRouter>
+    </Provider>
+  </StrictMode>
+);

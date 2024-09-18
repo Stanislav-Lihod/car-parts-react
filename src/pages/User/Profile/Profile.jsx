@@ -1,24 +1,39 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Button} from "../../../components/Button/Button";
 import * as style from './Profile.module.scss'
-import {updateUser} from "../../../store/redusers/userSlice";
+import {setUser} from "../../../store/redusers/userSlice";
+import {useLazyCheckUserQuery, useUpdateUserMutation} from "../../../services/UserService";
+import {useFetchPartsQuery} from "../../../services/PartsService";
 
 export default function Profile(props) {
   const dispatch = useDispatch()
   const {user} = useSelector(state => state.user)
+  const [updateUser] = useUpdateUserMutation();
+  const [trigger, { data: authData}] = useLazyCheckUserQuery();
 
-  const userUpdate = (e) =>{
-    e.stopPropagation()
+  const userUpdate = async (e) =>{
     e.preventDefault()
-    const formData = new FormData(e.target)
-    const formDataObject = {};
-    formData.forEach((value, key) => {
-      formDataObject[key] = value;
-    });
-
-    dispatch(updateUser(formDataObject))
+    const formData = Object.fromEntries(new FormData(e.target));
+    const result = await updateUser({body:formData, userId:user.id});
+    if (result){
+      dispatch(setUser(result))
+    }
   }
+  useEffect(() => {
+    if (user.email && user.password){
+      trigger({
+        email: user.email,
+        password: user.password,
+      })
+    }
+  }, [user]);
+
+  useEffect(()=>{
+    if (authData){
+      dispatch(setUser(authData))
+    }
+  }, [authData])
 
   return (
     <form onSubmit={userUpdate} className={style.profile}>

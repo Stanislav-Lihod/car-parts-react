@@ -1,7 +1,7 @@
 import React from 'react';
 import * as style from './Aside.module.scss'
 import {useDispatch, useSelector} from "react-redux";
-import {clearFilters, setRangeFilter, toggleFilter} from "../../../../store/redusers/filterSlice";
+import {clearFilters, updateFilter} from "../../../../store/redusers/filterSlice";
 import {filtersData} from "./initialFilters";
 import CheckboxFilter from "./CheckboxFilter";
 import SelectFilter from "./SelectFilter";
@@ -11,12 +11,9 @@ export const Aside = () => {
   const dispatch = useDispatch();
   const {selectedFilters} = useSelector((state) => state.filters);
 
-  const handleFilterChange = (type, value) => {
-    dispatch(toggleFilter({ type, value }));
-  };
-  const handleRangeChange = (type, value,) => {
-    dispatch(setRangeFilter({ type, value}));
-  };
+  const filterUpdate = (type, value, isMultipleChoice = false)=>{
+    dispatch(updateFilter({ type, value, isMultipleChoice}));
+  }
 
   const clearFilter = ()=>{
     dispatch(clearFilters())
@@ -29,8 +26,7 @@ export const Aside = () => {
           key={filter.type}
           filter={filter}
           selectedFilters={selectedFilters}
-          onFilterChange={handleFilterChange}
-          onRangeChange={handleRangeChange}
+          onFilterChange={filterUpdate}
         />
       ))}
       <Button
@@ -44,13 +40,13 @@ export const Aside = () => {
   );
 };
 
-const FilterGroup = ({ filter, selectedFilters, onFilterChange, onRangeChange }) => {
+const FilterGroup = ({ filter, selectedFilters, onFilterChange }) => {
   if (filter.optionsType === 'checkbox') {
     return (<CheckboxFilter filter={filter} selectedFilters={selectedFilters} onFilterChange={onFilterChange}/>)
   }
 
   if (filter.optionsType === 'range') {
-    return (<SelectFilter filter={filter} selectedFilters={selectedFilters} onRangeChange={onRangeChange}/>);
+    return (<SelectFilter filter={filter} selectedFilters={selectedFilters} onFilterChange={onFilterChange}/>);
   }
   return null;
 };
