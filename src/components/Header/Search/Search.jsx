@@ -26,7 +26,7 @@ export default function Search({ placeholder }) {
   const search = (e) =>{
     e.preventDefault()
     e.stopPropagation()
-    dispatch(updateFilter({"part_name": searchLine.length > 1 ? '*' + searchLine : ''}))
+    dispatch(updateFilter({type: "part_name", value: searchLine.length > 1 ? '*' + searchLine : ''}))
     if (location.pathname !== '/parts') {
       navigate('/parts')
     }
