@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchBasketParts, setPrice, updateBasket} from "../../../store/redusers/basketSlice";
 import PartsSkeleton from "../../../components/Preloader/PartsSkeleton/PartsSkeleton";
 
-export default function BasketParts(props) {
+export default function BasketParts() {
   const dispatch = useDispatch()
   const {isLoading, basketParts, idPartsInBasket} = useSelector(state => state.basket)
 

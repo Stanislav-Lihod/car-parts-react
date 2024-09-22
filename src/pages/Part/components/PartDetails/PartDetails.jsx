@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import PartDescription from "../PartDescription/PartDescription";
-import {Link} from "react-router-dom";
 
 export default function PartDetails({part}) {
   const [codes, setCodes] = useState([])

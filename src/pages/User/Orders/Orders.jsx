@@ -4,7 +4,7 @@ import Empty from "../../../components/Empty/Empty";
 import {Link} from "react-router-dom";
 import * as style from './Order.module.scss'
 
-export default function Orders(props) {
+export default function Orders() {
   const {user} = useSelector(state => state.user)
   const {orders} = user
 

@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import * as style from './Main.module.scss'
 import Filter from "./components/Filter/Filter";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import LineSkeleton from "../../components/Preloader/LineSkeleton/LineSkeleton";
 import {clearFilters} from "../../store/redusers/filterSlice";
 import {useFetchPartsQuery} from "../../services/PartsService";

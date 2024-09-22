@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {useLazyCheckUserQuery, useUpdateUserMutation} from "../../../services/UserService";
 import {setUser} from "../../../store/redusers/userSlice";
 
-export default function BasketApprove(props) {
+export default function BasketApprove() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {isAuth, isLoading, user} = useSelector(state => state.user)

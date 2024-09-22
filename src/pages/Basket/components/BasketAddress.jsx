@@ -1,13 +1,11 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {checkUser} from "../../../store/redusers/userSlice";
 import AddressSkeleton from "../../../components/Preloader/AdressSkeleton/AddressSkeleton";
 import * as style from './BasketAddress.module.scss'
 
-export default function BasketAddress(props) {
+export default function BasketAddress() {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const {isAuth, isLoading, user} = useSelector(state => state.user)
 
   useEffect(() => {

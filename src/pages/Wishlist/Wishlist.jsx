@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import * as style from "./Wishlist.module.scss";
 import {fetchWishlistParts} from "../../store/redusers/wishlistSlice";
 import {useDispatch, useSelector} from "react-redux";
@@ -6,7 +6,7 @@ import PartsSkeleton from "../../components/Preloader/PartsSkeleton/PartsSkeleto
 import Empty from "../../components/Empty/Empty";
 import WishlistPart from "./components/WishlistPart";
 
-export default function Wishlist(props) {
+export default function Wishlist() {
   const {isLoading, wishlistParts, idPartsInWishlist} = useSelector(state => state.wishlist)
   const dispatch = useDispatch()
 

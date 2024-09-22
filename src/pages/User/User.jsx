@@ -8,10 +8,10 @@ import Profile from "./Profile/Profile";
 import Loading from "../../components/Preloader/Loading";
 import {Login} from "./Login/Login";
 
-export default function User(props) {
+export default function User() {
 
   const dispatch = useDispatch()
-  const {isAuth, isLoading, user} = useSelector(state => state.user)
+  const {isAuth, isLoading} = useSelector(state => state.user)
   const [registrationPage, setRegistrationPage] = useState(false)
   const [currentProfilePage, setCurrentProfilePage] = useState('order')
 

@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {clearError} from "../../store/redusers/errorSlice";
 import {XCircleIcon} from "@heroicons/react/16/solid";
 
-function Error(props) {
+function Error() {
   const message = useSelector((state) => state.error.message);
   const dispatch = useDispatch();
   const [active, setActive] = useState(false)

@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Button} from "../../../components/Button/Button";
 import * as style from './Profile.module.scss'
 import {setUser} from "../../../store/redusers/userSlice";
 import {useLazyCheckUserQuery, useUpdateUserMutation} from "../../../services/UserService";
-import {useFetchPartsQuery} from "../../../services/PartsService";
 
-export default function Profile(props) {
+export default function Profile() {
   const dispatch = useDispatch()
   const {user} = useSelector(state => state.user)
   const [updateUser] = useUpdateUserMutation();

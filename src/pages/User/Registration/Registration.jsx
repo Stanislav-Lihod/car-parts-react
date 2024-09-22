@@ -2,7 +2,7 @@ import React from 'react';
 import * as style from "./Registration.module.scss";
 import {useDispatch} from "react-redux";
 import {setUser} from "../../../store/redusers/userSlice";
-import {CheckBadgeIcon, UserIcon} from "@heroicons/react/24/outline";
+import {CheckBadgeIcon} from "@heroicons/react/24/outline";
 import {Button} from "../../../components/Button/Button";
 import { useRegistrationMutation} from "../../../services/UserService";
 

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import PartDescription from "../PartDescription/PartDescription";
 import {useGetCarInfoQuery} from "../../../../services/PartService";

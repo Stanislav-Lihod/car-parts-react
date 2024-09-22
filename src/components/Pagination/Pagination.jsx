@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from 'react';
 import * as style from './Pagination.module.scss'
-import {Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {Button} from "../Button/Button";
-import {setCurrentFilter, updateFilter} from "../../store/redusers/filterSlice";
+import {updateFilter} from "../../store/redusers/filterSlice";
 
 export default function Pagination({pagination}) {
   const {current_page = 1, total_pages = 1} = pagination
@@ -16,14 +14,6 @@ export default function Pagination({pagination}) {
       behavior: "smooth",
     });
   }
-
-  // useEffect(() => {
-  //   dispatch(updateFilter({type: 'page', value: page}))
-  //   window.scrollTo({
-  //     top: 0,
-  //     behavior: "smooth",
-  //   });
-  // }, [page]);
 
   return (
     <section className={style.pagination}>
