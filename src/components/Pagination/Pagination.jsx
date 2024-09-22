@@ -1,7 +1,8 @@
+import React from 'react';
 import * as style from './Pagination.module.scss'
 import {useDispatch} from "react-redux";
 import {Button} from "../Button/Button";
-import {updateFilter} from "../../store/redusers/filterSlice";
+import { updateFilter} from "../../store/redusers/filterSlice";
 
 export default function Pagination({pagination}) {
   const {current_page = 1, total_pages = 1} = pagination

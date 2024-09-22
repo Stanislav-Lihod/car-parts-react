@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import AddressSkeleton from "../../../components/Preloader/AdressSkeleton/AddressSkeleton";
 import * as style from './BasketAddress.module.scss'
