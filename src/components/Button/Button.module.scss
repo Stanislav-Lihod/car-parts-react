@@ -6,6 +6,13 @@
   border: none;
   transition: .3s;
   border-radius: 4px;
+  color: white;
+  background-color: $primary;
+
+  &:hover{
+    color: black;
+    background-color: $secondary;
+  }
 }
 
 .yellow__blue{
@@ -18,17 +25,7 @@
   }
 }
 
-.blue__yellow {
-  color: white;
-  background-color: $primary;
-
-  &:hover{
-    color: black;
-    background-color: $secondary;
-  }
-}
-
-.w__full {
+.w_full {
   width: 100%;
 }
 

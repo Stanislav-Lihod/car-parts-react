@@ -12,8 +12,7 @@ export default function BasketAddress(props) {
 
   useEffect(() => {
     !isAuth && navigate('/user')
-    isAuth && dispatch(checkUser())
-  }, []);
+  }, [isAuth]);
 
   return (
     <div>

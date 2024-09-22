@@ -34,7 +34,12 @@ export const Login = ({toggleScreen}) =>{
 
           <input name='email' type='email' placeholder='Email' required/>
           <input name='password' type='password' placeholder='Password' required/>
-          <Button maxWidth={true} type='submit'>Login</Button>
+          <Button
+            type='submit'
+            additionalStyle={['w_full']}
+          >
+            Login
+          </Button>
         </form>
       </div>
       <div className={style.notification}>Don’t have an account? <span onClick={toggleScreen}>Register now</span></div>

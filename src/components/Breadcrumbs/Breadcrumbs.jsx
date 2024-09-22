@@ -1,10 +1,29 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import * as style from './Breadcrumbs.module.scss';
 import { BreadcrumbsItem } from "./BreadcrumbsItem";
-import { Link, generatePath } from "react-router-dom";
+import {Link} from "react-router-dom";
 import LineSkeleton from "../Preloader/LineSkeleton/LineSkeleton";
+import {useGetCarInfoQuery} from "../../services/PartService";
 
-export const Breadcrumbs = ({ isLoading, breadcrumbs }) => {
+export const Breadcrumbs = ({id}) => {
+  const {data, isLoading} = useGetCarInfoQuery(id)
+  const [breadcrumbs] = data || [];
+  const [modification, setModification] = useState({})
+
+  useEffect(() => {
+    if (breadcrumbs){
+      setModification(breadcrumbs.modification.filter(item => item.id === id)[0])
+    }
+  }, [breadcrumbs]);
+
+  const getQueryString = (additionalParams = {}) => {
+    const params = {
+      brand: breadcrumbs.brand,
+      ...additionalParams,
+    };
+    return new URLSearchParams(params).toString();
+  };
+
   return (
     <section className={style.breadcrumbs}>
       <div className='container'>
@@ -19,25 +38,18 @@ export const Breadcrumbs = ({ isLoading, breadcrumbs }) => {
               <Link to={'/parts'}>Parts</Link>
             </BreadcrumbsItem>
             <BreadcrumbsItem>
-              <Link to={generatePath('/parts', { 'car.brand': breadcrumbs.brand })}>
-                {breadcrumbs.modification.brandName}
+              <Link to={`/parts?${getQueryString()}`}>
+                {modification.brandName}
               </Link>
             </BreadcrumbsItem>
             <BreadcrumbsItem>
-              <Link to={generatePath('/parts', {
-                'car.brand': breadcrumbs.brand,
-                'car.model': breadcrumbs.model
-              })}>
-                {breadcrumbs.modification.modelName}
+              <Link to={`/parts?${getQueryString({ model: breadcrumbs.model })}`}>
+                {modification.modelName}
               </Link>
             </BreadcrumbsItem>
             <BreadcrumbsItem last={true}>
-              <Link to={generatePath('/parts', {
-                'car.brand': breadcrumbs.brand,
-                'car.model': breadcrumbs.model,
-                'car.modification': breadcrumbs.modification.id
-              })}>
-                {breadcrumbs.modification.name} {`(${breadcrumbs.modification.yearStart} - ${breadcrumbs.modification.yearEnd})`}
+              <Link to={`/parts?${getQueryString({ model: breadcrumbs.model, modification: id })}`}>
+                {modification.name} {`(${modification.yearStart} - ${modification.yearEnd})`}
               </Link>
             </BreadcrumbsItem>
           </div>

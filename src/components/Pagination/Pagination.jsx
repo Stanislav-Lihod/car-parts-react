@@ -31,7 +31,7 @@ export default function Pagination({pagination}) {
         current_page !== 1 ? (
           <Button
             onClick={()=>{paginationHandler(1)}}
-            bgColor='clear'
+            additionalStyle={['clear']}
           >
             First
           </Button>
@@ -44,8 +44,7 @@ export default function Pagination({pagination}) {
               <Button
                 onClick={()=>{paginationHandler(index + 1)}}
                 key={index}
-                bgColor='clear'
-                additionalStyle={[`${current_page === index + 1 ? 'active' : ''}`]}
+                additionalStyle={[`${current_page === index + 1 ? 'active' : ''}`, 'clear']}
               >
                 {index + 1}
               </Button>
@@ -58,7 +57,7 @@ export default function Pagination({pagination}) {
         current_page !== total_pages && (
           <Button
             onClick={()=>{paginationHandler(total_pages)}}
-            bgColor='clear'
+            additionalStyle={['clear']}
           >
             Last
           </Button>

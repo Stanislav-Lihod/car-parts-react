@@ -72,7 +72,10 @@ export default function Filter({isPartsPage}) {
         disabled={!carFilter.model}
       />
 
-      <Button onClick={searchButton}>
+      <Button
+        additionalStyle={['yellow__blue']}
+        onClick={searchButton}
+      >
         {isPartsPage ? 'Filter Car' : 'Search'}
       </Button>
 

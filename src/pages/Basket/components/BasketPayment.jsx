@@ -11,7 +11,7 @@ export default function BasketPayment({nextStep}) {
 
   useEffect(() => {
     !isAuth && navigate('/user')
-  }, []);
+  }, [isAuth]);
 
   return (
     <div className={style.payment}>
@@ -21,13 +21,13 @@ export default function BasketPayment({nextStep}) {
           <div className={style.paymentMethodItem}>
             <input type="radio" id="card1" name="payment" defaultChecked/>
             <label htmlFor="card1">Ending in : ...1111</label>
-            <img src="https://static-00.iconduck.com/assets.00/mastercard-icon-512x396-e90vsnhk.png" alt="MasterCard" style={{height: "20px"}}/>
+            <img src="/images/mastercard.png" alt="MasterCard" style={{height: "20px"}}/>
           </div>
         </div>
         <div className={style.card}>
           <h3>Method of Receipt</h3>
           <div className={style.methodOfReceiptItem}>
-            <p>{user.first_name} {user.second_name.slice(0, 1)}.</p>
+            <p>{user?.first_name} {user?.second_name?.slice(0, 1) ?? null}.</p>
             <p>
               {`${user.zipCode ?? ''} ${user.city ?? ''} ${user.location ?? ''}`}
             </p>
@@ -42,7 +42,7 @@ export default function BasketPayment({nextStep}) {
         </div>
         <Button
           onClick={nextStep}
-          maxWidth={'w_full'}
+          additionalStyle={['w_full']}
         >
           Pay {totalPrice.totalPrice} €
         </Button>

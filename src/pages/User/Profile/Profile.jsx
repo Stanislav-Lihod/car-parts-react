@@ -15,11 +15,12 @@ export default function Profile(props) {
   const userUpdate = async (e) =>{
     e.preventDefault()
     const formData = Object.fromEntries(new FormData(e.target));
-    const result = await updateUser({body:formData, userId:user.id});
+    const result = await updateUser({userId:user.id, body:formData});
     if (result){
       dispatch(setUser(result))
     }
   }
+
   useEffect(() => {
     if (user.email && user.password){
       trigger({

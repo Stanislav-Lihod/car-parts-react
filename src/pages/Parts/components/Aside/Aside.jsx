@@ -31,8 +31,7 @@ export const Aside = () => {
       ))}
       <Button
         onClick={clearFilter}
-        maxWidth={true}
-        bgColor='clear'
+        additionalStyle={['w_full', 'clear']}
       >
         Clear filters
       </Button>

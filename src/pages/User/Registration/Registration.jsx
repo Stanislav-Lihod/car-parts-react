@@ -30,7 +30,12 @@ export default function Registration({toggleScreen}) {
           <input name='email' type='email' placeholder='Email' required/>
           <input name='password' type='password' placeholder='Password' required/>
           <input name='password_confirm' type='password' placeholder='Confirm password' required/>
-          <Button maxWidth={true} type='submit'>Registration</Button>
+          <Button
+            type='submit'
+            additionalStyle={['w_full']}
+          >
+            Registration
+          </Button>
         </form>
       </div>
       <div className={style.notification}>Do have an account? <span onClick={toggleScreen}>Login</span></div>

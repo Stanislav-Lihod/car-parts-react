@@ -41,7 +41,7 @@ export const Basket = () =>{
 
   return(
     <main className={`${style.basket} container container_short`}>
-      {idPartsInBasket.length > 0 ? (
+      {idPartsInBasket.length > 0 || currentStep === 4? (
         <>
           <div className={style.progress}>
             {steps.map((step, index) => (
