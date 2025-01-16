@@ -3,9 +3,10 @@ import * as style from './Error.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {clearError} from "../../store/redusers/errorSlice";
 import {XCircleIcon} from "@heroicons/react/16/solid";
+import {RootState} from "../../store/store";
 
 function Error() {
-  const message = useSelector((state) => state.error.message);
+  const message = useSelector((state: RootState) => state.error.message) as string | null;
   const dispatch = useDispatch();
   const [active, setActive] = useState(false)
 
@@ -31,7 +32,7 @@ function Error() {
 
   return (
     <div className={`${style.error} ${active ? style.active : ''}`}>
-      <p>{message.replace(/_/g, ' ')}</p>
+      <p>{message ? message.replace(/_/g, ' ') : ''}</p>
       <XCircleIcon className={style.close} onClick={handleClose}/>
     </div>
   );

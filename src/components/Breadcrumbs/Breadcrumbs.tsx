@@ -5,14 +5,26 @@ import {Link} from "react-router-dom";
 import LineSkeleton from "../Preloader/LineSkeleton/LineSkeleton";
 import {useGetCarInfoQuery} from "../../services/PartService";
 
-export const Breadcrumbs = ({id}) => {
+interface BreadcrumbsProps {
+  id: number;
+}
+interface Modification {
+  brandName: string;
+  modelName: string;
+  name: string;
+  yearStart: number;
+  yearEnd: number;
+}
+
+export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ id }) => {
   const {data, isLoading} = useGetCarInfoQuery(id)
   const [breadcrumbs] = data || [];
-  const [modification, setModification] = useState({})
+  const [modification, setModification] = useState<Modification | null>(null);
 
   useEffect(() => {
     if (breadcrumbs){
-      setModification(breadcrumbs.modification.filter(item => item.id === id)[0])
+      const modified = breadcrumbs.modification.filter(item => item.id === id)[0];
+      setModification(modified || null);
     }
   }, [breadcrumbs]);
 
@@ -39,17 +51,17 @@ export const Breadcrumbs = ({id}) => {
             </BreadcrumbsItem>
             <BreadcrumbsItem>
               <Link to={`/parts?${getQueryString()}`}>
-                {modification.brandName}
+                {modification ? modification.brandName : ''}
               </Link>
             </BreadcrumbsItem>
             <BreadcrumbsItem>
               <Link to={`/parts?${getQueryString({ model: breadcrumbs.model })}`}>
-                {modification.modelName}
+                {modification ? modification.modelName : ''}
               </Link>
             </BreadcrumbsItem>
             <BreadcrumbsItem last={true}>
               <Link to={`/parts?${getQueryString({ model: breadcrumbs.model, modification: id })}`}>
-                {modification.name} {`(${modification.yearStart} - ${modification.yearEnd})`}
+                {modification ? `${modification.name} (${modification.yearStart} - ${modification.yearEnd})` : ''}
               </Link>
             </BreadcrumbsItem>
           </div>

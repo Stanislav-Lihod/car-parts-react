@@ -5,11 +5,12 @@ import Search from "./Search/Search";
 import * as style from "./Header.module.scss"
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../../store/redusers/userSlice";
+import {RootState} from "../../store/store";
 
 export const Header = () => {
-  const {counter: basketCounter} = useSelector(state => state.basket)
-  const {counter: wishlistCounter} = useSelector(state => state.wishlist)
-  const {isAuth} = useSelector(state => state.user)
+  const {counter: basketCounter} = useSelector((state:RootState) => state.basket)
+  const {counter: wishlistCounter} = useSelector((state:RootState) => state.wishlist)
+  const {isAuth} = useSelector((state:RootState) => state.user)
   const dispatch = useDispatch()
 
   const logoutUser = () =>{

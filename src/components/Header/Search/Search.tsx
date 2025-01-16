@@ -6,13 +6,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {XMarkIcon} from "@heroicons/react/16/solid";
 import {useLocation, useNavigate} from "react-router-dom";
 import {updateFilter} from "../../../store/redusers/filterSlice";
+import {RootState} from "../../../store/store";
 
 export default function Search({ placeholder }) {
   const location = useLocation();
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [searchLine, setSearchLine] = useState('')
-  const {selectedFilters} = useSelector(state => state.filters)
+  const {selectedFilters} = useSelector((state: RootState) => state.filters)
   const {part_name} = selectedFilters
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export default function Search({ placeholder }) {
     e.preventDefault()
     e.stopPropagation()
     setSearchLine('')
-    dispatch(setCurrentFilter({"part_name": ''}))
+    dispatch(updateFilter({ type: "part_name", value: "" }));
   }
 
   return (

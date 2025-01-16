@@ -32,3 +32,5 @@ export const setupStore = ()=>{
         .concat(partApi.middleware)
   })
 }
+
+export type RootState = ReturnType<typeof rootReducer>;

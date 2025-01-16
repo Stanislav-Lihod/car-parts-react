@@ -1,6 +1,14 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-const initialState = {
+interface FilterState {
+  isLoading: boolean;
+  isCarFilterLoading: boolean;
+  searchParam: string;
+  selectedFilters: Record<string, any>;
+  currentCarFilter: Record<string, any>;
+}
+
+const initialState: FilterState = {
   isLoading: false,
   isCarFilterLoading: false,
   searchParam: '',
@@ -12,13 +20,13 @@ export const filterSlice = createSlice({
   name: 'filters',
   initialState,
   reducers:{
-    setLoading(state, action){
+    setLoading(state, action: PayloadAction<boolean>){
       state.isLoading = action.payload
     },
-    setCarFilterLoading(state, action){
+    setCarFilterLoading(state, action: PayloadAction<boolean>){
       state.isCarFilterLoading = action.payload
     },
-    updateFilter(state, action){
+    updateFilter(state, action: PayloadAction<{ type: string; value: string; isMultipleChoice?: boolean }>){
       delete state.selectedFilters.page
       const { type, value, isMultipleChoice = false } = action.payload;
 
@@ -37,16 +45,17 @@ export const filterSlice = createSlice({
 
       filterSlice.caseReducers.updateSearchParam(state);
     },
-    updateCarFilter(state, action){
-      delete state.selectedFilters.page
-      const clearFilter = {}
-      for(var key in action.payload) {
-        if(action.payload[key] !== '') {
-          clearFilter[key] = action.payload[key]
-        }
-      }
-      state.currentCarFilter = clearFilter
+    updateCarFilter(state, action: PayloadAction<Record<string, string>>) {
+      delete state.selectedFilters.page;
 
+      const clearFilter = Object.entries(action.payload).reduce((acc, [key, value]) => {
+        if (value !== '') {
+          acc[key] = value;
+        }
+        return acc;
+      }, {} as Record<string, string>);
+
+      state.currentCarFilter = clearFilter;
       filterSlice.caseReducers.updateSearchParam(state);
     },
     updateSearchParam(state){
@@ -56,7 +65,7 @@ export const filterSlice = createSlice({
       })
       state.searchParam = decodeURIComponent(searchParams.toString())
     },
-    decodeSearchParams(state, action){
+    decodeSearchParams(state, action: PayloadAction<string>) {
       const searchParams = new URLSearchParams(action.payload);
       const carFilterArray = ['brand', 'model', 'modification']
 
@@ -69,7 +78,13 @@ export const filterSlice = createSlice({
           const values = value.split(',');
           values.forEach(value => {
             if (value !== '') {
-              filterSlice.caseReducers.updateFilter(state, { payload: { type, value, isMultipleChoice: values.length > 1} });
+              filterSlice.caseReducers.updateFilter(
+                state,
+                {
+                  type: 'filters/updateFilter',
+                  payload: { type, value, isMultipleChoice: values.length > 1 },
+                } as PayloadAction<{ type: string; value: string; isMultipleChoice?: boolean }>
+              );
             }
           });
         }

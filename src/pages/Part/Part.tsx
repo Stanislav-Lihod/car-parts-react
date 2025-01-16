@@ -14,13 +14,14 @@ import Loading from "../../components/Preloader/Loading";
 import {updateWishlist} from "../../store/redusers/wishlistSlice";
 import PartDetails from "./components/PartDetails/PartDetails";
 import {useGetPartQuery} from "../../services/PartService";
+import {RootState} from "../../store/store";
 
 export const Part = () =>{
   const navigate = useNavigate()
   const {id} = useParams()
   const dispatch = useDispatch()
-  const {idPartsInBasket} = useSelector(state => state.basket)
-  const {idPartsInWishlist} = useSelector(state => state.wishlist)
+  const {idPartsInBasket} = useSelector((state: RootState)=> state.basket)
+  const {idPartsInWishlist} = useSelector((state: RootState) => state.wishlist)
   const { data, isLoading} = useGetPartQuery(id);
   const [part] = data || [];
   const [inBasket, setInBasket] = useState(false)

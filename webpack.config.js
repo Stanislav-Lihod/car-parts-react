@@ -6,7 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  entry: path.resolve(__dirname, 'src', 'index.jsx'),
+  entry: path.resolve(__dirname, 'src', 'index.tsx'),
   output: {
     filename: "[name].[contenthash:8].js",
     path: path.resolve(__dirname, 'build'),
@@ -14,10 +14,15 @@ module.exports = {
     publicPath: "/"
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },
   module: {
     rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: 'ts-loader',
+      },
       {
         test: /\.(?:js|mjs|cjs|jsx)$/,
         exclude: /node_modules/,

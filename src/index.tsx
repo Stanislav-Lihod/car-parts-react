@@ -8,7 +8,7 @@ import {Provider} from "react-redux";
 import {setupStore} from "./store/store";
 import Error from "./components/Error/Error";
 
-const container = document.getElementById('root');
+const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 const store = setupStore()
