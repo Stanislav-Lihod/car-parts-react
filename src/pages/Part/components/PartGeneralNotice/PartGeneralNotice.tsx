@@ -2,7 +2,7 @@ import React from "react";
 import * as style from './PartGeneralNotice.module.scss'
 export default function PartGeneralNotice({part_name, car_name, part_number}){
   return (
-    <div className={`container ${style.part__description}`}>
+    <div className={`container ${style['part__description']}`}>
       <h2>{car_name} {part_name}: more information</h2>
       <p>In this category you will also find more spare parts such as {car_name} {part_name} {part_number}. View the description and technical information of the spare part you are interested
         in. Buy the required spare part online and we will deliver it to Europe and beyond within a few business days.

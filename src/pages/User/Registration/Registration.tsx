@@ -17,10 +17,10 @@ export default function Registration({toggleScreen}) {
   };
 
   return (
-    <div className={style.registration}>
+    <div className={style['registration']}>
       <div>
         <form onSubmit={onRegistration}>
-          <div className={style.title}>
+          <div className={style['title']}>
             <CheckBadgeIcon/>
             Registration
           </div>
@@ -38,7 +38,7 @@ export default function Registration({toggleScreen}) {
           </Button>
         </form>
       </div>
-      <div className={style.notification}>Do have an account? <span onClick={toggleScreen}>Login</span></div>
+      <div className={style['notification']}>Do have an account? <span onClick={toggleScreen}>Login</span></div>
     </div>
 )
   ;

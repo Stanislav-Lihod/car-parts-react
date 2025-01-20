@@ -23,11 +23,11 @@ export const Login = ({toggleScreen}) =>{
   };
 
   return (
-    <div className={style.login}>
+    <div className={style['login']}>
       <div>
         <form onSubmit={onLogin}>
 
-          <div className={style.title}>
+          <div className={style['title']}>
             <UserIcon/>
             Login
           </div>
@@ -42,7 +42,7 @@ export const Login = ({toggleScreen}) =>{
           </Button>
         </form>
       </div>
-      <div className={style.notification}>Don’t have an account? <span onClick={toggleScreen}>Register now</span></div>
+      <div className={style['notification']}>Don’t have an account? <span onClick={toggleScreen}>Register now</span></div>
     </div>
   );
 }

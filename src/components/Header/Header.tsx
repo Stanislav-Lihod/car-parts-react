@@ -18,41 +18,41 @@ export const Header = () => {
   }
 
   return (
-    <header className={style.header}>
-      <div className={`container ${style.content}`}>
-        {/*<div className={style.header__top}>*/}
+    <header className={style['header']}>
+      <div className={`container ${style['content']}`}>
+        {/*<div className={style['header__top']}>*/}
         {/*  <Link to={"/delivery"} className="hover:underline">Delivery</Link>*/}
         {/*  <Link to={"/returns"} className="hover:underline">Returns</Link>*/}
         {/*  <Link to={"/payment"} className="hover:underline">Payment</Link>*/}
         {/*  <Link to={"/contacts"} className="hover:underline">Contacts</Link>*/}
         {/*  <Link to={"/sell"} className="hover:underline">Sell</Link>*/}
         {/*</div>*/}
-        <div className={style.header__bottom}>
+        <div className={style['header__bottom']}>
           <Link to={'/'}>
             <img src="/images/logo.png" alt="Logo" width={80} height={55}/>
           </Link>
 
           <Search placeholder="Enter the part name"/>
-          <div className={style.user_action}>
-            <div className={style.user}>
-              <Link className={isAuth ? style.isAuth : ''} to={"/user"}>
+          <div className={style['user_action']}>
+            <div className={style['user']}>
+              <Link className={isAuth ? style['isAuth'] : ''} to={"/user"}>
                 <UserIcon className="w-6"/>
               </Link>
               { isAuth ? (
-                <div className={style.user_menu}>
+                <div className={style['user_menu']}>
                   <div onClick={logoutUser}>logout</div>
                 </div>
               ): null}
             </div>
             <Link to={"/wishlist"}>
               {
-                wishlistCounter > 0 ? (<span className={style.counter}>{wishlistCounter}</span>) : null
+                wishlistCounter > 0 ? (<span className={style['counter']}>{wishlistCounter}</span>) : null
               }
               <HeartIcon className="w-6"/>
             </Link>
             <Link to={"/basket"}>
               {
-                basketCounter > 0 ? (<span className={style.counter}>{basketCounter}</span>) : null
+                basketCounter > 0 ? (<span className={style['counter']}>{basketCounter}</span>) : null
               }
               <ShoppingCartIcon className="w-6"/>
             </Link>

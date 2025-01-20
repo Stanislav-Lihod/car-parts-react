@@ -6,6 +6,7 @@ import {updateBasket} from "../../store/redusers/basketSlice";
 import {useDispatch, useSelector} from "react-redux";
 import IconButton from "../Button/IconButton";
 import {updateWishlist} from "../../store/redusers/wishlistSlice";
+import {RootState} from "../../store/store";
 
 export default function PreviewPart({id, part}){
   const navigate = useNavigate();
@@ -21,8 +22,8 @@ export default function PreviewPart({id, part}){
 
   const [inBasket, setInBasket] = useState(false)
   const [inWishlist, setInWishlist] = useState(false)
-  const {idPartsInBasket} = useSelector(state => state.basket)
-  const {idPartsInWishlist} = useSelector(state => state.wishlist)
+  const {idPartsInBasket} = useSelector((state:RootState) => state.basket)
+  const {idPartsInWishlist} = useSelector((state:RootState) => state.wishlist)
 
   useEffect(() => {
     setInBasket(idPartsInBasket.includes(id))
@@ -54,30 +55,30 @@ export default function PreviewPart({id, part}){
   return(
     <Link
       to={`/used-part/${id}`}
-      className={style.link}
+      className={style['link']}
     >
-      <div className={`${style.part} ${inBasket || inWishlist ? style.active : ''}`}>
-        <div className={style.image}>
+      <div className={`${style['part']} ${inBasket || inWishlist ? style['active'] : ''}`}>
+        <div className={style['image']}>
           <img
             src={image.full}
             alt={`${part_name}, ${description}`}
           />
         </div>
-        <div className={style.content}>
-          <h2 className={style.content__title}>{part_name}</h2>
-          <div className={style.content__description} dangerouslySetInnerHTML={{__html: description}}/>
-          <div className={style.content__price}>{price_final}</div>
-          <div className={style.content__fee}>+ Service Fee</div>
-          <div className={style.content__fee}>+ Delivery: {delivery_price}</div>
+        <div className={style['content']}>
+          <h2 className={style['content__title']}>{part_name}</h2>
+          <div className={style['content__description']} dangerouslySetInnerHTML={{__html: description}}/>
+          <div className={style['content__price']}>{price_final}</div>
+          <div className={style['content__fee']}>+ Service Fee</div>
+          <div className={style['content__fee']}>+ Delivery: {delivery_price}</div>
           {}
-          <div className={style.content__seller}>
+          <div className={style['content__seller']}>
             {scrapheap.top_seller && <span><TrophyIcon/> Top seller </span>}
             {scrapheap.title}
           </div>
-          <div className={style.content__region}>
+          <div className={style['content__region']}>
             {scrapheap.city !== '' ? `${scrapheap.city},` : null} {scrapheap.country}
           </div>
-          <div className={style.actions}>
+          <div className={style['actions']}>
 
             <IconButton
               additionalClass={[`${inWishlist ? 'inBasket': ''}`]}

@@ -3,10 +3,11 @@ import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import AddressSkeleton from "../../../components/Preloader/AdressSkeleton/AddressSkeleton";
 import * as style from './BasketAddress.module.scss'
+import {RootState} from "../../../store/store";
 
 export default function BasketAddress() {
   const navigate = useNavigate()
-  const {isAuth, isLoading, user} = useSelector(state => state.user)
+  const {isAuth, isLoading, user} = useSelector((state:RootState) => state.user)
 
   useEffect(() => {
     !isAuth && navigate('/user')
@@ -17,7 +18,7 @@ export default function BasketAddress() {
       {isLoading ? (
         <AddressSkeleton/>
       ):(
-        <form className={style.form}>
+        <form className={style['form']}>
           <input type={'text'} value={user.location} readOnly={true}/>
           <input type={'text'} placeholder={'City'} defaultValue={user.city}/>
           <input type={'text'} placeholder={'Address'} defaultValue={user.address}/>

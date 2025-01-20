@@ -4,9 +4,9 @@ import {HandThumbUpIcon} from "@heroicons/react/24/outline";
 
 export default function RiskNotification(props) {
   return (
-    <section className={style.notification}>
-      <div className={style.content}>
-        <div className={style.icon}>
+    <section className={style['notification']}>
+      <div className={style['content']}>
+        <div className={style['icon']}>
           <HandThumbUpIcon/>
         </div>
         Risk free shopping<br/>

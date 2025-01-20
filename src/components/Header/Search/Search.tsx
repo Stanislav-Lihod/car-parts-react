@@ -41,12 +41,12 @@ export default function Search({ placeholder }) {
   }
 
   return (
-    <form onSubmit={search} className={style.search}>
-      <label htmlFor="search" className={style.search__label}>
+    <form onSubmit={search} className={style['search']}>
+      <label htmlFor="search" className={style['search__label']}>
         Search
       </label>
       <input
-        className={style.search__input}
+        className={style['search__input']}
         placeholder={placeholder}
         value={searchLine}
         onChange={(e)=>{
@@ -62,7 +62,7 @@ export default function Search({ placeholder }) {
       {searchLine.length > 0 ? (
         <span
           onClick={clearSearch}
-          className={style.close}>
+          className={style['close']}>
           <XMarkIcon style={{width: '16px'}}/>
         </span>
       ): null}

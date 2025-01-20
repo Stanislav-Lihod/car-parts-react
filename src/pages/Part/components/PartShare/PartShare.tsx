@@ -10,12 +10,12 @@ export default function PartShare({id, wishlistHandler, inWishlist}){
   }
 
   return (
-    <div className={style.partshare}>
+    <div className={style['partshare']}>
       <p>Item code in system: <Link to={`/used-part/${id}`}>{id}</Link></p>
-      <div className={style.partshare__social}>
+      <div className={style['partshare__social']}>
         <HeartIcon
           onClick={wishlistHandler}
-          className={`w-6 ${inWishlist ? style.active : ''}`}/>
+          className={`w-6 ${inWishlist ? style['active'] : ''}`}/>
         <Square2StackIcon
           onClick={copy}
           className="w-6"/>

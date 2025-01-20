@@ -51,7 +51,7 @@ export const Part = () =>{
   }
 
   return(
-    <main className={style.part}>
+    <main className={style['part']}>
       {
         isLoading ? (
           <Loading/>
@@ -60,17 +60,17 @@ export const Part = () =>{
             <Breadcrumbs id={part.modification}/>
             {
               part ? (
-                <div className={`container ${style.main}`}>
-                  <div className={style.main__general}>
+                <div className={`container ${style['main']}`}>
+                  <div className={style['main__general']}>
                     <img
                       src={part.image.full}
                       alt={part.part_name}
                     />
                     <RiskNotification/>
                   </div>
-                  <div className={style.main__description}>
+                  <div className={style['main__description']}>
                     <h1>{part.manufacturer} - {part.part_name.toUpperCase()}</h1>
-                    <div className={style.main__description__seller}>
+                    <div className={style['main__description__seller']}>
                       {part.scrapheap.top_seller ? (<span>Top seller </span>): null}
                       {part.scrapheap.title}
                     </div>
@@ -80,11 +80,11 @@ export const Part = () =>{
                       inWishlist={inWishlist}
                     />
 
-                    <div className={style.price}>
-                      <div className={style.price__general}>{part.price_final}</div>
+                    <div className={style['price']}>
+                      <div className={style['price__general']}>{part.price_final}</div>
                       <span>incl. VAT</span>
-                      <div className={style.price__fee}>+ Service Fee: {part.service_fee} €</div>
-                      <div className={style.price__fee}>+ Delivery: {part.delivery_price}</div>
+                      <div className={style['price__fee']}>+ Service Fee: {part.service_fee} €</div>
+                      <div className={style['price__fee']}>+ Delivery: {part.delivery_price}</div>
                     </div>
 
                     <Button

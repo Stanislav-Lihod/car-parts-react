@@ -6,10 +6,11 @@ import {filtersData} from "./initialFilters";
 import CheckboxFilter from "./CheckboxFilter";
 import SelectFilter from "./SelectFilter";
 import {Button} from "../../../../components/Button/Button";
+import {RootState} from "../../../../store/store";
 
 export const Aside = () => {
   const dispatch = useDispatch();
-  const {selectedFilters} = useSelector((state) => state.filters);
+  const {selectedFilters} = useSelector((state: RootState) => state.filters);
 
   const filterUpdate = (type, value, isMultipleChoice = false)=>{
     dispatch(updateFilter({ type, value, isMultipleChoice}));
@@ -20,7 +21,7 @@ export const Aside = () => {
   }
 
   return (
-    <aside className={style.aside}>
+    <aside className={style['aside']}>
       {filtersData.map((filter) => (
         <FilterGroup
           key={filter.type}

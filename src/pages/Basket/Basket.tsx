@@ -9,11 +9,12 @@ import BasketParts from "./components/BasketParts";
 import BasketAddress from "./components/BasketAddress";
 import BasketPayment from "./components/BasketPayment";
 import BasketApprove from "./components/BasketApprove";
+import {RootState} from "../../store/store";
 
 export const Basket = () =>{
   const navigate = useNavigate()
-  const {isAuth} = useSelector(state => state.user)
-  const {idPartsInBasket} = useSelector(state => state.basket)
+  const {isAuth} = useSelector((state:RootState) => state.user)
+  const {idPartsInBasket} = useSelector((state:RootState) => state.basket)
   const [currentStep, setCurrentStep] = useState(0);
   const steps = [
     {icon: <ShoppingCartIcon/>, template: <BasketParts/>, title: 'Shopping cart', button_name: 'Continue'},
@@ -40,15 +41,15 @@ export const Basket = () =>{
   }
 
   return(
-    <main className={`${style.basket} container container_short`}>
+    <main className={`${style['basket']} container container_short`}>
       {idPartsInBasket.length > 0 || currentStep === 4? (
         <>
-          <div className={style.progress}>
+          <div className={style['progress']}>
             {steps.map((step, index) => (
               <div
                 onClick={()=>progressClick(index)}
                 key={index}
-                className={`${style.item} ${index <= currentStep ? style.active : ''}`}
+                className={`${style['item']} ${index <= currentStep ? style['active'] : ''}`}
               >
                 {step.icon}
               </div>
@@ -56,7 +57,7 @@ export const Basket = () =>{
           </div>
 
           {
-            steps[currentStep].title ? <div className={style.title}>{steps[currentStep].title}</div> : null
+            steps[currentStep].title ? <div className={style['title']}>{steps[currentStep].title}</div> : null
           }
 
           {steps[currentStep].template}

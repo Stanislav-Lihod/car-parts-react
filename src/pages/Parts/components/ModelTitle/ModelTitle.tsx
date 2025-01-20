@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 import * as style from './ModelTitle.module.scss'
 import LineSkeleton from "../../../../components/Preloader/LineSkeleton/LineSkeleton";
 import {useSelector} from "react-redux";
+import {RootState} from "../../../../store/store";
 
 export default function ModelTitle () {
-  const {currentCar} = useSelector(state => state.filters)
+  // const {currentCar} = useSelector((state:RootState) => state.filters)
   const [carsLine, setCarsLine] = useState('')
 
   // useEffect(()=>{
@@ -16,9 +17,9 @@ export default function ModelTitle () {
   // }, [searchParam])
 
   return (
-    <section className={style.model}>
+    <section className={style['model']}>
       <div className="container">
-        <div className={style.model__content}>
+        <div className={style['model__content']}>
           Used {carsLine} car parts search
         </div>
       </div>

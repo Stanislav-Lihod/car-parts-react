@@ -3,40 +3,41 @@ import {useSelector} from "react-redux";
 import Empty from "../../../components/Empty/Empty";
 import {Link} from "react-router-dom";
 import * as style from './Order.module.scss'
+import {RootState} from "../../../store/store";
 
 export default function Orders() {
-  const {user} = useSelector(state => state.user)
+  const {user} = useSelector((state:RootState) => state.user)
   const {orders} = user
 
   return (
     <>
       {orders ? (
         <div>
-          <div className={style.head}>
-            <div className={style.item}>
-              <div className={style.number}>Order No</div>
+          <div className={style['head']}>
+            <div className={style['item']}>
+              <div className={style['number']}>Order No</div>
               <div>Date</div>
-              <div className={style.amount}>Amount</div>
+              <div className={style['amount']}>Amount</div>
             </div>
           </div>
-          <div className={style.items}>
+          <div className={style['items']}>
             {orders.map(order => {
               const date = new Date(order.date);
               const formattedDate = date.toISOString().replace('T', ' ').slice(0, 19);
               return (
                 <div key={order.id}>
-                  <div className={style.item}>
-                    <div className={style.number}># {order.id}</div>
+                  <div className={style['item']}>
+                    <div className={style['number']}># {order.id}</div>
                     <div>{formattedDate}</div>
-                    <div className={style.amount}>{order.totalPrice} €</div>
+                    <div className={style['amount']}>{order.totalPrice} €</div>
                   </div>
-                  <div className={style.body}>
+                  <div className={style['body']}>
                     {
                       order.parts.map(part =>(
-                        <div className={`${style.item} ${style.part}`} key={part.id}>
+                        <div className={`${style['item']} ${style['part']}`} key={part.id}>
                           <img src={part.image} alt={part.name}/>
-                          <div className={style.name}>{part.id} - {part.name}</div>
-                          <div className={style.amount}>{part.price}</div>
+                          <div className={style['name']}>{part.id} - {part.name}</div>
+                          <div className={style['amount']}>{part.price}</div>
                         </div>
                       ))
                     }

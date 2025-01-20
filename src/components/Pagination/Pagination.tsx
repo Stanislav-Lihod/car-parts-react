@@ -17,7 +17,7 @@ export default function Pagination({pagination}) {
   }
 
   return (
-    <section className={style.pagination}>
+    <section className={style['pagination']}>
       {
         current_page !== 1 ? (
           <Button

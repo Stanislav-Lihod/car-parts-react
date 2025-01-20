@@ -37,12 +37,12 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ id }) => {
   };
 
   return (
-    <section className={style.breadcrumbs}>
+    <section className={style['breadcrumbs']}>
       <div className='container'>
         {isLoading ? (
           <LineSkeleton length={'short'} />
         ) : (
-          <div className={style.breadcrumbs__content}>
+          <div className={style['breadcrumbs__content']}>
             <BreadcrumbsItem>
               <Link to={'/'}>Home</Link>
             </BreadcrumbsItem>

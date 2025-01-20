@@ -14,13 +14,13 @@ export const getCarApi = createApi({
       })(args, api, extraOptions);
 
       if (result.error) {
-        dispatch(setError(result.error.data?.message || 'An error occurred'))
+        const error = result.error as { data?: { message?: string } };
+        dispatch(setError(error.data?.message || 'An error occurred'));
       }
 
       return result;
-    } catch (error) {
-      dispatch(setError(error.message || 'An unexpected error occurred'))
-      throw error;
+    } catch (e: unknown) {
+      dispatch(setError(e instanceof Error ? e.message : 'An unknown error occurred'));
     } finally {
       dispatch(setCarFilterLoading(false));
     }

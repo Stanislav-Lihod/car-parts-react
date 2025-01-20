@@ -4,7 +4,7 @@ import LineSkeleton from "../LineSkeleton/LineSkeleton";
 
 export default function AddressSkeleton(props) {
   return (
-    <div className={style.skeleton}>
+    <div className={style['skeleton']}>
       <div>
         <LineSkeleton/>
         <LineSkeleton/>

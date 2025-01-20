@@ -1,10 +1,27 @@
 import React from 'react';
 import * as style from "../Filter.module.scss";
+interface FilterOption {
+  id: string | number;
+  name?: string;
+  title?: string;
+  brand?: string;
+  yearStart?: number;
+  yearEnd?: number;
+}
 
-function FilterSelect({ options, value, onChange, name, disabled, defaultOption }) {
+interface FilterSelectProps {
+  options: FilterOption[];
+  value: string | number;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  name?: string;
+  disabled?: boolean;
+  defaultOption?: string;
+}
+
+function FilterSelect({ options, value, onChange, name, disabled, defaultOption }:FilterSelectProps) {
   return (
     <select
-      className={style.select}
+      className={style['select']}
       name={name}
       value={value}
       onChange={onChange}
@@ -14,10 +31,10 @@ function FilterSelect({ options, value, onChange, name, disabled, defaultOption 
       {options?.map((item) => (
         <option
           value={item.id}
-          name={item.name || item.title || item.brand}
           key={item.id}
         >
-          {item.name || item.title || item.brand} {item.yearStart && item.yearEnd ? `(${item.yearStart} - ${item.yearEnd})` : ''}
+          {item.name || item.title || item.brand}
+          {item.yearStart && item.yearEnd ? ` (${item.yearStart} - ${item.yearEnd})` : ''}
         </option>
       ))}
     </select>

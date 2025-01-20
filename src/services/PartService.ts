@@ -14,9 +14,8 @@ export const partApi = createApi({
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch (error) {
-          const errorMessage = error.error?.data?.message || 'An error occurred';
-          dispatch(setError(errorMessage));
+        } catch (e: unknown) {
+          dispatch(setError(e instanceof Error ? e.message : 'An unknown error occurred'));
         }
       },
     }),
@@ -27,9 +26,8 @@ export const partApi = createApi({
       async onQueryStarted(id, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch (error) {
-          const errorMessage = error.error?.data?.message || 'An error occurred';
-          dispatch(setError(errorMessage));
+        } catch (e: unknown) {
+          dispatch(setError(e instanceof Error ? e.message : 'An unknown error occurred'));
         }
       },
     })

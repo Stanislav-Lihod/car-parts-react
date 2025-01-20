@@ -4,10 +4,11 @@ import {Button} from "../../../components/Button/Button";
 import * as style from './Profile.module.scss'
 import {setUser} from "../../../store/redusers/userSlice";
 import {useLazyCheckUserQuery, useUpdateUserMutation} from "../../../services/UserService";
+import {RootState} from "../../../store/store";
 
 export default function Profile() {
   const dispatch = useDispatch()
-  const {user} = useSelector(state => state.user)
+  const {user} = useSelector((state:RootState) => state.user)
   const [updateUser] = useUpdateUserMutation();
   const [trigger, { data: authData}] = useLazyCheckUserQuery();
 
@@ -36,21 +37,21 @@ export default function Profile() {
   }, [authData])
 
   return (
-    <form onSubmit={userUpdate} className={style.profile}>
-      <div className={style.item}>
+    <form onSubmit={userUpdate} className={style['profile']}>
+      <div className={style['item']}>
         <h3>Edit Profile</h3>
-        <div className={style.content}>
+        <div className={style['content']}>
           <input type='text' name="first_name" placeholder="First name" defaultValue={user.first_name}/>
           <input type='text' name="second_name" placeholder="Second name" defaultValue={user.second_name}/>
           <input type='text' name="location" placeholder="Location" defaultValue={user.location} readOnly={true}/>
           <input type='text' name="city" placeholder="City" defaultValue={user.city}/>
-          <input type='text' name="address" placeholder="Adress" defaultValue={user.adress}/>
+          <input type='text' name="address" placeholder="Address" defaultValue={user.address}/>
           <input type='phone' name="phone_number" placeholder="Phone number" defaultValue={user.phone_number}/>
         </div>
       </div>
-      <div className={style.item}>
+      <div className={style['item']}>
         <h3>Change Password</h3>
-        <div className={style.content}>
+        <div className={style['content']}>
           <input type='password' placeholder="Password"/>
           <input type='password' placeholder="Repeat Password"/>
         </div>

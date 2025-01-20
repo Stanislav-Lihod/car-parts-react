@@ -10,9 +10,9 @@ interface BreadcrumbsItemProps {
 export const BreadcrumbsItem = ({children, last}: BreadcrumbsItemProps) => {
 
   return (
-    <span className={style.breadcrumbs__item}>
+    <span className={style['breadcrumbs__item']}>
       {children}
-      {!last ? <ArrowRightIcon className={style.breadcrumbs__arrow}/> : null}
+      {!last ? <ArrowRightIcon className={style['breadcrumbs__arrow']}/> : null}
     </span>
   );
 };

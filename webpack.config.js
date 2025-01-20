@@ -45,7 +45,7 @@ module.exports = {
             options: {
               modules: {
                 auto: (resourcePath) => Boolean(resourcePath.includes('.module.')),
-                localIdentName: '[hash:base64:8]'
+                localIdentName: '[hash:base64:8]',
               },
             }
           },

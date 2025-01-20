@@ -6,22 +6,28 @@ import FilterSelect from "./components/FilterSelect";
 import {Button} from "../../../../components/Button/Button";
 import {useFetchBrandsQuery, useFetchModelsQuery, useFetchModificationQuery} from "../../../../services/GetCarsService";
 import {updateCarFilter} from "../../../../store/redusers/filterSlice";
+import {RootState} from "../../../../store/store";
 
-export default function Filter({isPartsPage}) {
+interface FilterProps{
+  isPartsPage: boolean;
+}
+
+export default function Filter({isPartsPage}: FilterProps) {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const [carFilter, setCarFilter] = useState({  brand: '', model: '', modification: '' });
-  const { isCarFilterLoading: isLoading ,currentCarFilter} = useSelector(state => state.filters)
+  const { isCarFilterLoading: isLoading ,currentCarFilter} = useSelector((state:RootState) => state.filters)
   const { data: brands} = useFetchBrandsQuery();
   const { data: models} = useFetchModelsQuery(carFilter.brand, {
     skip: carFilter.brand === '',
   });
   const { data: modifications } = useFetchModificationQuery(
     { brand: carFilter.brand, model: carFilter.model },
-    {skip: carFilter.brand === ''  || carFilter.model === ''});
+    { skip: carFilter.brand === ''  || carFilter.model === '' }
+  );
 
   useEffect(() => {
-    setCarFilter({...carFilter,...currentCarFilter})
+    setCarFilter({...carFilter, ...currentCarFilter})
   }, [currentCarFilter]);
 
   const searchButton = (e) =>{
@@ -32,7 +38,7 @@ export default function Filter({isPartsPage}) {
   }
 
   return (
-    <section className={`${style.section} ${isLoading ? style.loading : ''}`}>
+    <section className={`${style['section']} ${isLoading ? style['loading'] : ''}`}>
       <FilterSelect
         name="brand"
         value={carFilter.brand}
@@ -65,7 +71,6 @@ export default function Filter({isPartsPage}) {
       <FilterSelect
         name="modification"
         value={carFilter.modification}
-        // onChange={(e) => dispatch(setCurrentModification(e.target.value))}
         onChange={(e) => setCarFilter({...carFilter, modification: e.target.value})}
         defaultOption="Modification"
         options={modifications ? modifications[0].modification : []}

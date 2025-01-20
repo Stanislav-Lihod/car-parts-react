@@ -8,17 +8,17 @@ import {useFetchPartsQuery} from "../../services/PartsService";
 
 export const Main = () =>{
   const dispatch = useDispatch()
-  const { data} = useFetchPartsQuery()
+  const { data} = useFetchPartsQuery({})
 
   useEffect(()=>{
     dispatch(clearFilters())
   }, [dispatch])
 
   return (
-    <main className={style.head}>
-      <div className={`container ${style.content}`}>
+    <main className={style['head']}>
+      <div className={`container ${style['content']}`}>
         <h1>Used car parts online from <span>3,681</span> European sellers</h1>
-        <div className={style.content__desc}>
+        <div className={style['content__desc']}>
           Choose from <span>{
             data?.meta.total_items ? (
               data?.meta.total_items
@@ -27,7 +27,7 @@ export const Main = () =>{
             )
           }</span> competitively priced used car parts in one marketplace
         </div>
-        <Filter/>
+        <Filter isPartsPage={false}/>
       </div>
     </main>
   )

@@ -6,71 +6,104 @@ import {hideCounter, removeBasket} from "../../../store/redusers/basketSlice";
 import {useNavigate} from "react-router-dom";
 import {useLazyCheckUserQuery, useUpdateUserMutation} from "../../../services/UserService";
 import {setUser} from "../../../store/redusers/userSlice";
+import {RootState} from "../../../store/store";
 
+interface Order {
+  id: number;
+  totalPrice: number;
+  date: number;
+  parts: Part[];
+}
+
+interface User {
+  id: number;
+  email: string;
+  password: string;
+  orders?: Order[];
+}
+
+interface Part {
+  part_id: number;
+  image: {
+    thumb: string;
+  };
+  part_name: string;
+  price_final: number;
+}
 export default function BasketApprove() {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const {isAuth, isLoading, user} = useSelector(state => state.user)
-  const {basketParts, totalPrice} = useSelector(state => state.basket)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { isAuth, isLoading, user } = useSelector((state: RootState) => state.user) as { user: User; isAuth: boolean; isLoading: boolean };
+  const { basketParts, totalPrice } = useSelector((state: RootState) => {
+    const { basketParts, totalPrice } = state.basket;
+    const normalizedParts = basketParts.map((part: any) => ({
+      part_id: part.id,
+      image: { thumb: part.image },
+      part_name: part.name,
+      price_final: part.price,
+    }));
+    return { basketParts: normalizedParts, totalPrice };
+  }) as { basketParts: Part[]; totalPrice: { totalPrice: number } };
+
   const [updateUser] = useUpdateUserMutation();
-  const [trigger, { data: authData}] = useLazyCheckUserQuery();
+  const [trigger, { data: authData }] = useLazyCheckUserQuery();
 
   useEffect(() => {
-    !isAuth && navigate('/user')
+    if (!isAuth) navigate('/user');
 
-    const currentUserOrders = user.orders ?? []
-    const currentParts = basketParts.map(part => {
-      return {
-        id: part.part_id,
-        image: part.image.thumb,
-        name: part.part_name,
-        price: part.price_final
-      }
-    })
+    const currentParts: Part[] = basketParts.map(part => ({
+      part_id: part.part_id,
+      image: part.image,
+      part_name: part.part_name,
+      price_final: part.price_final,
+    }));
 
-    const orders = [...currentUserOrders,
-      { id: Date.now(),
+    const orders: Order[] = [
+      ...(user.orders ?? []),
+      {
+        id: Date.now(),
         totalPrice: totalPrice.totalPrice,
         date: Date.now(),
-        parts: currentParts
-      }]
+        parts: currentParts,
+      },
+    ];
 
-    userUpdate(orders)
+    userUpdate(orders);
 
-    dispatch(hideCounter())
+    dispatch(hideCounter());
 
-    return () => dispatch(removeBasket())
+    return () => {
+      dispatch(removeBasket());
+    };
   }, []);
 
   useEffect(() => {
-    if (user.email && user.password){
-      trigger({
-        email: user.email,
-        password: user.password,
-      })
+    if (user.email && user.password) {
+      trigger({ email: user.email, password: user.password });
     }
   }, [user]);
 
-  useEffect(()=>{
-    if (authData){
-      dispatch(setUser(authData))
+  useEffect(() => {
+    if (authData) {
+      dispatch(setUser(authData));
     }
-  }, [authData])
+  }, [authData]);
 
-  const userUpdate = async (orders) =>{
-    const result = await updateUser({userId:user.id, body: {...user, orders}});
-    if (result){
-      dispatch(setUser(result))
+  const userUpdate = async (orders: Order[]) => {
+    const result = await updateUser({ userId: user.id, body: { ...user, orders } });
+    if ('data' in result && result.data) {
+      dispatch(setUser(result.data as User));
     }
-  }
+  };
 
   return (
     <>
       {isLoading ? (
         'Loading'
-      ):(
-        <div className={style.approve}>
-          <CheckBadgeIcon/>
+      ) : (
+        <div className={style['approve']}>
+          <CheckBadgeIcon />
           <h2>Your order {Date.now()} was created</h2>
         </div>
       )}

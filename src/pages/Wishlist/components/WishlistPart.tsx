@@ -7,12 +7,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {updateBasket} from "../../../store/redusers/basketSlice";
 import {updateWishlist} from "../../../store/redusers/wishlistSlice";
 import {XMarkIcon} from "@heroicons/react/16/solid";
+import {RootState} from "../../../store/store";
 
 export default function WishlistPart({part}) {
   const dispatch = useDispatch()
   const  navigate = useNavigate()
   const [isInBasket, setIsInBasket] = useState(false)
-  const {idPartsInBasket} = useSelector(state => state.basket)
+  const {idPartsInBasket} = useSelector((state:RootState) => state.basket)
 
   useEffect(() => {
     setIsInBasket(idPartsInBasket.includes(part.part_id))
@@ -34,24 +35,24 @@ export default function WishlistPart({part}) {
   }
 
   return (
-    <div className={style.part}>
-      <div className={style.part__general}>
+    <div className={style['part']}>
+      <div className={style['part__general']}>
         <Link to={`/used-part/${part.part_id}`}>
           <img src={part.image.thumb} alt={part.part_name}/>
         </Link>
-        <div className={style.part__general__content}>
-          <div className={style.part__general__title}>{part.part_name}</div>
-          <div className={style.part__general__code}>Item code in system: <Link to={`/used-part/${part.part_id}`}>{part.part_id}</Link></div>
-          <div className={style.part__general__seller}>{part.scrapheap.title}</div>
+        <div className={style['part__general__content']}>
+          <div className={style['part__general__title']}>{part.part_name}</div>
+          <div className={style['part__general__code']}>Item code in system: <Link to={`/used-part/${part.part_id}`}>{part.part_id}</Link></div>
+          <div className={style['part__general__seller']}>{part.scrapheap.title}</div>
         </div>
       </div>
       <div
-        className={style.description}
+        className={style['description']}
         dangerouslySetInnerHTML={{__html: part.description}}/>
       <div
-        className={style.actions}
+        className={style['actions']}
       >
-        <div className={style.price}>{part.price_final}</div>
+        <div className={style['price']}>{part.price_final}</div>
         <IconButton
           additionalClass={[`${isInBasket ? 'inBasket' : ''}`]}
           style={{

@@ -4,8 +4,8 @@ import * as style from './CarFilter.module.scss'
 
 function CarFilter() {
   return (
-    <section className={style.filter}>
-      <div className={style.filter__title}>Car</div>
+    <section className={style['filter']}>
+      <div className={style['filter__title']}>Car</div>
       <Filter isPartsPage={true}/>
     </section>
   );

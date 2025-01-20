@@ -31,9 +31,9 @@ function Error() {
   };
 
   return (
-    <div className={`${style.error} ${active ? style.active : ''}`}>
+    <div className={`${style['error']} ${active ? style['active'] : ''}`}>
       <p>{message ? message.replace(/_/g, ' ') : ''}</p>
-      <XCircleIcon className={style.close} onClick={handleClose}/>
+      <XCircleIcon className={style['close']} onClick={handleClose}/>
     </div>
   );
 }

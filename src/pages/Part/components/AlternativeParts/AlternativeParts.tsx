@@ -8,8 +8,6 @@ export default function AlternativeParts(){
   return (
     <div className="container mt-8 mb-8 gap-3 flex flex-col">
       <h2 className="text-lg font-bold">Alternative offers for <Link className="text-cyan-700" to={`/search?q=${partCode}`}>{partCode}</Link></h2>
-      <Part id={123}/>
-      <Part id={321}/>
     </div>
   )
 }

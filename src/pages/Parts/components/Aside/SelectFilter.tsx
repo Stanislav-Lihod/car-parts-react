@@ -13,9 +13,9 @@ export default function SelectFilter({filter, selectedFilters, onFilterChange}) 
   const optionValues = generateOptions(filter.options.min, filter.options.max, filter.options.range, filter.options.reverse);
 
   return (
-    <div className={style.group}>
+    <div className={style['group']}>
       <h4>{filter.name}</h4>
-      <div className={style.range}>
+      <div className={style['range']}>
         <select
           value={selectedFilters[filter.type + '[from]'] || ''}
           onChange={(e) => onFilterChange(filter.type + '[from]', e.target.value)}

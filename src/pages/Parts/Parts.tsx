@@ -15,6 +15,7 @@ import PartsSkeleton from "../../components/Preloader/PartsSkeleton/PartsSkeleto
 import LineSkeleton from "../../components/Preloader/LineSkeleton/LineSkeleton";
 import Pagination from "../../components/Pagination/Pagination";
 import {useFetchPartsQuery} from "../../services/PartsService";
+import {RootState} from "../../store/store";
 
 export const Parts = () =>{
   const dispatch = useDispatch()
@@ -24,7 +25,7 @@ export const Parts = () =>{
     selectedFilters,
     searchParam,
     currentCarFilter
-  } = useSelector(state => state.filters)
+  } = useSelector((state:RootState) => state.filters)
 
   const [totalParts, setTotalParts] = useState(0)
   const { data} = useFetchPartsQuery({...selectedFilters, ...currentCarFilter})
@@ -48,14 +49,14 @@ export const Parts = () =>{
   };
 
   return(
-    <main className={style.main}>
+    <main className={style['main']}>
       <ModelTitle/>
-      <div className={`container ${style.content}`}>
+      <div className={`container ${style['content']}`}>
         <Aside/>
-        <div className={style.content__general}>
+        <div className={style['content__general']}>
           <CarFilter />
           <div>
-            <div className={style.content__sortBlock}>
+            <div className={style['content__sortBlock']}>
               {isLoading? (
                 <LineSkeleton length={'medium'}/>
               ): (
@@ -72,7 +73,7 @@ export const Parts = () =>{
               </select>
             </div>
 
-            <div className={style.part__list}>
+            <div className={style['part__list']}>
 
               {isLoading ? (
                 Array.from({ length: 9 }).map((_, index) => (
