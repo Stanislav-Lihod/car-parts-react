@@ -12,7 +12,6 @@ export const Header = () => {
   const {counter: wishlistCounter} = useSelector((state:RootState) => state.wishlist)
   const {isAuth} = useSelector((state:RootState) => state.user)
   const dispatch = useDispatch()
-
   const logoutUser = () =>{
     dispatch(logout())
   }

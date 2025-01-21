@@ -26,7 +26,7 @@ const initialState: BasketState = {
   isLoading: true,
   error: "",
   idPartsInBasket: JSON.parse(localStorage.getItem("basketParts") ?? "[]").map((item: any) => Number(item)) as number[],
-  counter: JSON.parse(localStorage.getItem("basketParts")?.length.toString() ?? "0"),
+  counter: JSON.parse(localStorage.getItem("basketParts") ?? "[]").length,
   basketParts: [],
   totalPrice: { totalPrice: 0, totalDelivery: 0 },
 };

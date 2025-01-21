@@ -36,12 +36,12 @@ interface CarDescriptionProps {
 
 export default function CarDescription({ part }: CarDescriptionProps) {
   const { data, isLoading } = useGetCarInfoQuery(part.modification);
-  const breadcrumbs: Breadcrumbs | undefined = data;
+  const breadcrumbs: Breadcrumbs[] | undefined = data;
   const [modification, setModification] = useState<Modification | null>(null);
 
   useEffect(() => {
-    if (breadcrumbs) {
-      const matchedModification = breadcrumbs.modification.find(
+    if (breadcrumbs && breadcrumbs.length > 0) {
+      const matchedModification = breadcrumbs[0].modification.find(
         (item) => item.id === part.modification
       );
       setModification(matchedModification || null);
@@ -49,11 +49,13 @@ export default function CarDescription({ part }: CarDescriptionProps) {
   }, [breadcrumbs, part.modification]);
 
   const getQueryString = (additionalParams = {}) => {
-    const params = {
-      brand: breadcrumbs?.brand || "",
-      ...additionalParams,
-    };
-    return new URLSearchParams(params).toString();
+    if (breadcrumbs && breadcrumbs.length > 0) {
+      const params = {
+        brand: breadcrumbs[0].brand || "",
+        ...additionalParams,
+      };
+      return new URLSearchParams(params).toString();
+    }
   };
 
   return isLoading ? (
@@ -74,7 +76,7 @@ export default function CarDescription({ part }: CarDescriptionProps) {
           <dd>
             <Link
               to={`/parts?${getQueryString({
-                model: breadcrumbs?.model || "",
+                model: breadcrumbs ? breadcrumbs[0].model : "",
               })}`}
             >
               {modification?.modelName || "-"}
@@ -86,7 +88,7 @@ export default function CarDescription({ part }: CarDescriptionProps) {
           <dd>
             <Link
               to={`/parts?${getQueryString({
-                model: breadcrumbs?.model || "",
+                model: breadcrumbs ? breadcrumbs[0].model : "",
                 modification: modification?.id,
               })}`}
             >
