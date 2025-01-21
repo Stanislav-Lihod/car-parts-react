@@ -11,12 +11,18 @@ import BasketPayment from "./components/BasketPayment";
 import BasketApprove from "./components/BasketApprove";
 import {RootState} from "../../store/store";
 
+interface BasketStep {
+  icon: React.ReactNode;
+  template?: React.ReactNode;
+  title?: string;
+  button_name?: string;
+}
 export const Basket = () =>{
   const navigate = useNavigate()
   const {isAuth} = useSelector((state:RootState) => state.user)
   const {idPartsInBasket} = useSelector((state:RootState) => state.basket)
   const [currentStep, setCurrentStep] = useState(0);
-  const steps = [
+  const steps: BasketStep[] = [
     {icon: <ShoppingCartIcon/>, template: <BasketParts/>, title: 'Shopping cart', button_name: 'Continue'},
     {icon: <UserIcon/>},
     {icon: <GlobeEuropeAfricaIcon/>, template: <BasketAddress/>, title: 'Delivery address', button_name: 'NEXT: Payment'},
@@ -57,18 +63,20 @@ export const Basket = () =>{
           </div>
 
           {
-            steps[currentStep].title ? <div className={style['title']}>{steps[currentStep].title}</div> : null
+            steps[currentStep]?.title ? <div className={style['title']}>{steps[currentStep].title}</div> : null
           }
 
-          {steps[currentStep].template}
+          {steps[currentStep]?.template ? steps[currentStep].template : null}
 
-          {steps[currentStep].button_name && (
+          {steps[currentStep].button_name ? (
             <Button
               onClick={nextClick}
             >
               {steps[currentStep].button_name}
             </Button>
-          )}
+          )
+            : null
+          }
         </>
       ) : (
         <Empty additionalClass="w-400">Shopping cart is empty</Empty>

@@ -3,16 +3,9 @@ import BasketPart from "./BasketPart";
 import * as style from "../Basket.module.scss";
 import RiskNotification from "../../../components/RiskNotification/RiskNotification";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBasketParts, setPrice, updateBasket } from "../../../store/redusers/basketSlice";
+import {fetchBasketParts, Part, setPrice, updateBasket} from "../../../store/redusers/basketSlice";
 import PartsSkeleton from "../../../components/Preloader/PartsSkeleton/PartsSkeleton";
 import { AppDispatch, RootState } from "../../../store/store";
-
-interface Part {
-  part_id: number;
-  price: number;
-  delivery_price: string;
-  service_fee: number;
-}
 
 export default function BasketParts() {
   const dispatch = useDispatch<AppDispatch>();

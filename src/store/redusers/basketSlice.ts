@@ -6,7 +6,7 @@ interface TotalPrice {
   totalDelivery: number;
 }
 
-interface Part {
+export interface Part {
   part_id: number;
   price: number;
   delivery_price: string;
@@ -40,11 +40,7 @@ export const fetchBasketParts = (parts: string) => async (dispatch: any) => {
     );
     dispatch(basketSlice.actions.basketPartsFetching(response.data));
   } catch (e: unknown) {
-    if (e instanceof Error) {
-      dispatch(basketSlice.actions.errorHandling(e.message));
-    } else {
-      dispatch(basketSlice.actions.errorHandling("Unknown error"));
-    }
+    dispatch(basketSlice.actions.errorHandling(e instanceof Error ? e.message : "Unknown error"));
   }
 };
 
@@ -80,8 +76,8 @@ export const basketSlice = createSlice({
       state.counter = state.idPartsInBasket.length;
       localStorage.setItem("basketParts", JSON.stringify(state.idPartsInBasket));
     },
-    basketPartsFetching(state, action: PayloadAction<any[]>) {
-      state.basketParts = action.payload.map(part => part.part_id);
+    basketPartsFetching(state, { payload }: PayloadAction<any[]>) {
+      state.basketParts = payload;
       state.isLoading = false;
     },
     setPrice(state, action: PayloadAction<TotalPrice>) {
