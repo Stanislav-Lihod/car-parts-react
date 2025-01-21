@@ -16,7 +16,7 @@ interface Order {
   date: number;
   parts: Part[];
 }
-interface User {
+export interface User {
   id: number;
   email: string;
   password: string;

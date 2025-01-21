@@ -4,7 +4,7 @@ import {Button} from "../../../components/Button/Button";
 import {UserIcon} from "@heroicons/react/24/outline";
 import {useLoginUserMutation} from "../../../services/UserService";
 import {useDispatch} from "react-redux";
-import {setUser} from "../../../store/redusers/userSlice";
+import {setUser, User} from "../../../store/redusers/userSlice";
 
 export const Login = ({toggleScreen}) =>{
   const dispatch = useDispatch();
@@ -17,8 +17,7 @@ export const Login = ({toggleScreen}) =>{
     formData.forEach((value, key) => {
       formDataObject[key] = value;
     });
-
-    const result = await loginUser(formDataObject).unwrap();
+    const result = await loginUser(formData).unwrap() as { data: User; token: string };
     dispatch(setUser(result));
   };
 

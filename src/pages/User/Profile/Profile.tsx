@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Button} from "../../../components/Button/Button";
 import * as style from './Profile.module.scss'
-import {setUser} from "../../../store/redusers/userSlice";
+import {setUser, User} from "../../../store/redusers/userSlice";
 import {useLazyCheckUserQuery, useUpdateUserMutation} from "../../../services/UserService";
 import {RootState} from "../../../store/store";
 
@@ -14,8 +14,16 @@ export default function Profile() {
 
   const userUpdate = async (e) =>{
     e.preventDefault()
-    const formData = Object.fromEntries(new FormData(e.target));
-    const result = await updateUser({userId:user.id, body:formData});
+    const formElements = e.currentTarget.elements as HTMLFormControlsCollection;
+    const formObject: Record<string, string> = {};
+
+    for (let i = 0; i < formElements.length; i++) {
+      const element = formElements[i] as HTMLInputElement;
+      if (element.name) {
+        formObject[element.name] = element.value;
+      }
+    }
+    const result = await updateUser(formObject).unwrap() as { data: User; token: string };
     if (result){
       dispatch(setUser(result))
     }
@@ -32,7 +40,7 @@ export default function Profile() {
 
   useEffect(()=>{
     if (authData){
-      dispatch(setUser(authData))
+      // dispatch(setUser(authData))
     }
   }, [authData])
 

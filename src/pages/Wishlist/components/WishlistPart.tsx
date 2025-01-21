@@ -55,7 +55,7 @@ export default function WishlistPart({part}) {
         <div className={style['price']}>{part.price_final}</div>
         <IconButton
           additionalClass={[`${isInBasket ? 'inBasket' : ''}`]}
-          style={{
+          styles={{
             bottom: 0,
             right: 0
           }}
@@ -65,7 +65,7 @@ export default function WishlistPart({part}) {
         </IconButton>
         <IconButton
           additionalClass={['clear']}
-          style={{
+          styles={{
             bottom: 0,
             right: 0
           }}

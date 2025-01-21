@@ -86,14 +86,14 @@ export default function BasketApprove() {
 
   useEffect(() => {
     if (authData) {
-      dispatch(setUser(authData));
+      // dispatch(setUser({ data: authData as User, token: '' }));
     }
   }, [authData]);
 
   const userUpdate = async (orders: Order[]) => {
     const result = await updateUser({ userId: user.id, body: { ...user, orders } });
     if ('data' in result && result.data) {
-      dispatch(setUser(result.data as User));
+      // dispatch(setUser({ data: result.data as User, token: '' }));
     }
   };
 

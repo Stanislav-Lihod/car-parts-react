@@ -68,7 +68,7 @@ export const basketSlice = createSlice({
         currentBasket.delete(action.payload.part);
       }
 
-      state.idPartsInBasket = [...currentBasket];
+      state.idPartsInBasket = [...currentBasket] as number[];
       state.counter = state.idPartsInBasket.length;
       localStorage.setItem("basketParts", JSON.stringify(state.idPartsInBasket));
     },
