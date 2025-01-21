@@ -17,7 +17,8 @@ export const Login = ({toggleScreen}) =>{
     formData.forEach((value, key) => {
       formDataObject[key] = value;
     });
-    const result = await loginUser(formData).unwrap() as { data: User; token: string };
+    const result = await loginUser(formDataObject).unwrap() as { data: User; token: string };
+
     dispatch(setUser(result));
   };
 
